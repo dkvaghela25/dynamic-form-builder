@@ -32,15 +32,19 @@ const InputField = ({ schema, index }) => {
     }
 
     return (
-        <div className="flex flex-col gap-1 bg-gray-100 p-5 rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 shadow-sm md:p-5">
             {editMode
                 ? <EditSchema schema={schema} index={index} setEditMode={setEditMode} />
                 : <>
-                    <div className="flex ml-auto gap-2">
-                        <FaEdit className="w-6 h-6 cursor-pointer text-green-500" onClick={editSchema} />
-                        <MdDelete className="w-6 h-6 cursor-pointer text-red-500" onClick={deleteSchema} />
+                    <div className="mb-2 flex justify-end gap-2">
+                        <button type="button" className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-emerald-600 transition hover:bg-emerald-50" onClick={editSchema}>
+                            <FaEdit className="h-4 w-4" />
+                        </button>
+                        <button type="button" className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-rose-600 transition hover:bg-rose-50" onClick={deleteSchema}>
+                            <MdDelete className="h-4 w-4" />
+                        </button>
                     </div>
-                    <label htmlFor="">{schema.label}</label>
+                    <label htmlFor="" className="mb-1 text-sm font-medium text-slate-700">{schema.label || "Untitled field"}</label>
                     <Controller
                         control={control}
                         name={schema.name}
@@ -48,7 +52,7 @@ const InputField = ({ schema, index }) => {
                         render={({ field }) => (
                             <input
                                 {...field}
-                                className="border rounded p-2 bg-white"
+                                className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
                                 type={schema.type}
                                 value={schema.value}
                                 onChange={(e) => {

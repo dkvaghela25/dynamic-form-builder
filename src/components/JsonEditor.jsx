@@ -22,13 +22,21 @@ const JsonEditor = () => {
 
     return (
         <div
-            className="w-[15%] fixed bg-white rounded shadow-[0_3px_10px_rgb(0,0,0,0.2)] overflow-hidden flex flex-col border border-gray-500 cursor-pointer"
+            className="sticky top-6 h-fit w-full max-w-[240px] shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
         >
+            <div className="border-b border-slate-200 px-4 py-3">
+                <div className="text-sm font-semibold tracking-wide text-slate-800">Input Library</div>
+                <div className="mt-1 text-xs text-slate-500">Select a field type to add it</div>
+            </div>
             {Object.entries(availableInputs).map(([key, value]) => {
-                return <div onClick={() => addInput(key, value)} className="capitalize" key={key}>
-                    <div className="p-2">{value}</div>
-                    <hr className="border-gray-500" />
-                </div>
+                return <button
+                    onClick={() => addInput(key, value)}
+                    className="w-full cursor-pointer border-b border-slate-200 px-4 py-2.5 text-left text-sm font-medium capitalize text-slate-700 transition hover:bg-slate-50 last:border-b-0"
+                    key={key}
+                    type="button"
+                >
+                    {value}
+                </button>
             })}
         </div>
     );
