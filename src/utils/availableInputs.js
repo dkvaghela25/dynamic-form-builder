@@ -1,0 +1,17 @@
+export const availableInputs = {
+    text: "Text Input",
+    textarea: "Multi-line Input",
+    number: "Number Input",
+    password: "Password Input",
+    email: "Email Input",
+    select: "Dropdown",
+    radio: "Radio Group",
+    checkbox: "Checkbox",
+    switch: "Toggle Switch",
+    date: "Date Picker",
+    datetime: "DateTime Picker",
+    file: "File Upload",
+    multiselect: "Multi Select",
+    range: "Slider",
+    color: "Color Picker",
+}
