@@ -99,25 +99,24 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         if (rule === "minLength" &&  value > validationRules["maxLength"]) return setError("minLength value can not be less than maxLength");
 
 
-        setFormData(prev => { return { ...prev, validationRules: { ...validationRules, [rule]: value } } })
+        setFormData(prev => { return { ...prev, validationRules: [ ...validationRules, { type : rule, value : value } ] } })
         setRule("")
         setValue("")
         setError("")
         setIsEditing(false)
     }
 
-    const removeRule = (key) => {
-        // eslint-disable-next-line no-unused-vars
-        const updatedRules = Object.fromEntries(Object.entries(validationRules).filter(([currKey, currValue]) => currKey !== key))
+    const removeRule = (type) => {
+        const updatedRules = validationRules.filter(rule => rule.type !== type)
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
     }
 
-    const editRule = (key) => {
-        setRule(key)
-        setValue(validationRules[key])
+    const editRule = (type) => {
+        setRule(type)
+        setValue(validationRules[type])
         setIsEditing(true);
     }
-
+    
     return (
         <>
             <div className="mt-1 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
@@ -129,16 +128,16 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         <div className="p-2 text-center">Value</div>
                         <div className="p-2 text-center">Action</div>
                     </div>
-                    {Object.entries(validationRules).map(([key, value]) => {
+                    {validationRules.map(rule => {
                         return (
-                            <div className="grid grid-cols-3 font-semibold" key={key}>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700">{key}</div>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{value.toString()}</div>
+                            <div className="grid grid-cols-3 font-semibold" key={rule.type}>
+                                <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700">{rule.type}</div>
+                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule.value.toString()}</div>
                                 <div className="flex gap-5 items-center justify-center border-t border-slate-200 p-2">
-                                    {key !== "required" &&
+                                    {rule.type !== "required" &&
                                         <>
-                                            <FaEdit className="h-5 w-5 cursor-pointer text-emerald-500 transition hover:text-emerald-700" onClick={() => editRule(key)} />
-                                            <MdDelete className="h-5 w-5 cursor-pointer text-red-500 transition hover:text-rose-700" onClick={() => removeRule(key)} />
+                                            <FaEdit className="h-5 w-5 cursor-pointer text-emerald-500 transition hover:text-emerald-700" onClick={() => editRule(rule.type)} />
+                                            <MdDelete className="h-5 w-5 cursor-pointer text-red-500 transition hover:text-rose-700" onClick={() => removeRule(rule.type)} />
                                         </>
                                     }
                                 </div>
@@ -151,9 +150,16 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                     <input
                         type="checkbox"
                         className="h-4 w-4 accent-indigo-600"
-                        checked={validationRules.required}
+                        checked={validationRules.find(rule => rule.type === "required").value}
                         onChange={(e) => {
-                            setFormData(prev => { return { ...prev, validationRules: { required: e.target.checked } } })
+                            const updatedRules = validationRules.map(rule => {
+                                if(rule.type === "required"){
+                                    return { ...rule, value : e.target.checked }
+                                } else {
+                                    return rule;
+                                }
+                            })
+                            setFormData(prev => { return { ...prev, validationRules: updatedRules } })
                         }}
                     />
                     <label htmlFor="" className="text-sm font-medium text-slate-700">Required</label>

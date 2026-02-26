@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FormSchemaContext } from "../contexts/formSchemaContext";
 import EditSchema from "./EditSchema";
+import { validateForm } from "../utils/validateForm";
 
 const InputField = ({ schema, index }) => {
     const { control, trigger, formState: { errors } } = useFormContext();
@@ -54,7 +55,7 @@ const InputField = ({ schema, index }) => {
                     <Controller
                         control={control}
                         name={schema.name}
-                        rules={schema.validationRules}
+                        rules={validateForm( schema.label ,schema.validationRules)}
                         render={({ field, fieldState: { error } }) => (
                             <>
                                 <input
@@ -74,7 +75,7 @@ const InputField = ({ schema, index }) => {
                                     }}
                                     placeholder={schema.placeholder}
                                 />
-                                {error && <p>{error.message}</p>}
+                                {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                             </>
                         )}
                     />

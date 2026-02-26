@@ -19,10 +19,9 @@ const JsonEditor = () => {
             placeholder: "",
             name: generateUniqueName(key),
             value: "",
-            validationRules: {
-                required: true,
-                minLength: 3
-            }
+            validationRules: [
+                { type: 'required', value: false },
+            ]
         }])
     }
 
