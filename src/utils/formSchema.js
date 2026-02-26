@@ -5,11 +5,11 @@ export const formSchema = [
         label: "Username",
         placeholder: "Enter username",
         value: "",
-        validationRules: {
-            required: true,
-            minLength: 3,
-            maxLength: 10
-        }
+        validationRules: [
+            { type: 'required' },
+            { type: 'minLength', value: 3 },
+            { type: 'maxLength', value: 12 },
+        ]
     },
     {
         name: "gender",

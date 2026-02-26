@@ -3,6 +3,7 @@ import { FormSchemaContext } from "../contexts/formSchemaContext";
 import { useFormContext } from "react-hook-form";
 import { MdDelete } from "react-icons/md";
 import { Fragment } from "react";
+import { FaEdit } from "react-icons/fa";
 
 const EditSchema = ({ schema, index, setEditMode }) => {
 
@@ -17,21 +18,14 @@ const EditSchema = ({ schema, index, setEditMode }) => {
         validationRules: schema.validationRules
     })
 
-    console.log(formData);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        if (name === "name") {
-            unregister(formData.name);
-            setValue(value, formData.value);
-        }
-
         setFormData(prev => { return { ...prev, [name]: value } })
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+
         setFormSchema(prev => {
             return prev.map((currElem, currIndex) => {
                 if (currIndex === index) {
@@ -41,6 +35,12 @@ const EditSchema = ({ schema, index, setEditMode }) => {
                 }
             })
         })
+
+        if (schema.name !== formData.name) {
+            unregister(schema.name);
+            setValue(formData.name, schema.value);
+        }
+
         setEditMode(false);
     }
 
@@ -82,24 +82,40 @@ const ValidationRules = ({ validationRules, setFormData }) => {
 
     const [rule, setRule] = useState("")
     const [value, setValue] = useState("")
+    const [error, setError] = useState("")
+    const [isEditing, setIsEditing] = useState(false);
 
     let availableRules = ["min", "max", "minLength", "maxLength", "pattern"];
-    availableRules = availableRules.filter(rule => !(Object.keys(validationRules).includes(rule)));
+    // availableRules = availableRules.filter(rule => !(Object.keys(validationRules).includes(rule)));
 
     const addRule = (e) => {
         e.preventDefault();
+
+        if (!rule) return setError("Please Select Rule");
+        if (!value) return setError("Please Select Value");
+        if (rule === "max" &&  value < validationRules["min"]) return setError("max value can not be less than min");
+        if (rule === "min" &&  value > validationRules["max"]) return setError("min value can not be grater than max");
+        if (rule === "maxLength" &&  value < validationRules["minLength"]) return setError("maxLength value can not be garter than minLength");
+        if (rule === "minLength" &&  value > validationRules["maxLength"]) return setError("minLength value can not be less than maxLength");
+
+
         setFormData(prev => { return { ...prev, validationRules: { ...validationRules, [rule]: value } } })
         setRule("")
         setValue("")
+        setError("")
+        setIsEditing(false)
     }
-    
+
     const removeRule = (key) => {
-        console.log(key);
         // eslint-disable-next-line no-unused-vars
-        const updatedRules = Object.fromEntries(Object.entries(validationRules).filter(([currKey,currValue]) => currKey !== key))
+        const updatedRules = Object.fromEntries(Object.entries(validationRules).filter(([currKey, currValue]) => currKey !== key))
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
-        setRule("")
-        setValue("")
+    }
+
+    const editRule = (key) => {
+        setRule(key)
+        setValue(validationRules[key])
+        setIsEditing(true);
     }
 
     return (
@@ -108,18 +124,25 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                 <div className="text-base font-semibold text-slate-800">Validation Rules</div>
 
                 <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-                    <div className="grid grid-cols-3 bg-slate-100 text-xs font-semibold uppercase tracking-wide text-slate-600">
+                    <div className="grid grid-cols-3 bg-slate-100 text-xs font-extrabold uppercase tracking-wide text-slate-600">
                         <div className="p-2 text-center">Rule</div>
                         <div className="p-2 text-center">Value</div>
                         <div className="p-2 text-center">Action</div>
                     </div>
                     {Object.entries(validationRules).map(([key, value]) => {
                         return (
-                            <Fragment key={key}>
+                            <div className="grid grid-cols-3 font-semibold" key={key}>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700">{key}</div>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{value.toString()}</div>
-                                <div className="flex items-center justify-center border-t border-slate-200 p-2"> <MdDelete className="h-5 w-5 cursor-pointer text-rose-500 transition hover:text-rose-700" onClick={() => removeRule(key)} /> </div>
-                            </Fragment>
+                                <div className="flex gap-5 items-center justify-center border-t border-slate-200 p-2">
+                                    {key !== "required" &&
+                                        <>
+                                            <FaEdit className="h-5 w-5 cursor-pointer text-emerald-500 transition hover:text-emerald-700" onClick={() => editRule(key)} />
+                                            <MdDelete className="h-5 w-5 cursor-pointer text-red-500 transition hover:text-rose-700" onClick={() => removeRule(key)} />
+                                        </>
+                                    }
+                                </div>
+                            </div>
                         )
                     })}
                 </div>
@@ -165,8 +188,9 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         type={rule === "pattern" ? "text" : "number"}
                     />
 
-                    <button onClick={addRule} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> Add</button>
+                    <button onClick={addRule} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>
                 </div>
+                {error && <p className="text-sm pl-3 text-red-500 -mt-2"> * {error}</p>}
             </div>
         </>
     )

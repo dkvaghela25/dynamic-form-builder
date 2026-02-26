@@ -10,8 +10,8 @@ const App = () => {
   });
 
   return (
-  <div className="min-h-screen w-full bg-gradient-to-br from-slate-100 via-slate-50 to-blue-100 px-4 py-6 md:px-8 md:py-10">
-    <div className="mx-auto flex w-full max-w-[1280px] gap-6 lg:gap-8">
+  <div className="min-h-screen w-full bg-[#F2F6FA] px-30 py-10">
+    <div className="flex w-full gap-10">
     <JsonEditor />
     <FormProvider {...methods}>
         <LivePreview /> 
