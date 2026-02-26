@@ -81,7 +81,7 @@ export default EditSchema;
 const ValidationRules = ({ validationRules, setFormData }) => {
 
     const [rule, setRule] = useState("")
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState(undefined)
     const [error, setError] = useState("")
     const [isEditing, setIsEditing] = useState(false);
 
@@ -97,8 +97,7 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         if (rule === "min" &&  value > validationRules["max"]) return setError("min value can not be grater than max");
         if (rule === "maxLength" &&  value < validationRules["minLength"]) return setError("maxLength value can not be garter than minLength");
         if (rule === "minLength" &&  value > validationRules["maxLength"]) return setError("minLength value can not be less than maxLength");
-
-
+        
         setFormData(prev => { return { ...prev, validationRules: [ ...validationRules, { type : rule, value : value } ] } })
         setRule("")
         setValue("")
@@ -112,8 +111,9 @@ const ValidationRules = ({ validationRules, setFormData }) => {
     }
 
     const editRule = (type) => {
+        console.log(validationRules);
         setRule(type)
-        setValue(validationRules[type])
+        setValue(validationRules.find(rule => rule.type === type).value)
         setIsEditing(true);
     }
     

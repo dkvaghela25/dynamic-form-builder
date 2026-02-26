@@ -7,13 +7,14 @@ import EditSchema from "./EditSchema";
 import { validateForm } from "../utils/validateForm";
 
 const InputField = ({ schema, index }) => {
-    const { control, trigger, formState: { errors } } = useFormContext();
+    const { control, trigger, unregister } = useFormContext();
     const { setFormSchema } = useContext(FormSchemaContext);
     const [editMode, setEditMode] = useState(false);
 
     console.log(schema);
 
     const deleteSchema = () => {
+        unregister(schema.name)
         setFormSchema(prev => prev.filter((currElem, currIndex) => currIndex !== index));
     }
 
@@ -33,8 +34,6 @@ const InputField = ({ schema, index }) => {
         })
     }
 
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", errors);
-
     return (
         <div className="rounded-xl border border-slate-200 bg-slate-100 p-5 shadow-sm">
             {editMode
@@ -50,7 +49,7 @@ const InputField = ({ schema, index }) => {
                     </div>
                     <label htmlFor="" className="mb-1 font-medium text-slate-700">
                         <span>{schema.label || "Untitled field"}</span>
-                        {schema.validationRules.required && <span className="text-red-500"> *</span>}
+                        {schema.validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                     </label>
                     <Controller
                         control={control}
@@ -61,7 +60,7 @@ const InputField = ({ schema, index }) => {
                                 <input
                                     required={schema.validationRules.required}
                                     {...field}
-                                    className={`"w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 ${error ? "border-red-400" : ""}`}
+                                    className={`"w-full rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
                                     type={schema.type}
                                     value={schema.value}
                                     error={error}

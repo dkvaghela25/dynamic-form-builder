@@ -1,8 +1,8 @@
 export const availableInputs = {
     text: "Text Input",
-    textarea: "Multi-line Input",
     number: "Number Input",
     password: "Password Input",
+    textarea: "Multi-line Input",
     email: "Email Input",
     select: "Dropdown",
     radio: "Radio Group",

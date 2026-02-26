@@ -44,8 +44,8 @@ export const validateForm = (label, rules = []) => {
             
             case 'pattern': {
                 finalRules.pattern = {
-                    value,
-                    message: `Invalid ${label || "This"}`
+                    value: new RegExp(value),
+                    message: `Invalid ${label}`
                 };
                 break;
             }
