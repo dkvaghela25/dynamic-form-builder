@@ -88,22 +88,37 @@ const ValidationRules = ({ validationRules, setFormData }) => {
     let availableRules = ["min", "max", "minLength", "maxLength", "pattern"];
     // availableRules = availableRules.filter(rule => !(Object.keys(validationRules).includes(rule)));
 
-    const addRule = (e) => {
+    const handleAddRule = (e) => {
         e.preventDefault();
 
         if (!rule) return setError("Please Select Rule");
         if (!value) return setError("Please Select Value");
-        if (rule === "max" &&  value < validationRules["min"]) return setError("max value can not be less than min");
-        if (rule === "min" &&  value > validationRules["max"]) return setError("min value can not be grater than max");
-        if (rule === "maxLength" &&  value < validationRules["minLength"]) return setError("maxLength value can not be garter than minLength");
-        if (rule === "minLength" &&  value > validationRules["maxLength"]) return setError("minLength value can not be less than maxLength");
-        
-        setFormData(prev => { return { ...prev, validationRules: [ ...validationRules, { type : rule, value : value } ] } })
+        if (rule === "max" && value < validationRules?.find(currRule => currRule.type === "min")?.value) return setError("max value can not be less than min");
+        if (rule === "min" && value > validationRules?.find(currRule => currRule.type === "max")?.value) return setError("min value can not be grater than max");
+        if (rule === "maxLength" && value < validationRules?.find(currRule => currRule.type === "minLength")?.value) return setError("maxLength value can not be garter than minLength");
+        if (rule === "minLength" && value > validationRules?.find(currRule => currRule.type === "maxLength")?.value) return setError("minLength value can not be less than maxLength");
+
+        const existingRule = validationRules.find(currRule => currRule.type === rule);
+
+        if (isEditing || existingRule) {
+            const updatedRules = validationRules.map(currRule => {
+                if (currRule.type === rule) {
+                    return { type: rule, value: value }
+                } else {
+                    return currRule;
+                }
+            })
+            setFormData(prev => { return { ...prev, validationRules: updatedRules } })
+        } else {
+            setFormData(prev => { return { ...prev, validationRules: [...validationRules, { type: rule, value: value }] } })
+        }
+
         setRule("")
         setValue("")
         setError("")
         setIsEditing(false)
     }
+
 
     const removeRule = (type) => {
         const updatedRules = validationRules.filter(rule => rule.type !== type)
@@ -111,12 +126,11 @@ const ValidationRules = ({ validationRules, setFormData }) => {
     }
 
     const editRule = (type) => {
-        console.log(validationRules);
         setRule(type)
         setValue(validationRules.find(rule => rule.type === type).value)
         setIsEditing(true);
     }
-    
+
     return (
         <>
             <div className="mt-1 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
@@ -153,8 +167,8 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         checked={validationRules.find(rule => rule.type === "required").value}
                         onChange={(e) => {
                             const updatedRules = validationRules.map(rule => {
-                                if(rule.type === "required"){
-                                    return { ...rule, value : e.target.checked }
+                                if (rule.type === "required") {
+                                    return { ...rule, value: e.target.checked }
                                 } else {
                                     return rule;
                                 }
@@ -169,7 +183,8 @@ const ValidationRules = ({ validationRules, setFormData }) => {
 
 
                     <select
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                        disabled={isEditing}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
                         name="rule"
                         value={rule}
                         onChange={(e) => {
@@ -186,15 +201,15 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         placeholder="Value (First select rule for defining it's value)"
                         disabled={!rule}
                         name="value"
+                        value={value}
                         onChange={e =>
                             setValue(rule !== "pattern" ? Number(e.target.value) : e.target.value)
                         }
-                        value={value}
                         className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
                         type={rule === "pattern" ? "text" : "number"}
                     />
 
-                    <button onClick={addRule} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>
+                    <button onClick={handleAddRule} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>
                 </div>
                 {error && <p className="text-sm pl-3 text-red-500 -mt-2"> * {error}</p>}
             </div>

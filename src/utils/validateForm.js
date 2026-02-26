@@ -3,10 +3,14 @@ export const validateForm = (label, rules = []) => {
 
     rules.forEach((rule) => {
         const { type, value } = rule;
+        
         switch (type) {
-
+            
             case 'required': {
-                finalRules.required = `${label || "This"} is required field`;
+                finalRules.required = {
+                    value,
+                    message: `${label || "This"} is required field`
+                } 
                 break;
             }
 
