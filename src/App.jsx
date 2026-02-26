@@ -1,7 +1,8 @@
 import { DevTool } from "@hookform/devtools";
-import JsonEditor from "./components/JsonEditor";
 import LivePreview from "./components/LivePreview";
 import { FormProvider, useForm } from "react-hook-form";
+import AvailableInputs from "./components/AvailableInputs";
+import JsonViewer from "./components/JsonViewer";
 
 const App = () => {
 
@@ -10,12 +11,13 @@ const App = () => {
   });
 
   return (
-  <div className="min-h-screen w-full bg-[#F2F6FA] px-30 py-10">
+  <div className="min-h-screen w-full bg-[#F2F6FA] p-10">
     <div className="flex w-full gap-10">
-    <JsonEditor />
+    <AvailableInputs />
     <FormProvider {...methods}>
         <LivePreview /> 
     </FormProvider>
+    <JsonViewer />
     </div>
     <DevTool control={methods.control} />
   </div>

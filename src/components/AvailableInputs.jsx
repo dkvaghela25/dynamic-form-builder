@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { availableInputs } from "../utils/availableInputs";
 import { FormSchemaContext } from "../contexts/formSchemaContext";
 
-const JsonEditor = () => {
+const AvailableInputs = () => {
 
     const { setFormSchema } = useContext(FormSchemaContext);;
 
@@ -46,4 +46,4 @@ const JsonEditor = () => {
     );
 };
 
-export default JsonEditor;
+export default AvailableInputs;

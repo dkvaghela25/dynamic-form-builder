@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FormSchemaContext } from "../contexts/formSchemaContext";
 import EditSchema from "./EditSchema";
@@ -74,6 +74,7 @@ const InputField = ({ schema, index }) => {
                                     }}
                                     placeholder={schema.placeholder}
                                 />
+                                {schema.type === "password" && <FaEye />}
                                 {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                             </>
                         )}
