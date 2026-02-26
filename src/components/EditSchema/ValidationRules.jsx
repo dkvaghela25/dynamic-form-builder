@@ -1,82 +1,7 @@
-import { useContext, useState } from "react";
-import { FormSchemaContext } from "../contexts/formSchemaContext";
-import { useFormContext } from "react-hook-form";
-import { MdDelete } from "react-icons/md";
-import { Fragment } from "react";
+import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-
-const EditSchema = ({ schema, index, setEditMode }) => {
-
-    const { unregister, setValue } = useFormContext();
-    const { setFormSchema } = useContext(FormSchemaContext)
-    const [formData, setFormData] = useState({
-        type: schema.type,
-        label: schema.label,
-        placeholder: schema.placeholder,
-        name: schema.name,
-        value: schema.value,
-        validationRules: schema.validationRules
-    })
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => { return { ...prev, [name]: value } })
-    }
-
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-
-        setFormSchema(prev => {
-            return prev.map((currElem, currIndex) => {
-                if (currIndex === index) {
-                    return formData;
-                } else {
-                    return currElem;
-                }
-            })
-        })
-
-        if (schema.name !== formData.name) {
-            unregister(schema.name);
-            setValue(formData.name, schema.value);
-        }
-
-        setEditMode(false);
-    }
-
-    return (
-        <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
-
-            {Object.entries(formData).map(([key, value]) => {
-                return (
-                    <div className="flex flex-col gap-1" key={key}>
-                        {(key !== "type" && key !== "validationRules") &&
-                            <>
-                                <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
-                                <input
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                                    type="text"
-                                    name={key}
-                                    value={value}
-                                    onChange={handleChange}
-                                />
-                            </>
-                        }
-                    </div>
-                )
-            })}
-
-            <ValidationRules validationRules={formData.validationRules} setFormData={setFormData} />
-
-            <div className="ml-auto mt-2 flex gap-3">
-                <button className="cursor-pointer rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onClick={() => setEditMode(false)}>Cancel</button>
-                <button className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700" onClick={handleFormSubmit}>Edit Schema</button>
-            </div>
-        </div>
-    );
-};
-
-export default EditSchema;
+import { MdDelete } from "react-icons/md";
+import Icon from "../ui/Icon";
 
 const ValidationRules = ({ validationRules, setFormData }) => {
 
@@ -86,17 +11,20 @@ const ValidationRules = ({ validationRules, setFormData }) => {
     const [isEditing, setIsEditing] = useState(false);
 
     let availableRules = ["min", "max", "minLength", "maxLength", "pattern"];
-    // availableRules = availableRules.filter(rule => !(Object.keys(validationRules).includes(rule)));
+
+    const getRuleValue = (rule) => {
+        return validationRules?.find(currRule => currRule.type === rule)?.value
+    }
 
     const handleAddRule = (e) => {
         e.preventDefault();
 
         if (!rule) return setError("Please Select Rule");
         if (!value) return setError("Please Select Value");
-        if (rule === "max" && value < validationRules?.find(currRule => currRule.type === "min")?.value) return setError("max value can not be less than min");
-        if (rule === "min" && value > validationRules?.find(currRule => currRule.type === "max")?.value) return setError("min value can not be grater than max");
-        if (rule === "maxLength" && value < validationRules?.find(currRule => currRule.type === "minLength")?.value) return setError("maxLength value can not be garter than minLength");
-        if (rule === "minLength" && value > validationRules?.find(currRule => currRule.type === "maxLength")?.value) return setError("minLength value can not be less than maxLength");
+        if (rule === "max" && value < getRuleValue("min")) return setError("max value can not be less than min");
+        if (rule === "min" && value > getRuleValue("max")) return setError("min value can not be grater than max");
+        if (rule === "maxLength" && value < getRuleValue("minLength")) return setError("maxLength value can not be garter than minLength");
+        if (rule === "minLength" && value > getRuleValue("maxLength")) return setError("minLength value can not be less than maxLength");
 
         const existingRule = validationRules.find(currRule => currRule.type === rule);
 
@@ -119,7 +47,6 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         setIsEditing(false)
     }
 
-
     const removeRule = (type) => {
         const updatedRules = validationRules.filter(rule => rule.type !== type)
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
@@ -127,8 +54,19 @@ const ValidationRules = ({ validationRules, setFormData }) => {
 
     const editRule = (type) => {
         setRule(type)
-        setValue(validationRules.find(rule => rule.type === type).value)
+        setValue(getRuleValue(type));
         setIsEditing(true);
+    }
+
+    const handleChange = (e) => {
+        const updatedRules = validationRules.map(rule => {
+            if (rule.type === "required") {
+                return { ...rule, value: e.target.checked }
+            } else {
+                return rule;
+            }
+        })
+        setFormData(prev => { return { ...prev, validationRules: updatedRules } })
     }
 
     return (
@@ -147,11 +85,11 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                             <div className="grid grid-cols-3 font-semibold" key={rule.type}>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700">{rule.type}</div>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule.value.toString()}</div>
-                                <div className="flex gap-5 items-center justify-center border-t border-slate-200 p-2">
+                                <div className="border-t border-slate-200 p-2 flex gap-5 items-center justify-center">
                                     {rule.type !== "required" &&
                                         <>
-                                            <FaEdit className="h-5 w-5 cursor-pointer text-emerald-500 transition hover:text-emerald-700" onClick={() => editRule(rule.type)} />
-                                            <MdDelete className="h-5 w-5 cursor-pointer text-red-500 transition hover:text-rose-700" onClick={() => removeRule(rule.type)} />
+                                            <Icon icon="edit" onClick={() => editRule(rule.type)} />
+                                            <Icon icon="delete" onClick={() => removeRule(rule.type)} />
                                         </>
                                     }
                                 </div>
@@ -164,17 +102,8 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                     <input
                         type="checkbox"
                         className="h-4 w-4 accent-indigo-600"
-                        checked={validationRules.find(rule => rule.type === "required").value}
-                        onChange={(e) => {
-                            const updatedRules = validationRules.map(rule => {
-                                if (rule.type === "required") {
-                                    return { ...rule, value: e.target.checked }
-                                } else {
-                                    return rule;
-                                }
-                            })
-                            setFormData(prev => { return { ...prev, validationRules: updatedRules } })
-                        }}
+                        checked={getRuleValue("required")}
+                        onChange={handleChange}
                     />
                     <label htmlFor="" className="text-sm font-medium text-slate-700">Required</label>
                 </div>
@@ -216,3 +145,5 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         </>
     )
 }
+
+export default ValidationRules;
