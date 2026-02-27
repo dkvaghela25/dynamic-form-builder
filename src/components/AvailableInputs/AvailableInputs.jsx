@@ -1,7 +1,7 @@
 
 import { useContext } from "react";
-import { availableInputs } from "../utils/availableInputs";
-import { FormSchemaContext } from "../contexts/formSchemaContext";
+import { FormSchemaContext } from "../../contexts/formSchemaContext";
+import { availableInputs } from "../../utils/constants";
 
 const AvailableInputs = () => {
 
@@ -12,17 +12,8 @@ const AvailableInputs = () => {
         return `${type}${timestampPart}`;
     };
 
-    const addInput = (key) => {
-        setFormSchema(prev => [...prev, {
-            type: key,
-            label: "",
-            placeholder: "",
-            name: generateUniqueName(key),
-            value: "",
-            validationRules: [
-                { type: 'required', value: false },
-            ]
-        }])
+    const addInput = (newSchema) => {
+        setFormSchema(prev => [...prev, {...newSchema, name : generateUniqueName(newSchema.type)}])
     }
 
     return (
@@ -35,11 +26,11 @@ const AvailableInputs = () => {
             </div>
             {Object.entries(availableInputs).map(([key, value]) => {
                 return <button
-                    onClick={() => addInput(key)}
+                    onClick={() => addInput(value)}
                     className="w-full cursor-pointer border-b border-slate-200 px-4 py-2.5 text-left text-sm font-medium capitalize text-slate-700 transition hover:bg-slate-50 last:border-b-0"
                     key={key}
                 >
-                    {value}
+                    {value.label}
                 </button>
             })}
         </div>

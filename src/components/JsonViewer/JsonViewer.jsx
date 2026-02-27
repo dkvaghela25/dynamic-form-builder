@@ -1,4 +1,4 @@
-import { useFormSchemaContext } from "../contexts/formSchemaContext";
+import { useFormSchemaContext } from "../../contexts/formSchemaContext";
 
 const JsonViewer = () => {
 

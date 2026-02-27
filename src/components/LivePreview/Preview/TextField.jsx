@@ -1,14 +1,17 @@
 import { useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { FormSchemaContext } from "../../contexts/formSchemaContext";
+import { FormSchemaContext } from "../../../contexts/formSchemaContext";
+import { useCurrentSchemaContext } from "../InputCard";
 
-const TextInput = ({ field, schema, error, index }) => {
+const TextField = ({ field, error }) => {
 
+    const { schema, index } = useCurrentSchemaContext();
 
     const { trigger } = useFormContext();
     const { setFormSchema } = useContext(FormSchemaContext);
 
     const handleChange = (e) => {
+        field.onChange(e);
         setFormSchema(prev => {
             return prev.map((currElem, currIndex) => {
                 if (currIndex === index) {
@@ -20,6 +23,11 @@ const TextInput = ({ field, schema, error, index }) => {
         })
     }
 
+    const handleBlur = (e) => {
+        field.onBlur(e);
+        trigger(schema.name);
+    }
+
     return (
         <>
             <input
@@ -29,18 +37,12 @@ const TextInput = ({ field, schema, error, index }) => {
                 type={schema.type}
                 value={schema.value}
                 error={error}
-                onChange={(e) => {
-                    field.onChange(e);
-                    handleChange(e);
-                }}
-                onBlur={(e) => {
-                    field.onBlur(e);
-                    trigger(schema.name);
-                }}
+                onChange={handleChange}
+                onBlur={handleBlur}
                 placeholder={schema.placeholder}
             />
         </>
     );
 };
 
-export default TextInput;
+export default TextField;

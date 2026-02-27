@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
-import { FormSchemaContext } from "../contexts/formSchemaContext";
-import InputField from "./InputField/InputField";
-import EditSchema from "./EditSchema/EditSchema";
+import { useContext } from "react";
+import { FormSchemaContext } from "../../contexts/formSchemaContext";
+import InputCard from "./InputCard";
 
 const LivePreview = () => {
-    const [editMode, setEditMode] = useState(false);
     const { formSchema } = useContext(FormSchemaContext);
 
     return (
@@ -17,14 +15,10 @@ const LivePreview = () => {
                 ? <div className="flex h-full w-full items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center text-2xl font-semibold text-slate-600">Select an input type from the left panel</div>
                 : formSchema.map((schema, index) => {
                     return (
-                        <div key={index} className="rounded-xl border border-slate-200 bg-slate-100 p-5 shadow-sm">
-                            {editMode
-                                ? <EditSchema schema={schema} index={index} setEditMode={setEditMode} />
-                                : <InputField schema={schema} index={index} setEditMode={setEditMode} />
-                            }
-                        </div>
-                    )
-                })}
+                        <InputCard key={index} schema={schema} index={index} />
+                    ) 
+                })
+            }
         </form>
     );
 };

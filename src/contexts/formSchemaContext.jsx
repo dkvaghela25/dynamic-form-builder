@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 
 export const FormSchemaContext = createContext();
 
-export const SchemaProvider = ({ children }) => {
+export const FormSchemaProvider = ({ children }) => {
     const [formSchema, setFormSchema] = useState([]);
 
     const value = {

@@ -14,7 +14,7 @@ const Icon = ({ icon, onClick }) => {
         edit: <FaEdit />,
         delete: <MdDelete />
     }
-
+    
     return (
         <button className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white cursor-pointer ${getDynamicStyles()}`} onClick={onClick}>
             {icons[icon]}

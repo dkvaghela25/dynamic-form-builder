@@ -1,22 +1,26 @@
 import { useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FaEye } from "react-icons/fa";
-import { FormSchemaContext } from "../../contexts/formSchemaContext";
-import { validateForm } from "../../utils/validateForm";
-import Icon from "../ui/Icon";
-import TextInput from "./TextInput";
+import { FormSchemaContext } from "../../../contexts/formSchemaContext";
+import Icon from "../../ui/Icon";
+import { validateForm } from "../../../utils/validateForm";
+import { useCurrentSchemaContext } from "../InputCard";
+import TextField from "./TextField";
 
-const InputField = ({ schema, setEditMode, index }) => {
+const Preview = () => {
+
+    const { schema, setEditMode, index } = useCurrentSchemaContext();
 
     const { control, unregister } = useFormContext();
     const { setFormSchema } = useContext(FormSchemaContext);
 
-    const deleteSchema = () => {
+    const deleteSchema = (e) => {
+        e.preventDefault();
         unregister(schema.name)
         setFormSchema(prev => prev.filter((currElem, currIndex) => currIndex !== index));
     }
 
-    const editSchema = () => {
+    const editSchema = (e) => {
+        e.preventDefault();
         setEditMode(true);
     }
 
@@ -37,8 +41,7 @@ const InputField = ({ schema, setEditMode, index }) => {
                             <span>{schema.label || "Untitled field"}</span>
                             {schema.validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
-                        <TextInput field={field} schema={schema} error={error} index={index} />
-                        {schema.type === "password" && <button className="absolute top-3 right-3"><FaEye className="w-6 h-6" /></button>}
+                        <TextField field={field} schema={schema} error={error} index={index} />
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}
@@ -47,4 +50,4 @@ const InputField = ({ schema, setEditMode, index }) => {
     );
 };
 
-export default InputField;
+export default Preview;

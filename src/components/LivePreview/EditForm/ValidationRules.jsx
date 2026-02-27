@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import Icon from "../ui/Icon";
+import Icon from "../../ui/Icon";
+import { useCurrentSchemaContext } from "../InputCard";
 
 const ValidationRules = ({ validationRules, setFormData }) => {
+    
+    const { schema : { availableRules } } = useCurrentSchemaContext();
 
     const [rule, setRule] = useState("")
     const [value, setValue] = useState(undefined)
     const [error, setError] = useState("")
     const [isEditing, setIsEditing] = useState(false);
-
-    let availableRules = ["min", "max", "minLength", "maxLength", "pattern"];
 
     const getRuleValue = (rule) => {
         return validationRules?.find(currRule => currRule.type === rule)?.value
@@ -25,9 +24,9 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         if (rule === "min" && value > getRuleValue("max")) return setError("min value can not be grater than max");
         if (rule === "maxLength" && value < getRuleValue("minLength")) return setError("maxLength value can not be garter than minLength");
         if (rule === "minLength" && value > getRuleValue("maxLength")) return setError("minLength value can not be less than maxLength");
-
+        
         const existingRule = validationRules.find(currRule => currRule.type === rule);
-
+        
         if (isEditing || existingRule) {
             const updatedRules = validationRules.map(currRule => {
                 if (currRule.type === rule) {
@@ -52,7 +51,8 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
     }
 
-    const editRule = (type) => {
+    const editRule = (e, type) => {
+        e.preventDefault();
         setRule(type)
         setValue(getRuleValue(type));
         setIsEditing(true);
@@ -81,15 +81,16 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         <div className="p-2 text-center">Action</div>
                     </div>
                     {validationRules.map(rule => {
+                        console.log(rule);
                         return (
-                            <div className="grid grid-cols-3 font-semibold" key={rule.type}>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700">{rule.type}</div>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule.value.toString()}</div>
-                                <div className="border-t border-slate-200 p-2 flex gap-5 items-center justify-center">
+                            <div className="grid h-10 grid-cols-3 font-semibold" key={rule.type}>
+                                <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
+                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
+                                <div className="border-t border-slate-200 p-2 gap-5">
                                     {rule.type !== "required" &&
                                         <>
-                                            <Icon icon="edit" onClick={() => editRule(rule.type)} />
-                                            <Icon icon="delete" onClick={() => removeRule(rule.type)} />
+                                            <Icon icon="edit" onClick={(e) => editRule(e, rule.type)} />
+                                            <Icon icon="delete" onClick={(e) => removeRule(e, rule.type)} />
                                         </>
                                     }
                                 </div>
@@ -127,7 +128,7 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                     </select>
 
                     <input
-                        placeholder="Value (First select rule for defining it's value)"
+                        placeholder={`${!rule ? "First select rule for defining it's value" : ""} ${rule === "pattern" ? `e.g., ${String(/^\+?\d{10,15}$/)}` : ""}`}
                         disabled={!rule}
                         name="value"
                         value={value}
