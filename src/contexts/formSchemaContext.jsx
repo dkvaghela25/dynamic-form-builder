@@ -1,23 +1,30 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo } from "react";
 
-export const FormSchemaContext = createContext();
+const FormStateContext = createContext();
+const FormDispatchContext = createContext();
 
 export const FormSchemaProvider = ({ children }) => {
     const [formSchema, setFormSchema] = useState([]);
-
-    const value = {
-        formSchema,
-        setFormSchema
-    }
+    const dispatchValue = useMemo(() => ({ setFormSchema }), []);
 
     return (
-        <FormSchemaContext.Provider value={value}>{children}</FormSchemaContext.Provider>
-    )
+        <FormDispatchContext.Provider value={dispatchValue}>
+            <FormStateContext.Provider value={formSchema}>
+                {children}
+            </FormStateContext.Provider>
+        </FormDispatchContext.Provider>
+    );
+};
 
-}
-
-export const useFormSchemaContext = () => {
-    const context = useContext(FormSchemaContext);
+export const useFormSchema = () => {
+    const context = useContext(FormStateContext);
+    if (context === undefined) throw new Error("useFormSchema must be used within Provider");
     return context;
-}
+};
+
+export const useSetFormSchema = () => {
+    const context = useContext(FormDispatchContext);
+    if (context === undefined) throw new Error("useSetFormSchema must be used within Provider");
+    return context.setFormSchema;
+};

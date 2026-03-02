@@ -1,11 +1,9 @@
-
-import { useContext } from "react";
-import { FormSchemaContext } from "../../contexts/formSchemaContext";
+import { useSetFormSchema } from "../../contexts/formSchemaContext";
 import { availableInputs } from "../../utils/constants";
 
 const AvailableInputs = () => {
 
-    const { setFormSchema } = useContext(FormSchemaContext);;
+    const setFormSchema = useSetFormSchema();
 
     const generateUniqueName = (type) => {
         const timestampPart = new Date().getTime();

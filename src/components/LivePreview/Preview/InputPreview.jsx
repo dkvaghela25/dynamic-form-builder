@@ -1,5 +1,5 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
+import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
 import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
@@ -8,10 +8,10 @@ import TextInput from "./TextInput";
 const InputPreview = () => {
 
     const { schema, setEditMode, index } = useCurrentSchemaContext();
-    const { setFormSchema } = useFormSchemaContext();
     const { control, unregister } = useFormContext();
+   const setFormSchema = useSetFormSchema();
 
-    const finalRules = useCustomRules(schema.label, schema.validationRules);
+   const finalRules = useCustomRules(schema.label, schema.validationRules);
 
     const removeSchema = (e) => {
         e.preventDefault();

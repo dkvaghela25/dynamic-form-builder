@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FormSchemaContext } from "../../../contexts/formSchemaContext";
+import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 import { useCurrentSchemaContext } from "../InputCard";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -9,9 +8,7 @@ const TextInput = ({ field, error }) => {
     const { schema, index } = useCurrentSchemaContext();
 
     const { trigger } = useFormContext();
-    const { setFormSchema } = useContext(FormSchemaContext);
-
-    const [showPassword, setShowPassword] = useState(false);
+    const setFormSchema = useSetFormSchema();
 
     const handleChange = (e) => {
         field.onChange(e);

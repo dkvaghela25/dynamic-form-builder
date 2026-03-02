@@ -1,8 +1,8 @@
-import { useFormSchemaContext } from "../../contexts/formSchemaContext";
+import { useFormSchema } from "../../contexts/formSchemaContext";
 
 const JsonViewer = () => {
 
-    const { formSchema } = useFormSchemaContext();
+    const formSchema = useFormSchema();
 
     return (
         <div className="sticky top-6 w-[22%] h-fit min-h-[88vh] shrink-0 rounded-2xl border border-slate-200 bg-white shadow-sm ">
@@ -16,6 +16,7 @@ const JsonViewer = () => {
             </pre>
         </div>
     );
+    
 };
 
 export default JsonViewer;
