@@ -3,8 +3,7 @@ import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
 import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
-import TextField from "./TextField";
-import Tooltip from "../../ui/ToolTip";
+import TextInput from "./TextInput";
 
 const InputPreview = () => {
 
@@ -23,6 +22,19 @@ const InputPreview = () => {
     const editSchema = (e) => {
         e.preventDefault();
         setEditMode(true);
+    }
+
+    const renderInputComponent = (field,error) => {
+
+        switch(schema.type) {
+            case "text":
+            case "number":
+            case "password":
+            case "email": return <TextInput field={field} error={error} />;
+
+            default: return <div></div>
+        }
+
     }
 
     return (
@@ -45,7 +57,7 @@ const InputPreview = () => {
                             <span>{schema.label || "Untitled field"}</span>
                             {schema.validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
-                        <TextField field={field} schema={schema} error={error} index={index} />
+                        {renderInputComponent(field, error)}
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}

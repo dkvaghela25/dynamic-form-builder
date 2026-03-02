@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { FormSchemaContext } from "../../../contexts/formSchemaContext";
 import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
@@ -43,9 +43,9 @@ const EditSchemaForm = () => {
 
             {Object.entries(formData).map(([key, value]) => {
                 return (
-                    <>
+                    <Fragment key={key}>
                         {!(["type", "validationRules", "availableRules"].includes(key)) &&
-                            <div className="flex flex-col gap-1" key={key}>
+                            <div className="flex flex-col gap-1">
                                 <>
                                     <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
                                     <input
@@ -58,7 +58,7 @@ const EditSchemaForm = () => {
                                 </>
                             </div>
                         }
-                    </>
+                    </Fragment>
                 )
             })}
 

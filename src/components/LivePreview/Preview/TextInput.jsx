@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FormSchemaContext } from "../../../contexts/formSchemaContext";
 import { useCurrentSchemaContext } from "../InputCard";
 
-const TextField = ({ field, error }) => {
+const TextInput = ({ field, error }) => {
 
     const { schema, index } = useCurrentSchemaContext();
 
@@ -45,4 +45,9 @@ const TextField = ({ field, error }) => {
     );
 };
 
-export default TextField;
+export default TextInput;
+
+<>
+
+
+</>
