@@ -122,7 +122,7 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         }}
                     >
                         <option value="">Select Rule</option>
-                        {availableRules.map(rule => {
+                        {availableRules?.map(rule => {
                             return <option key={rule} value={rule}>{rule}</option>
                         })}
                     </select>

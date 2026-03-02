@@ -3,13 +3,13 @@ import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
 import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
-import TextInput from "./TextInput";
+import TextInput from "./InputTypes/TextInput";
 
 const InputPreview = () => {
-
+    
     const { schema, setEditMode, index } = useCurrentSchemaContext();
     const { control, unregister } = useFormContext();
-   const setFormSchema = useSetFormSchema();
+    const setFormSchema = useSetFormSchema();
 
    const finalRules = useCustomRules(schema.label, schema.validationRules);
 
@@ -30,7 +30,8 @@ const InputPreview = () => {
             case "text":
             case "number":
             case "password":
-            case "email": return <TextInput field={field} error={error} />;
+            case "email":
+            case "textarea": return <TextInput field={field} error={error} />;
 
             default: return <div></div>
         }

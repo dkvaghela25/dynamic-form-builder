@@ -15,8 +15,15 @@ const InputCard = ({ schema, index }) => {
 
     const [editMode, setEditMode] = useState(false);
 
+    const value = {
+        schema,
+        index,
+        editMode,
+        setEditMode
+    }
+
     return (
-        <CurrentSchemaContext.Provider value={{schema, index, editMode, setEditMode}}>
+        <CurrentSchemaContext.Provider value={value}>
             <div key={index} className="rounded-xl border border-slate-200 bg-slate-100 p-5 shadow-sm">
                 {editMode
                     ? <EditSchemaForm />

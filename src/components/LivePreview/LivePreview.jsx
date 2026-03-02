@@ -2,6 +2,7 @@ import { useFormSchema } from "../../contexts/formSchemaContext";
 import InputCard from "./InputCard";
 
 const LivePreview = () => {
+
     const formSchema = useFormSchema();
 
     return (

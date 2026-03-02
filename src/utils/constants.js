@@ -54,6 +54,7 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": "",
+        "availableRules": ["min", "max"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
