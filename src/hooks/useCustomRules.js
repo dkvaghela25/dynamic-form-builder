@@ -1,12 +1,11 @@
 import { useMemo } from "react";
 
-export const useValidateForm = (label, rules = []) => {
+const useCustomRules = (label, rules = []) => {
 
     const finalRules = useMemo(() => {
         const finalRules = {};
 
         rules.forEach((rule) => {
-
 
             const { type, value } = rule;
 
@@ -71,3 +70,5 @@ export const useValidateForm = (label, rules = []) => {
     return finalRules;
 
 }
+
+export default useCustomRules;

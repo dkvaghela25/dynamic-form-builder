@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
-import { useValidateForm } from "../../../utils/validateForm";
+import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
 import TextField from "./TextField";
 
@@ -11,7 +11,7 @@ const InputPreview = () => {
     const { setFormSchema } = useFormSchemaContext();
     const { control, unregister } = useFormContext();
 
-    const finalRules = useValidateForm(schema.label, schema.validationRules);
+    const finalRules = useCustomRules(schema.label, schema.validationRules);
 
     const deleteSchema = (e) => {
         e.preventDefault();
