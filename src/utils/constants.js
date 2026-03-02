@@ -23,19 +23,147 @@ export const availableInputs = {
         ]
     },
 
-    password: "Password Input",
-    textarea: "Multi-line Input",
-    email: "Email Input",
-    select: "Dropdown",
-    radio: "Radio Group",
-    checkbox: "Checkbox",
-    switch: "Toggle Switch",
-    date: "Date Picker",
-    datetime: "DateTime Picker",
-    file: "File Upload",
-    multiselect: "Multi Select",
-    range: "Slider",
-    color: "Color Picker",
-}
+    password: {
+        "type": "password",
+        "label": "Password Input",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
 
-export const availableRules = ["min", "max", "minLength", "maxLength", "pattern"];
+    textarea: {
+        "type": "textarea",
+        "label": "Multi-line Input",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    email: {
+        "type": "email",
+        "label": "Email Input",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    select: {
+        "type": "select",
+        "label": "Dropdown",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    radio: {
+        "type": "radio",
+        "label": "Radio Group",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    checkbox: {
+        "type": "checkbox",
+        "label": "Checkbox",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    switch: {
+        "type": "switch",
+        "label": "Toggle Switch",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    date: {
+        "type": "date",
+        "label": "Date Picker",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    datetime: {
+        "type": "datetime",
+        "label": "DateTime Picker",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    file: {
+        "type": "file",
+        "label": "File Upload",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    multiselect: {
+        "type": "multiselect",
+        "label": "Multi Select",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    range: {
+        "type": "range",
+        "label": "Slider",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    color: {
+        "type": "color",
+        "label": "Color Picker",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+}

@@ -81,7 +81,6 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         <div className="p-2 text-center">Action</div>
                     </div>
                     {validationRules.map(rule => {
-                        console.log(rule);
                         return (
                             <div className="grid h-10 grid-cols-3 font-semibold" key={rule.type}>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>

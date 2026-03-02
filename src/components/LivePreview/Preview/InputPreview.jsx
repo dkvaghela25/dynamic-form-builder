@@ -1,17 +1,17 @@
-import { useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FormSchemaContext } from "../../../contexts/formSchemaContext";
+import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
-import { validateForm } from "../../../utils/validateForm";
+import { useValidateForm } from "../../../utils/validateForm";
 import { useCurrentSchemaContext } from "../InputCard";
 import TextField from "./TextField";
 
-const Preview = () => {
+const InputPreview = () => {
 
     const { schema, setEditMode, index } = useCurrentSchemaContext();
-
+    const { setFormSchema } = useFormSchemaContext();
     const { control, unregister } = useFormContext();
-    const { setFormSchema } = useContext(FormSchemaContext);
+
+    const finalRules = useValidateForm(schema.label, schema.validationRules);
 
     const deleteSchema = (e) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ const Preview = () => {
             <Controller
                 control={control}
                 name={schema.name}
-                rules={validateForm(schema.label, schema.validationRules)}
+                rules={finalRules}
                 render={({ field, fieldState: { error } }) => (
                     <div className="relative flex flex-col">
                         <label htmlFor="" className="mb-1 font-medium text-slate-700">
@@ -50,4 +50,4 @@ const Preview = () => {
     );
 };
 
-export default Preview;
+export default InputPreview;

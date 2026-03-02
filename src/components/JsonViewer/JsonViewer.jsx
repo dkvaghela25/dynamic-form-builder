@@ -10,9 +10,6 @@ const JsonViewer = () => {
                 <div className="font-semibold text-slate-800">JSON Viewer</div>
                 <div className="mt-1 text-xs text-slate-500">Configure fields and see your JSON update instantly.</div>
             </div>
-            {/* <div ">
-                {JSON.stringify(formSchema)}
-            </div> */}
 
             <pre className="p-3 pr-0 box-border w-full max-h-[80vh] break-all overflow-x-auto overflow-y-auto">
                 {JSON.stringify(formSchema, null, 1)}

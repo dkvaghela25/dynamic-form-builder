@@ -4,15 +4,13 @@ import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
 import { useCurrentSchemaContext } from "../InputCard";
 
-const EditForm = () => {
+const EditSchemaForm = () => {
 
     const { schema, setEditMode, index } = useCurrentSchemaContext();
 
     const { unregister, setValue } = useFormContext();
     const { setFormSchema } = useContext(FormSchemaContext)
     const [formData, setFormData] = useState(schema)
-
-    console.log(formData);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -72,4 +70,4 @@ const EditForm = () => {
     );
 };
 
-export default EditForm;
+export default EditSchemaForm;

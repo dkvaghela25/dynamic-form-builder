@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
-import EditForm from "./EditForm/EditForm";
-import Preview from "./Preview/Preview";
+import { createContext, lazy, useContext, useState } from "react";
+import InputPreview from "./Preview/InputPreview";
+
+const EditSchemaForm = lazy(() => import("./EditForm/EditSchemaForm"))
 
 const CurrentSchemaContext = createContext();
 
@@ -18,8 +19,8 @@ const InputCard = ({ schema, index }) => {
         <CurrentSchemaContext.Provider value={{schema, index, editMode, setEditMode}}>
             <div key={index} className="rounded-xl border border-slate-200 bg-slate-100 p-5 shadow-sm">
                 {editMode
-                    ? <EditForm />
-                    : <Preview />
+                    ? <EditSchemaForm />
+                    : <InputPreview />
                 }
             </div>
         </CurrentSchemaContext.Provider>
