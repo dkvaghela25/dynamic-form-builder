@@ -18,6 +18,7 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": "",
+        "availableRules": ["min", "max"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -29,17 +30,7 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": "",
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    textarea: {
-        "type": "textarea",
-        "label": "Multi-line Input",
-        "placeholder": "",
-        "name": "",
-        "value": "",
+        "availableRules": ["minLength", "maxLength", "pattern"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -48,6 +39,18 @@ export const availableInputs = {
     email: {
         "type": "email",
         "label": "Email Input",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "availableRules": ["minLength", "maxLength", "pattern"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    textarea: {
+        "type": "textarea",
+        "label": "Multi-line Input",
         "placeholder": "",
         "name": "",
         "value": "",

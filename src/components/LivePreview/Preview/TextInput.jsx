@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormSchemaContext } from "../../../contexts/formSchemaContext";
 import { useCurrentSchemaContext } from "../InputCard";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const TextInput = ({ field, error }) => {
 
@@ -9,6 +10,8 @@ const TextInput = ({ field, error }) => {
 
     const { trigger } = useFormContext();
     const { setFormSchema } = useContext(FormSchemaContext);
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         field.onChange(e);
@@ -34,13 +37,20 @@ const TextInput = ({ field, error }) => {
                 required={schema.validationRules.required}
                 {...field}
                 className={`"w-full rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
-                type={schema.type}
+                type={(schema.type === "password" && showPassword) ? "text" : schema.type}
                 value={schema.value}
                 error={error}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder={schema.placeholder}
             />
+            {schema.type === "password" &&
+                <span className="flex justify-end" onClick={() => setShowPassword(!showPassword)} >
+                    {showPassword ?
+                        <FaEye className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" /> :
+                        <FaEyeSlash className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" />
+                    }
+                </span>}
         </>
     );
 };
