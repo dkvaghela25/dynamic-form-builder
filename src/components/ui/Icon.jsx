@@ -1,7 +1,8 @@
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import Tooltip from "./ToolTip";
 
-const Icon = ({ icon, onClick }) => {
+const Icon = ({ helperText, icon, onClick }) => {
 
     const getDynamicStyles = () => {
         switch (icon) {
@@ -14,11 +15,13 @@ const Icon = ({ icon, onClick }) => {
         edit: <FaEdit />,
         delete: <MdDelete />
     }
-    
+
     return (
-        <button className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white cursor-pointer ${getDynamicStyles()}`} onClick={onClick}>
-            {icons[icon]}
-        </button>
+        <Tooltip helperText={helperText}>
+            <button className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white cursor-pointer ${getDynamicStyles()}`} onClick={onClick}>
+                {icons[icon]}
+            </button>
+        </Tooltip>
     );
 };
 

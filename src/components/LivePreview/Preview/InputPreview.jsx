@@ -4,6 +4,7 @@ import Icon from "../../ui/Icon";
 import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
 import TextField from "./TextField";
+import Tooltip from "../../ui/ToolTip";
 
 const InputPreview = () => {
 
@@ -13,7 +14,7 @@ const InputPreview = () => {
 
     const finalRules = useCustomRules(schema.label, schema.validationRules);
 
-    const deleteSchema = (e) => {
+    const removeSchema = (e) => {
         e.preventDefault();
         unregister(schema.name)
         setFormSchema(prev => prev.filter((currElem, currIndex) => currIndex !== index));
@@ -26,9 +27,12 @@ const InputPreview = () => {
 
     return (
         <div className="flex flex-col">
-            <div className="mb-2 flex justify-end gap-2">
-                <Icon icon="edit" onClick={editSchema} />
-                <Icon icon="delete" onClick={deleteSchema} />
+            <div className="mb-2 flex justify-between gap-2 border-b border-b-slate-300 pb-3">
+                <div className="font-medium text-[18px] text-slate-700">Input Type : {schema.type}</div>
+                <div className="flex gap-2">
+                    <Icon icon="edit" helperText="Edit Schema" onClick={editSchema} />
+                    <Icon icon="delete" helperText="Remove Schema" onClick={removeSchema} />
+                </div>
             </div>
 
             <Controller

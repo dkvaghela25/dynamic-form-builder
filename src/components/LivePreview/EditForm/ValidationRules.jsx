@@ -46,7 +46,8 @@ const ValidationRules = ({ validationRules, setFormData }) => {
         setIsEditing(false)
     }
 
-    const removeRule = (type) => {
+    const removeRule = (e, type) => {
+        e.preventDefault();
         const updatedRules = validationRules.filter(rule => rule.type !== type)
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
     }
@@ -84,12 +85,12 @@ const ValidationRules = ({ validationRules, setFormData }) => {
                         return (
                             <div className="grid h-10 grid-cols-3 font-semibold" key={rule.type}>
                                 <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
-                                <div className="border-t border-slate-200 p-2 gap-5">
+                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700 justify-center">{rule?.value?.toString()}</div>
+                                <div className="border-t border-slate-200 gap-5 flex justify-center items-center">
                                     {rule.type !== "required" &&
                                         <>
-                                            <Icon icon="edit" onClick={(e) => editRule(e, rule.type)} />
-                                            <Icon icon="delete" onClick={(e) => removeRule(e, rule.type)} />
+                                            <Icon helperText="Edit Rule" icon="edit" onClick={(e) => editRule(e, rule.type)} />
+                                            <Icon helperText="Remove Rule" icon="delete" onClick={(e) => removeRule(e, rule.type)} />
                                         </>
                                     }
                                 </div>

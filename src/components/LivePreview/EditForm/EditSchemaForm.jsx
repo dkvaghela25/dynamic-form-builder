@@ -43,20 +43,22 @@ const EditSchemaForm = () => {
 
             {Object.entries(formData).map(([key, value]) => {
                 return (
-                    <div className="flex flex-col gap-1" key={key}>
-                        {(key !== "type" && key !== "validationRules") &&
-                            <>
-                                <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
-                                <input
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                                    type="text"
-                                    name={key}
-                                    value={value}
-                                    onChange={handleChange}
-                                />
-                            </>
+                    <>
+                        {!(["type", "validationRules", "availableRules"].includes(key)) &&
+                            <div className="flex flex-col gap-1" key={key}>
+                                <>
+                                    <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
+                                    <input
+                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                                        type="text"
+                                        name={key}
+                                        value={value}
+                                        onChange={handleChange}
+                                    />
+                                </>
+                            </div>
                         }
-                    </div>
+                    </>
                 )
             })}
 
