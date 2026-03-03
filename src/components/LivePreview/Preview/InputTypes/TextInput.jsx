@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { useFormSchemaContext } from "../../../../contexts/formSchemaContext";
+import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
 import { useCurrentSchemaContext } from "../../InputCard";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
@@ -13,7 +13,7 @@ const TextInput = ({ field, error }) => {
     const { type, placeholder, name, value, validationRules } = schema;
 
     const { trigger } = useFormContext();
-    const { setFormSchema } = useFormSchemaContext();
+     const setFormSchema = useSetFormSchema();
 
     const handleChange = (e) => {
         field.onChange(e);

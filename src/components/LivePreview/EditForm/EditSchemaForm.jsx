@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
 import { useCurrentSchemaContext } from "../InputCard";
-import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
+import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 
 const EditSchemaForm = () => {
 
@@ -10,7 +10,7 @@ const EditSchemaForm = () => {
 
     const { unregister, setValue } = useFormContext();
     const [formData, setFormData] = useState(schema)
-    const { setFormSchema } = useFormSchemaContext();
+    const setFormSchema = useSetFormSchema();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,7 +23,10 @@ const EditSchemaForm = () => {
                     case "number": return ["min", "max"];
                     case "password": return ["minLength", "maxLength", "pattern"];
                     case "email": return ["pattern"];
-                    case "color": return [];
+                    case "color": {
+                        setFormData(prev => { return { ...prev, "value": "#000000" } })
+                        return []
+                    };
                 }
             })();
 
