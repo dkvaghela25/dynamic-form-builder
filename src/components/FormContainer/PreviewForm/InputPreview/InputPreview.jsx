@@ -2,8 +2,8 @@ import { Controller, useFormContext } from "react-hook-form";
 import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
 import Icon from "../../../ui/Icon";
 import useCustomRules from "../../../../hooks/useCustomRules";
-import TextInput from "../../InputTypes/TextInput";
 import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
+import { renderInputComponent } from "../../../../utils/renderInputComponent";
 
 const InputPreview = () => {
 
@@ -22,21 +22,6 @@ const InputPreview = () => {
     const editSchema = (e) => {
         e.preventDefault();
         setEditMode(true);
-    }
-
-    const renderInputComponent = (field, error) => {
-
-        switch (schema.type) {
-            case "text":
-            case "number":
-            case "password":
-            case "email":
-            case "color":
-            case "textarea": return <TextInput field={field} error={error} />;
-
-            default: return <div></div>
-        }
-
     }
 
     return (
@@ -59,7 +44,7 @@ const InputPreview = () => {
                             <span>{schema.label || "Untitled field"}</span>
                             {schema.validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
-                        {renderInputComponent(field, error)}
+                        {renderInputComponent(field, error, schema.type)}
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}
