@@ -1,17 +1,17 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { useSetFormSchema } from "../../../contexts/formSchemaContext";
+import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
 import Icon from "../../ui/Icon";
 import useCustomRules from "../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../InputCard";
 import TextInput from "./InputTypes/TextInput";
 
 const InputPreview = () => {
-    
+
     const { schema, setEditMode, index } = useCurrentSchemaContext();
     const { control, unregister } = useFormContext();
-    const setFormSchema = useSetFormSchema();
+    const { setFormSchema } = useFormSchemaContext();
 
-   const finalRules = useCustomRules(schema.label, schema.validationRules);
+    const finalRules = useCustomRules(schema.label, schema.validationRules);
 
     const removeSchema = (e) => {
         e.preventDefault();
@@ -24,9 +24,9 @@ const InputPreview = () => {
         setEditMode(true);
     }
 
-    const renderInputComponent = (field,error) => {
+    const renderInputComponent = (field, error) => {
 
-        switch(schema.type) {
+        switch (schema.type) {
             case "text":
             case "number":
             case "password":

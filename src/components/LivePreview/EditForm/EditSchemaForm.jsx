@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
 import { useCurrentSchemaContext } from "../InputCard";
-import { useSetFormSchema } from "../../../contexts/formSchemaContext";
+import { useFormSchemaContext } from "../../../contexts/formSchemaContext";
 
 const EditSchemaForm = () => {
 
@@ -10,7 +10,7 @@ const EditSchemaForm = () => {
 
     const { unregister, setValue } = useFormContext();
     const [formData, setFormData] = useState(schema)
-    const setFormSchema = useSetFormSchema();
+    const { setFormSchema } = useFormSchemaContext();
 
     const handleChange = (e) => {
         const { name, value } = e.target;

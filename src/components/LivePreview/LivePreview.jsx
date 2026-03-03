@@ -1,9 +1,9 @@
-import { useFormSchema } from "../../contexts/formSchemaContext";
+import { useFormSchemaContext } from "../../contexts/formSchemaContext";
 import InputCard from "./InputCard";
 
 const LivePreview = () => {
 
-    const formSchema = useFormSchema();
+    const { formSchema } = useFormSchemaContext();
 
     return (
         <form className="ml-auto flex w-full flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
