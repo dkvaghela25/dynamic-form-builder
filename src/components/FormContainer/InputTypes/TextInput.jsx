@@ -1,19 +1,19 @@
 import { useFormContext } from "react-hook-form";
-import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
-import { useCurrentSchemaContext } from "../../InputCard";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import { useSetFormSchema } from "../../../contexts/formSchemaContext";
+import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 
 const TextInput = ({ field, error }) => {
 
     const [showPassword, setShowPassword] = useState(false)
 
-    const { schema , index } = useCurrentSchemaContext();
+    const { schema, index } = useCurrentSchemaContext();
 
     const { type, placeholder, name, value, validationRules } = schema;
 
     const { trigger } = useFormContext();
-     const setFormSchema = useSetFormSchema();
+    const setFormSchema = useSetFormSchema();
 
     const handleChange = (e) => {
         field.onChange(e);

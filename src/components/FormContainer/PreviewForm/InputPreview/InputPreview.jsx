@@ -1,9 +1,9 @@
 import { Controller, useFormContext } from "react-hook-form";
-import { useSetFormSchema } from "../../../contexts/formSchemaContext";
-import Icon from "../../ui/Icon";
-import useCustomRules from "../../../hooks/useCustomRules";
-import { useCurrentSchemaContext } from "../InputCard";
-import TextInput from "./InputTypes/TextInput";
+import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
+import Icon from "../../../ui/Icon";
+import useCustomRules from "../../../../hooks/useCustomRules";
+import TextInput from "../../InputTypes/TextInput";
+import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 
 const InputPreview = () => {
 

@@ -1,15 +1,8 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, lazy, useContext, useState } from "react";
-import InputPreview from "./Preview/InputPreview";
+import { lazy, useState } from "react";
+import InputPreview from "./InputPreview";
+import { CurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 
-const EditSchemaForm = lazy(() => import("./EditForm/EditSchemaForm"))
-
-const CurrentSchemaContext = createContext();
-
-export const useCurrentSchemaContext = () => {
-    const context = useContext(CurrentSchemaContext);
-    return context
-}
+const EditSchemaForm = lazy(() => import("../EditForm/EditSchemaForm"))
 
 const InputCard = ({ schema, index }) => {
 

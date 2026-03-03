@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
-import { useCurrentSchemaContext } from "../InputCard";
-import { useSetFormSchema } from "../../../contexts/formSchemaContext";
+import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
+import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
 
 const EditSchemaForm = () => {
 

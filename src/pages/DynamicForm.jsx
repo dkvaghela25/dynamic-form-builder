@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
 import AvailableInputs from "../components/AvailableInputs/AvailableInputs";
-import LivePreview from "../components/LivePreview/LivePreview";
 import JsonViewer from "../components/JsonViewer/JsonViewer";
 import { DevTool } from "@hookform/devtools";
+import FormContainer from "../components/FormContainer/FormContainer";
 
 const DynamicForm = () => {
 
@@ -15,7 +15,7 @@ const DynamicForm = () => {
             <AvailableInputs />
 
             <FormProvider {...methods}>
-                <LivePreview />
+                <FormContainer />
             </FormProvider>
 
             <JsonViewer />
