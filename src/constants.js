@@ -12,42 +12,6 @@ export const availableInputs = {
         ]
     },
 
-    // number: {
-    //     "type": "number",
-    //     "label": "Number Input",
-    //     "placeholder": "",
-    //     "name": "",
-    //     "value": "",
-    //     "availableRules": ["min", "max"],
-    //     "validationRules": [
-    //         { "type": "required", "value": false }
-    //     ]
-    // },
-
-    // password: {
-    //     "type": "password",
-    //     "label": "Password Input",
-    //     "placeholder": "",
-    //     "name": "",
-    //     "value": "",
-    //     "availableRules": ["minLength", "maxLength", "pattern"],
-    //     "validationRules": [
-    //         { "type": "required", "value": false }
-    //     ]
-    // },
-
-    // email: {
-    //     "type": "email",
-    //     "label": "Email Input",
-    //     "placeholder": "",
-    //     "name": "",
-    //     "value": "",
-    //     "availableRules": ["minLength", "maxLength", "pattern"],
-    //     "validationRules": [
-    //         { "type": "required", "value": false }
-    //     ]
-    // },
-
     textarea: {
         "type": "textarea",
         "label": "Multi-line Input",

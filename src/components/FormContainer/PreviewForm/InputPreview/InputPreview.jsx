@@ -26,8 +26,8 @@ const InputPreview = () => {
 
     return (
         <div className="flex flex-col">
-            <div className="mb-2 flex justify-between gap-2 border-b border-b-slate-300 pb-3">
-                <div className="font-medium text-[18px] text-slate-700">Input Type : {schema.type}</div>
+            <div className="mb-2 flex justify-between items-center gap-2 border-b border-b-slate-300 pb-3">
+                <div className="font-medium text-[18px] text-slate-700 h-fit">Input Type : {schema.type}</div>
                 <div className="flex gap-2">
                     <Icon icon="edit" helperText="Edit Schema" onClick={editSchema} />
                     <Icon icon="delete" helperText="Remove Schema" onClick={removeSchema} />

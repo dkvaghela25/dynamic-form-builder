@@ -64,7 +64,7 @@ const EditSchemaForm = () => {
     return (
         <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
 
-            <div className="flex flex-col gap-1">
+            { ["text","number","password","color"].includes(formData.type) && <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Input Type</label>
                 <select
                     className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
@@ -78,7 +78,7 @@ const EditSchemaForm = () => {
                     <option value="email">email</option>
                     <option value="color">color</option>
                 </select>
-            </div>
+            </div>}
 
 
             {Object.entries(formData).map(([key, value]) => {

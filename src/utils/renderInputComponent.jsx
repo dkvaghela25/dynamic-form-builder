@@ -1,3 +1,4 @@
+import MultiLineInput from "../components/FormContainer/InputTypes/MultiLineInput";
 import TextInput from "../components/FormContainer/InputTypes/TextInput";
 
 export const renderInputComponent = (field, error, type) => {
@@ -7,8 +8,8 @@ export const renderInputComponent = (field, error, type) => {
         case "number":
         case "password":
         case "email":
-        case "color":
-        case "textarea": return <TextInput field={field} error={error} />;
+        case "color": return <TextInput field={field} error={error} />;
+        case "textarea": return <MultiLineInput field={field} error={error} />;
 
         default: return <div></div>
     }
