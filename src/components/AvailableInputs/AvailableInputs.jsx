@@ -1,5 +1,5 @@
 import { useFormSchemaContext } from "../../contexts/formSchemaContext";
-import { availableInputs } from "../../utils/constants";
+import { availableInputs } from "../../constants";
 
 const AvailableInputs = () => {
 

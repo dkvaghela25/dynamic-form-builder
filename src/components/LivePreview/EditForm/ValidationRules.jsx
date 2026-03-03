@@ -1,11 +1,8 @@
 import { useState } from "react";
 import Icon from "../../ui/Icon";
-import { useCurrentSchemaContext } from "../InputCard";
 
-const ValidationRules = ({ validationRules, setFormData }) => {
+const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
     
-    const { schema : { availableRules } } = useCurrentSchemaContext();
-
     const [rule, setRule] = useState("")
     const [value, setValue] = useState(undefined)
     const [error, setError] = useState("")

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import AppLayout from "./components/layout/AppLayout";
+import AppLayout from "./layout/AppLayout";
 import DynamicForm from "./pages/DynamicForm";
 
 const App = () => {

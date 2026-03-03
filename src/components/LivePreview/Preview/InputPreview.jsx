@@ -31,6 +31,7 @@ const InputPreview = () => {
             case "number":
             case "password":
             case "email":
+            case "color":
             case "textarea": return <TextInput field={field} error={error} />;
 
             default: return <div></div>

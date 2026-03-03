@@ -8,10 +8,12 @@ const TextInput = ({ field, error }) => {
 
     const [showPassword, setShowPassword] = useState(false)
 
-    const { schema, index } = useCurrentSchemaContext();
+    const { schema , index } = useCurrentSchemaContext();
+
+    const { type, placeholder, name, value, validationRules } = schema;
 
     const { trigger } = useFormContext();
-    const { setFormSchema} = useFormSchemaContext();
+    const { setFormSchema } = useFormSchemaContext();
 
     const handleChange = (e) => {
         field.onChange(e);
@@ -28,45 +30,30 @@ const TextInput = ({ field, error }) => {
 
     const handleBlur = (e) => {
         field.onBlur(e);
-        trigger(schema.name);
+        trigger(name);
     }
 
     return (
         <>
-            {schema.type === "textarea"
-                ? <textarea
-                    required={schema.validationRules.required}
-                    {...field}
-                    className={`"w-full h-25 rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
-                    value={schema.value}
-                    error={error}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder={schema.placeholder}
-                ></textarea>
-                : <>
-                    <input
-                        required={schema.validationRules.required}
-                        {...field}
-                        className={`"w-full rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
-                        type={(schema.type === "password" && showPassword) ? "text" : schema.type}
-                        value={schema.value}
-                        error={error}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        placeholder={schema.placeholder}
-                    />
-                    {schema.type === "password" &&
-                        <span className="flex justify-end" onClick={() => setShowPassword(!showPassword)} >
-                            {showPassword ?
-                                <FaEye className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" /> :
-                                <FaEyeSlash className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" />
-                            }
-                        </span>
+            <input
+                required={validationRules.required}
+                {...field}
+                className={`w-full ${type === "color" ? "h-12 p-1! cursor-pointer rounded-sm!" : ""} rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white px-3 py-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
+                type={(type === "password" && showPassword) ? "text" : type}
+                value={value}
+                error={error}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder={placeholder}
+            />
+            {type === "password" &&
+                <span className="flex justify-end" onClick={() => setShowPassword(!showPassword)} >
+                    {showPassword ?
+                        <FaEye className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" /> :
+                        <FaEyeSlash className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" />
                     }
-                </>
+                </span>
             }
-
         </>
     );
 };

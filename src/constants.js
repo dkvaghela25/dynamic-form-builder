@@ -1,6 +1,6 @@
 export const availableInputs = {
 
-    text: {
+    textInput: {
         "type": "text",
         "label": "Text Input",
         "placeholder": "",
@@ -12,41 +12,41 @@ export const availableInputs = {
         ]
     },
 
-    number: {
-        "type": "number",
-        "label": "Number Input",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "availableRules": ["min", "max"],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
+    // number: {
+    //     "type": "number",
+    //     "label": "Number Input",
+    //     "placeholder": "",
+    //     "name": "",
+    //     "value": "",
+    //     "availableRules": ["min", "max"],
+    //     "validationRules": [
+    //         { "type": "required", "value": false }
+    //     ]
+    // },
 
-    password: {
-        "type": "password",
-        "label": "Password Input",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "availableRules": ["minLength", "maxLength", "pattern"],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
+    // password: {
+    //     "type": "password",
+    //     "label": "Password Input",
+    //     "placeholder": "",
+    //     "name": "",
+    //     "value": "",
+    //     "availableRules": ["minLength", "maxLength", "pattern"],
+    //     "validationRules": [
+    //         { "type": "required", "value": false }
+    //     ]
+    // },
 
-    email: {
-        "type": "email",
-        "label": "Email Input",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "availableRules": ["minLength", "maxLength", "pattern"],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
+    // email: {
+    //     "type": "email",
+    //     "label": "Email Input",
+    //     "placeholder": "",
+    //     "name": "",
+    //     "value": "",
+    //     "availableRules": ["minLength", "maxLength", "pattern"],
+    //     "validationRules": [
+    //         { "type": "required", "value": false }
+    //     ]
+    // },
 
     textarea: {
         "type": "textarea",
@@ -159,15 +159,15 @@ export const availableInputs = {
         ]
     },
 
-    color: {
-        "type": "color",
-        "label": "Color Picker",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
+    // color: {
+    //     "type": "color",
+    //     "label": "Color Picker",
+    //     "placeholder": "",
+    //     "name": "",
+    //     "value": "",
+    //     "validationRules": [
+    //         { "type": "required", "value": false }
+    //     ]
+    // },
 
 }
