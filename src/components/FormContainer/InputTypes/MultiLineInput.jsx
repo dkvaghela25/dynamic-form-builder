@@ -1,31 +1,8 @@
-import { useFormContext } from "react-hook-form";
 import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
-import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 
-const MultiLineInput = ({ field, error }) => {
+const MultiLineInput = ({ field, error, handleChange }) => {
 
-    const { schema, index } = useCurrentSchemaContext();
-    const setFormSchema = useSetFormSchema();
-
-    const { trigger } = useFormContext();
-
-    const handleChange = (e) => {
-        field.onChange(e);
-        setFormSchema(prev => {
-            return prev.map((currElem, currIndex) => {
-                if (currIndex === index) {
-                    return { ...currElem, value: e.target.value }
-                } else {
-                    return currElem;
-                }
-            })
-        })
-    }
-
-    const handleBlur = (e) => {
-        field.onBlur(e);
-        trigger(schema.name);
-    }
+    const { schema } = useCurrentSchemaContext();
 
     return (
         <textarea
@@ -35,7 +12,6 @@ const MultiLineInput = ({ field, error }) => {
             value={schema.value}
             error={error}
             onChange={handleChange}
-            onBlur={handleBlur}
             placeholder={schema.placeholder}
         ></textarea>
     );

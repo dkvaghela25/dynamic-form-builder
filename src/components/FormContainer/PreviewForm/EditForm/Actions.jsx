@@ -1,15 +1,11 @@
 import { memo } from "react";
 import Icon from "../../../ui/Icon";
 
-const Actions = ({ type, editRule, removeRule }) => {
+const Actions = ({ text, index, handleEdit, handleDelete }) => {
     return (
-        <div className="flex justify-center items-center border-t border-slate-200 gap-5">
-            {type !== "required" &&
-                <>
-                    <Icon helperText="Edit Rule" icon="edit" onClick={(e) => editRule(e, type)} />
-                    <Icon helperText="Remove Rule" icon="delete" onClick={(e) => removeRule(e, type)} />
-                </>
-            }
+        <div className="flex justify-center items-center border-t border-slate-200 gap-5 p-1">
+            <Icon helperText={`Edit ${text}`} icon="edit" onClick={(e) => handleEdit(e, index)} />
+            <Icon helperText={`Remove ${text}`} icon="delete" onClick={(e) => handleDelete(e, index)} />
         </div>
     );
 };

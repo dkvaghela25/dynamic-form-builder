@@ -25,5 +25,5 @@ export const useFormSchema = () => {
 export const useSetFormSchema = () => {
     const context = useContext(FormDispatchContext);
     if (context === undefined) throw new Error("useSetFormSchema must be used within Provider");
-    return context.setFormSchema;
+    return context;
 };

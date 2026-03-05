@@ -45,7 +45,7 @@ const InputPreview = () => {
                             <span>{label || "Untitled field"}</span>
                             {validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
-                        {renderInputComponent(field, error, type)}
+                        {renderInputComponent(field, error, index, type, setFormSchema)}
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}

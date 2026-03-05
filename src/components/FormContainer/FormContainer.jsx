@@ -13,6 +13,7 @@ const FormContainer = ({ editMode }) => {
     const formSchema = useFormSchema();
 
     const methods = useForm({
+        mode: "onBlur",
         defaultValues: {}
     });
 

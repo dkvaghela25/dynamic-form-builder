@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ValidationRules from "./ValidationRules";
+import OptionsEditor from "./OptionsEditor";
 import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
 import { textInputs } from "../../../../constants";
@@ -85,7 +86,7 @@ const EditSchemaForm = () => {
             {Object.entries(formData).map(([key, value]) => {
                 return (
                     <Fragment key={key}>
-                        {!(["type", "validationRules", "availableRules"].includes(key)) &&
+                        {!(["type", "validationRules", "availableRules", "options"].includes(key)) &&
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
                                 <input
@@ -100,6 +101,8 @@ const EditSchemaForm = () => {
                     </Fragment>
                 )
             })}
+
+            { formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
 
             <ValidationRules availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />
 
