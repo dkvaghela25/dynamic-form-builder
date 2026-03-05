@@ -47,7 +47,7 @@ const TextInput = ({ field, error }) => {
                 placeholder={placeholder}
             />
             {type === "password" &&
-                <span className="flex justify-end" onClick={() => setShowPassword(!showPassword)} >
+                <span className="flex justify-end h-0" onClick={() => setShowPassword(!showPassword)} >
                     {showPassword ?
                         <FaEye className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" /> :
                         <FaEyeSlash className="w-6 text-right h-6 relative -top-8.5 right-4 cursor-pointer" />

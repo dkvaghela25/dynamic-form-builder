@@ -123,15 +123,6 @@ export const availableInputs = {
         ]
     },
 
-    // color: {
-    //     "type": "color",
-    //     "label": "Color Picker",
-    //     "placeholder": "",
-    //     "name": "",
-    //     "value": "",
-    //     "validationRules": [
-    //         { "type": "required", "value": false }
-    //     ]
-    // },
-
 }
+
+export const textInputs = ["text", "number", "email", "password", "color"];

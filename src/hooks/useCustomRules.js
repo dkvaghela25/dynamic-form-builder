@@ -53,7 +53,7 @@ const useCustomRules = (label, rules = []) => {
 
                 case 'pattern': {
                     finalRules.pattern = {
-                        value: new RegExp(value),
+                        value: RegExp(value),
                         message: `Invalid ${label}`
                     };
                     break;

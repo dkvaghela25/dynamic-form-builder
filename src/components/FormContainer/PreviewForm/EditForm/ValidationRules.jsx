@@ -80,10 +80,10 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
                     </div>
                     {validationRules.map(rule => {
                         return (
-                            <div className="grid h-10 grid-cols-3 font-semibold" key={rule.type}>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
-                                <div className="border-t border-slate-200 p-2 text-center text-sm text-slate-700 justify-center">{rule?.value?.toString()}</div>
-                                <div className="border-t border-slate-200 gap-5 flex justify-center items-center">
+                            <div className="grid grid-cols-3 font-semibold" key={rule.type}>
+                                <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
+                                <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
+                                <div className="flex justify-center items-center border-t border-slate-200 gap-5">
                                     {rule.type !== "required" &&
                                         <>
                                             <Icon helperText="Edit Rule" icon="edit" onClick={(e) => editRule(e, rule.type)} />
@@ -125,12 +125,12 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
                     </select>
 
                     <input
-                        placeholder={`${!rule ? "First select rule for defining it's value" : ""} ${rule === "pattern" ? `e.g., ${String(/^\+?\d{10,15}$/)}` : ""}`}
+                        placeholder={`${!rule ? "First select rule for defining it's value" : ""} ${rule === "pattern" ? "(e.g , ^\\+?\\d{10,15}$)" : ""}`}
                         disabled={!rule}
                         name="value"
                         value={value}
                         onChange={e =>
-                            setValue(rule !== "pattern" ? Number(e.target.value) : e.target.value)
+                            setValue(rule === "pattern" ? String(e.target.value) : Number(e.target.value))
                         }
                         className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
                         type={rule === "pattern" ? "text" : "number"}
