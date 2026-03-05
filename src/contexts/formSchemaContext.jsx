@@ -1,15 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState } from "react";
 
 const FormStateContext = createContext();
 const FormDispatchContext = createContext();
 
 export const FormSchemaProvider = ({ children }) => {
     const [formSchema, setFormSchema] = useState([]);
-    const dispatchValue = useMemo(() => ({ setFormSchema }), []);
 
     return (
-        <FormDispatchContext.Provider value={dispatchValue}>
+        <FormDispatchContext.Provider value={setFormSchema}>
             <FormStateContext.Provider value={formSchema}>
                 {children}
             </FormStateContext.Provider>

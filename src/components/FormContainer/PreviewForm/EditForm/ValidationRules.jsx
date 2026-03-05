@@ -1,16 +1,16 @@
-import { useState } from "react";
-import Icon from "../../../ui/Icon";
+import { useCallback, useState } from "react";
+import Actions from "./Actions";
 
 const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
-    
+
     const [rule, setRule] = useState("")
     const [value, setValue] = useState(undefined)
     const [error, setError] = useState("")
     const [isEditing, setIsEditing] = useState(false);
 
-    const getRuleValue = (rule) => {
+    const getRuleValue = useCallback((rule) => {
         return validationRules?.find(currRule => currRule.type === rule)?.value
-    }
+    }, [validationRules])
 
     const handleAddRule = (e) => {
         e.preventDefault();
@@ -21,9 +21,9 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         if (rule === "min" && value > getRuleValue("max")) return setError("min value can not be grater than max");
         if (rule === "maxLength" && value < getRuleValue("minLength")) return setError("maxLength value can not be garter than minLength");
         if (rule === "minLength" && value > getRuleValue("maxLength")) return setError("minLength value can not be less than maxLength");
-        
+
         const existingRule = validationRules.find(currRule => currRule.type === rule);
-        
+
         if (isEditing || existingRule) {
             const updatedRules = validationRules.map(currRule => {
                 if (currRule.type === rule) {
@@ -43,19 +43,6 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         setIsEditing(false)
     }
 
-    const removeRule = (e, type) => {
-        e.preventDefault();
-        const updatedRules = validationRules.filter(rule => rule.type !== type)
-        setFormData(prev => { return { ...prev, validationRules: updatedRules } })
-    }
-
-    const editRule = (e, type) => {
-        e.preventDefault();
-        setRule(type)
-        setValue(getRuleValue(type));
-        setIsEditing(true);
-    }
-
     const handleChange = (e) => {
         const updatedRules = validationRules.map(rule => {
             if (rule.type === "required") {
@@ -66,6 +53,19 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         })
         setFormData(prev => { return { ...prev, validationRules: updatedRules } })
     }
+
+    const removeRule = useCallback((e, type) => {
+        e.preventDefault();
+        const updatedRules = validationRules.filter(rule => rule.type !== type)
+        setFormData(prev => { return { ...prev, validationRules: updatedRules } })
+    }, [validationRules, setFormData])
+
+    const editRule = useCallback((e, type) => {
+        e.preventDefault();
+        setRule(type)
+        setValue(getRuleValue(type));
+        setIsEditing(true);
+    }, [getRuleValue])
 
     return (
         <>
@@ -83,14 +83,7 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
                             <div className="grid grid-cols-3 font-semibold" key={rule.type}>
                                 <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
                                 <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
-                                <div className="flex justify-center items-center border-t border-slate-200 gap-5">
-                                    {rule.type !== "required" &&
-                                        <>
-                                            <Icon helperText="Edit Rule" icon="edit" onClick={(e) => editRule(e, rule.type)} />
-                                            <Icon helperText="Remove Rule" icon="delete" onClick={(e) => removeRule(e, rule.type)} />
-                                        </>
-                                    }
-                                </div>
+                                <Actions type={rule.type} editRule={editRule} removeRule={removeRule} />
                             </div>
                         )
                     })}
