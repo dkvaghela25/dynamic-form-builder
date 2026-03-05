@@ -1,50 +1,51 @@
+import { useCallback, useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
-import Icon from "../../../ui/Icon";
 import useCustomRules from "../../../../hooks/useCustomRules";
 import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 import { renderInputComponent } from "../../../../utils/renderInputComponent";
+import Title from "./Title";
 
 const InputPreview = () => {
 
     const { schema, setEditMode, index } = useCurrentSchemaContext();
     const { control, unregister } = useFormContext();
-     const setFormSchema = useSetFormSchema();
+    const setFormSchema = useSetFormSchema();
 
-    const finalRules = useCustomRules(schema.label, schema.validationRules);
+    const { name, type, label, validationRules } = schema;
 
-    const removeSchema = (e) => {
+    const finalRules = useCustomRules(label, validationRules);
+
+    const inputType = useMemo(() => type, [type])
+
+    const removeSchema = useCallback((e) => {
         e.preventDefault();
-        unregister(schema.name)
+        unregister(name)
         setFormSchema(prev => prev.filter((currElem, currIndex) => currIndex !== index));
-    }
+    }, [setFormSchema, unregister, index, name])
 
-    const editSchema = (e) => {
+    const editSchema = useCallback((e) => {
         e.preventDefault();
         setEditMode(true);
-    }
+    }, [setEditMode])
 
     return (
         <div className="flex flex-col">
             <div className="mb-2 flex justify-between items-center gap-2 border-b border-b-slate-300 pb-3">
-                <div className="font-medium text-[18px] text-slate-700 h-fit">Input Type : {schema.type}</div>
-                <div className="flex gap-2">
-                    <Icon icon="edit" helperText="Edit Schema" onClick={editSchema} />
-                    <Icon icon="delete" helperText="Remove Schema" onClick={removeSchema} />
-                </div>
+                <Title type={inputType} editSchema={editSchema} removeSchema={removeSchema} />
             </div>
 
             <Controller
                 control={control}
-                name={schema.name}
+                name={name}
                 rules={finalRules}
                 render={({ field, fieldState: { error } }) => (
                     <div className="relative flex flex-col">
                         <label htmlFor="" className="mb-1 font-medium text-slate-700">
-                            <span>{schema.label || "Untitled field"}</span>
-                            {schema.validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
+                            <span>{label || "Untitled field"}</span>
+                            {validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
-                        {renderInputComponent(field, error, schema.type)}
+                        {renderInputComponent(field, error, type)}
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}

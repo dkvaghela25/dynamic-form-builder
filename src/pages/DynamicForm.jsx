@@ -1,26 +1,13 @@
-import { FormProvider, useForm } from "react-hook-form";
 import AvailableInputs from "../components/AvailableInputs/AvailableInputs";
 import JsonViewer from "../components/JsonViewer/JsonViewer";
-import { DevTool } from "@hookform/devtools";
-import FormContainer from "../components/FormContainer/FormContainer";
+import MainContent from "../components/FormContainer/MainContent";
 
 const DynamicForm = () => {
-
-    const methods = useForm({
-        defaultValues: {}
-    });
-
     return (
         <>
             <AvailableInputs />
-
-            <FormProvider {...methods}>
-                <FormContainer />
-            </FormProvider>
-
+            <MainContent />
             <JsonViewer />
-
-            <DevTool control={methods.control} />
         </>
     );
 };

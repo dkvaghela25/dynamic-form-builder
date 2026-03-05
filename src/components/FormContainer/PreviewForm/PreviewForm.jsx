@@ -1,5 +1,5 @@
 import { useFormSchema } from "../../../contexts/formSchemaContext";
-import InputCard from "./InputPreview/InputCard";
+import InputCard from "./InputCard";
 
 const PreviewForm = () => {
 

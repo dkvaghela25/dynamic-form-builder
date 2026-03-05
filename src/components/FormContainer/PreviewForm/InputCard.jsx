@@ -1,8 +1,8 @@
 import { lazy, useState } from "react";
-import InputPreview from "./InputPreview";
-import { CurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
+import InputPreview from "./InputPreview/InputPreview";
+import { CurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 
-const EditSchemaForm = lazy(() => import("../EditForm/EditSchemaForm"))
+const EditSchemaForm = lazy(() => import("./EditForm/EditSchemaForm"))
 
 const InputCard = ({ schema, index }) => {
 
