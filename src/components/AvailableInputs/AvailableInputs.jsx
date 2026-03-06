@@ -3,7 +3,7 @@ import { availableInputs } from "../../constants";
 
 const AvailableInputs = () => {
 
-     const setFormSchema = useSetFormSchema();
+    const setFormSchema = useSetFormSchema();
 
     const generateUniqueName = (type) => {
         const timestampPart = new Date().getTime();
@@ -12,6 +12,11 @@ const AvailableInputs = () => {
 
     const addInput = (newSchema) => {
         setFormSchema(prev => [...prev, { ...newSchema, name: generateUniqueName(newSchema.type) }])
+        const top = document.documentElement.scrollHeight;
+        window.scrollTo({
+            top,
+            behavior: 'smooth'
+        });
     };
 
     return (

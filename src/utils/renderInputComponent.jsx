@@ -6,6 +6,7 @@ import MultiSelect from "../components/FormContainer/InputTypes/Slider";
 import RadioGroup from "../components/FormContainer/InputTypes/RadioGroup";
 import TextInput from "../components/FormContainer/InputTypes/TextInput";
 import Slider from "../components/FormContainer/InputTypes/Slider";
+import Switch from "../components/FormContainer/InputTypes/Switch";
 
 export const renderInputComponent = (field, error, index, type, setFormSchema) => {
 
@@ -36,6 +37,7 @@ export const renderInputComponent = (field, error, index, type, setFormSchema) =
         case "checkbox": return <CheckboxGroup field={field} error={error} />;
         case "file": return <FileUpload field={field} error={error} />;
         case "range": return <Slider field={field} error={error} handleChange={handleChange} />;
+        case "switch": return <Switch field={field} error={error} handleChange={handleChange} />;
 
         default: return <div></div>
     }
