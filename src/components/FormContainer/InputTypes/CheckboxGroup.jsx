@@ -1,7 +1,7 @@
 import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 
-const CheckBox = ({ field, error }) => {
+const CheckboxGroup = ({ field, error }) => {
 
     const { schema, index } = useCurrentSchemaContext();
     const { value, options } = schema;
@@ -45,4 +45,4 @@ const CheckBox = ({ field, error }) => {
     );
 };
 
-export default CheckBox;
+export default CheckboxGroup;

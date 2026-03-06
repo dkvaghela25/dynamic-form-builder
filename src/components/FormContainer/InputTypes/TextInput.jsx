@@ -34,8 +34,3 @@ const TextInput = ({ field, error, handleChange }) => {
 };
 
 export default TextInput;
-
-<>
-
-
-</>

@@ -57,7 +57,7 @@ export const availableInputs = {
 
     "checkbox": {
         "type": "checkbox",
-        "label": "Checkbox",
+        "label": "Checkbox Group",
         "placeholder": "",
         "name": "",
         "value": [],
@@ -65,17 +65,6 @@ export const availableInputs = {
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
         ],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "switch": {
-        "type": "switch",
-        "label": "Toggle Switch",
-        "placeholder": "",
-        "name": "",
-        "value": "",
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -114,9 +103,20 @@ export const availableInputs = {
         ]
     },
 
-    "multiselect": {
-        "type": "multiselect",
-        "label": "Multi Select",
+    "range": {
+        "type": "range",
+        "label": "Slider",
+        "placeholder": "",
+        "name": "",
+        "value": 20,
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "switch": {
+        "type": "switch",
+        "label": "Toggle Switch",
         "placeholder": "",
         "name": "",
         "value": "",
@@ -125,12 +125,16 @@ export const availableInputs = {
         ]
     },
 
-    "range": {
-        "type": "range",
-        "label": "Slider",
+    "multiselect": {
+        "type": "multiselect",
+        "label": "Multi Select",
         "placeholder": "",
         "name": "",
         "value": "",
+        "options": [
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
+        ],
         "validationRules": [
             { "type": "required", "value": false }
         ]
