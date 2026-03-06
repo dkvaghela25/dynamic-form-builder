@@ -19,8 +19,8 @@ const OptionsEditor = ({ options, setFormData }) => {
   const handleClick = (e) => {
     e.preventDefault();
     
-    const existingOptionLabel = options.find(option => option.label === inputFields.label)
-    const existingOptionValue = options.find(option => option.value === inputFields.value)
+    const existingOptionLabel = options.find((currOption, currIndex) => (currOption.label === inputFields.label && currIndex !== editIndex))
+    const existingOptionValue = options.find((currOption, currIndex) => (currOption.value === inputFields.value && currIndex !== editIndex))
 
     if (existingOptionLabel && existingOptionValue) return setError("Option already exists");
     if (existingOptionLabel) return setError("Option with this label already exists");

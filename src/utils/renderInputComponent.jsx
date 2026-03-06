@@ -1,5 +1,6 @@
 import Dropdown from "../components/FormContainer/InputTypes/Dropdown";
 import MultiLineInput from "../components/FormContainer/InputTypes/MultiLineInput";
+import RadioGroup from "../components/FormContainer/InputTypes/RadioGroup";
 import TextInput from "../components/FormContainer/InputTypes/TextInput";
 
 export const renderInputComponent = (field, error, index, type, setFormSchema) => {
@@ -25,6 +26,7 @@ export const renderInputComponent = (field, error, index, type, setFormSchema) =
         case "color": return <TextInput field={field} error={error} handleChange={handleChange} />;
         case "textarea": return <MultiLineInput field={field} error={error} handleChange={handleChange} />;
         case "select": return <Dropdown field={field} error={error} handleChange={handleChange} />;
+        case "radio": return <RadioGroup field={field} error={error} handleChange={handleChange} />;
 
         default: return <div></div>
     }

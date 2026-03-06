@@ -46,6 +46,10 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": "",
+        "options": [
+            { label: "Option1", value: "Option1" },
+            { label: "Option2", value: "Option2" }
+        ],
         "validationRules": [
             { "type": "required", "value": false }
         ]
