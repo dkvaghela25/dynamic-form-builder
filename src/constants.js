@@ -1,6 +1,6 @@
 export const availableInputs = {
 
-    textInput: {
+    "textInput": {
         "type": "text",
         "label": "Text Input",
         "placeholder": "",
@@ -12,7 +12,7 @@ export const availableInputs = {
         ]
     },
 
-    textarea: {
+    "textarea": {
         "type": "textarea",
         "label": "Multi-line Input",
         "placeholder": "",
@@ -24,15 +24,15 @@ export const availableInputs = {
         ]
     },
 
-    select: {
+    "select": {
         "type": "select",
         "label": "Dropdown",
         "placeholder": "",
         "name": "",
         "value": "",
         "options": [
-            { label: "Option1", value: "Option1" },
-            { label: "Option2", value: "Option2" }
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
         ],
         "availableRules": [],
         "validationRules": [
@@ -40,37 +40,37 @@ export const availableInputs = {
         ]
     },
 
-    radio: {
+    "radio": {
         "type": "radio",
         "label": "Radio Group",
         "placeholder": "",
         "name": "",
         "value": "",
         "options": [
-            { label: "Option1", value: "Option1" },
-            { label: "Option2", value: "Option2" }
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
         ],
         "validationRules": [
             { "type": "required", "value": false }
         ]
     },
 
-    checkbox: {
+    "checkbox": {
         "type": "checkbox",
         "label": "Checkbox",
         "placeholder": "",
         "name": "",
         "value": [],
         "options": [
-            { label: "Option1", value: "Option1" },
-            { label: "Option2", value: "Option2" }
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
         ],
         "validationRules": [
             { "type": "required", "value": false }
         ]
     },
 
-    switch: {
+    "switch": {
         "type": "switch",
         "label": "Toggle Switch",
         "placeholder": "",
@@ -81,7 +81,7 @@ export const availableInputs = {
         ]
     },
 
-    date: {
+    "date": {
         "type": "date",
         "label": "Date Picker",
         "placeholder": "",
@@ -92,8 +92,8 @@ export const availableInputs = {
         ]
     },
 
-    datetime: {
-        "type": "datetime",
+    "datetime-local": {
+        "type": "datetime-local",
         "label": "DateTime Picker",
         "placeholder": "",
         "name": "",
@@ -103,7 +103,7 @@ export const availableInputs = {
         ]
     },
 
-    file: {
+    "file": {
         "type": "file",
         "label": "File Upload",
         "placeholder": "",
@@ -114,7 +114,7 @@ export const availableInputs = {
         ]
     },
 
-    multiselect: {
+    "multiselect": {
         "type": "multiselect",
         "label": "Multi Select",
         "placeholder": "",
@@ -125,7 +125,7 @@ export const availableInputs = {
         ]
     },
 
-    range: {
+    "range": {
         "type": "range",
         "label": "Slider",
         "placeholder": "",
