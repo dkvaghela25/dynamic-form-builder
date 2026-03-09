@@ -1,14 +1,21 @@
-import { useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Icon from "../../ui/Icon";
 import { FaFileImage } from "react-icons/fa";
+import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
+import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 
 const FileUpload = ({ field, error }) => {
 
-    const [uploadedFiles, setUploadedFiles] = useState([]);
+    const setFormData = useSetFormSchema();
+    const { schema, index } = useCurrentSchemaContext();
+    const { value: uploadedFiles } = schema;
 
     const updateUploadedFiles = (files) => {
-        setUploadedFiles(files);
+        setFormData(prev => {
+            return prev.map((currSchema, currIndex) => {
+                return currIndex === index ? { ...currSchema, value: files } : currSchema
+            })
+        })
         field.onChange(files)
     }
 
@@ -16,7 +23,7 @@ const FileUpload = ({ field, error }) => {
         e.preventDefault();
         let { files } = e.target;
         let newFiles = Object.values(files);
-        updateUploadedFiles([ ...uploadedFiles, ...newFiles]);
+        updateUploadedFiles([...uploadedFiles, ...newFiles]);
     }
 
     const handleDragOver = (e) => {
@@ -27,7 +34,7 @@ const FileUpload = ({ field, error }) => {
         e.preventDefault();
         const { files } = e.dataTransfer;
         let newFiles = Object.values(files);
-        updateUploadedFiles([ ...uploadedFiles, ...newFiles]);
+        updateUploadedFiles([...uploadedFiles, ...newFiles]);
     };
 
     const handleRemove = (e, index) => {

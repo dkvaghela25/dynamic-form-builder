@@ -13,7 +13,10 @@ const MultiSelect = ({ field, error }) => {
     const { schema, index } = useCurrentSchemaContext();
 
     const { placeholder, value: selectedOptions, options: availableOptions } = schema;
-    const [filteredOptions, setFilteredOptions] = useState(availableOptions);
+
+    const initialOptions = availableOptions.filter(({ value }) => !(selectedOptions.includes(value)));
+    const [filteredOptions, setFilteredOptions] = useState(initialOptions);
+
 
     const updateValue = (updatedValue) => {
         setFormData(prev => {
@@ -27,8 +30,12 @@ const MultiSelect = ({ field, error }) => {
 
     const handleDisplayOptions = (e) => {
         e.preventDefault();
-        setIsOpen(!isOpen);
-        inputRef.current?.focus();
+        if(!isOpen){
+            setIsOpen(true);
+            inputRef.current?.focus();
+        } else {
+            setIsOpen(false);
+        }
     };
 
     const addOption = (e, value) => {

@@ -4,7 +4,7 @@ import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 const CheckboxGroup = ({ field, error }) => {
 
     const { schema, index } = useCurrentSchemaContext();
-    const { value, options } = schema;
+    const { name, value, options } = schema;
     const setFormData = useSetFormSchema();
 
 
@@ -27,17 +27,19 @@ const CheckboxGroup = ({ field, error }) => {
 
     return (
         <div className={`grid grid-cols-4 p-3 gap-2 w-full rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white text-slate-900 transition`}>
-            {options?.map(({ label, value }) => {
+            {options?.map(option => {
                 return (
-                    <div className="flex gap-3 items-center" key={label}>
+                    <div className="flex gap-3 items-center" key={option.label}>
                         <input
+                            id={`${option.label}-checkbox-id`}
+                            checked={value.includes(option.value)}
                             className="h-4 w-4 accent-indigo-600"
                             type="checkbox"
-                            name={label}
-                            value={value}
+                            name={name}
+                            value={option.value}
                             onChange={handleChange}
                         />
-                        <label className="text-[16px] font-medium text-slate-700">{label}</label>
+                        <label htmlFor={`${option.label}-checkbox-id`} className="text-[16px] font-medium text-slate-700">{option.label}</label>
                     </div>
                 )
             })}

@@ -20,6 +20,7 @@ const Switch = ({ field, error }) => {
     <div className={`flex gap-3 items-center p-3 w-full rounded-xl border ${error ? "border-red-300" : "border-slate-300"} bg-white text-slate-900 transition`}>
       <div className="relative w-10 h-6">
         <input
+          checked={value}
           onChange={handleChange}
           value={value}
           id="switch-component"
