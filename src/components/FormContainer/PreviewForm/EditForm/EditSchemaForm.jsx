@@ -91,7 +91,7 @@ const EditSchemaForm = () => {
                                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
                                 <input
                                     className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                                    type="text"
+                                    type={["step", "min", "max"].includes(key) ? "number" : "text"}
                                     name={key}
                                     value={value}
                                     onChange={handleChange}
@@ -102,7 +102,7 @@ const EditSchemaForm = () => {
                 )
             })}
 
-            { formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
+            {formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
 
             <ValidationRules availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />
 

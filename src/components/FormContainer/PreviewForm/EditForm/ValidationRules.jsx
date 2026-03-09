@@ -22,8 +22,12 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         if (!inputFields.value) return setError("Please Select Value");
         if (inputFields.type === "max" && inputFields.value < getRuleValue("min")) return setError("max value can not be less than min");
         if (inputFields.type === "min" && inputFields.value > getRuleValue("max")) return setError("min value can not be grater than max");
-        if (inputFields.type === "maxLength" && inputFields.value < getRuleValue("minLength")) return setError("maxLength value can not be garter than minLength");
-        if (inputFields.type === "minLength" && inputFields.value > getRuleValue("maxLength")) return setError("minLength value can not be less than maxLength");
+        if (inputFields.type === "maxLength" && inputFields.value < getRuleValue("minLength")) return setError("maxLength value can not be less than minLength");
+        if (inputFields.type === "minLength" && inputFields.value > getRuleValue("maxLength")) return setError("minLength value can not be grater than maxLength");
+        if (inputFields.type === "maxDate" && inputFields.value < getRuleValue("minDate")) return setError("maxDate value can not be less than minDate");
+        if (inputFields.type === "minDate" && inputFields.value > getRuleValue("maxDate")) return setError("minDate value can not be grater than maxDate");
+        if (inputFields.type === "maxDateTime" && inputFields.value < getRuleValue("minDateTime")) return setError("maxDateTime value can not be less than minDateTime");
+        if (inputFields.type === "minDateTime" && inputFields.value > getRuleValue("maxDateTime")) return setError("minDateTime value can not be grater than maxDateTime");
 
         const existingRule = validationRules.find(currRule => currRule.type === inputFields.type);
 
@@ -61,7 +65,6 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         setInputFields(prev => { return { ...prev, [name]: value } })
     }
 
@@ -77,6 +80,22 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         setInputFields(currRule)
         setIsEditing(true);
     }, [validationRules])
+
+    const getInputType = (validationRuleType) => {
+        switch(validationRuleType) {
+            case "min": 
+            case "max": 
+            case "minLength": 
+            case "maxLength":  
+            case "minSelected":  
+            case "maxSelected": return "number" 
+            case "pattern" : return "text"
+            case "minDate" : 
+            case "maxDate" : return "date" 
+            case "minDateTime" : 
+            case "maxDateTime" : return "datetime-local" 
+        }
+    }    
 
     return (
         <>
@@ -133,7 +152,7 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
                         value={inputFields.value}
                         onChange={handleChange}
                         className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
-                        type={inputFields.type === "pattern" ? "text" : "number"}
+                        type={getInputType(inputFields.type)}
                     />
 
                     <button onClick={handleClick} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>

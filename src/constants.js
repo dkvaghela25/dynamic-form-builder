@@ -34,12 +34,11 @@ export const availableInputs = {
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
         ],
-        "availableRules": [],
         "validationRules": [
             { "type": "required", "value": false }
         ]
     },
-
+    
     "radio": {
         "type": "radio",
         "label": "Radio Group",
@@ -50,7 +49,6 @@ export const availableInputs = {
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
         ],
-        "availableRules": [],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -62,22 +60,9 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": [],
-        options: [
-            { label: "Gujarat", value: "gujarat" },
-            { label: "Delhi", value: "delhi" },
-            { label: "Maharashtra", value: "maharashtra" },
-            { label: "Rajasthan", value: "rajasthan" },
-            { label: "Karnataka", value: "karnataka" },
-            { label: "Tamil Nadu", value: "tamil_nadu" },
-            { label: "Kerala", value: "kerala" },
-            { label: "Punjab", value: "punjab" },
-            { label: "Haryana", value: "haryana" },
-            { label: "Uttar Pradesh", value: "uttar_pradesh" },
-            { label: "Madhya Pradesh", value: "madhya_pradesh" },
-            { label: "West Bengal", value: "west_bengal" },
-            { label: "Bihar", value: "bihar" },
-            { label: "Odisha", value: "odisha" },
-            { label: "Telangana", value: "telangana" }
+        "options": [
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
         ],
         "availableRules": ["minSelected", "maxSelected"],
         "validationRules": [
@@ -124,10 +109,11 @@ export const availableInputs = {
     "range": {
         "type": "range",
         "label": "Slider",
-        "placeholder": "",
+        "step" : 1,
+        "min" : 0,
+        "max" : 100,
         "name": "",
         "value": 20,
-        "availableRules": ["min", "max", "step"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -139,7 +125,6 @@ export const availableInputs = {
         "placeholder": "",
         "name": "",
         "value": false,
-        "availableRules": [],
         "validationRules": [
             { "type": "required", "value": false }
         ]

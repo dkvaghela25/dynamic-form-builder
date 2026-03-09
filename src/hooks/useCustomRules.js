@@ -50,6 +50,38 @@ const useCustomRules = (label = "This field", rules = []) => {
                     };
                     break;
                 }
+                
+                case 'minDate': {
+                    finalRules.min = {
+                        value,
+                        message: `${label} date should be after ${new Date(value).toLocaleDateString()}`
+                    };
+                    break;
+                }
+                
+                case 'maxDate': {
+                    finalRules.max = {
+                        value,
+                        message: `${label} date should be before ${new Date(value).toLocaleDateString()}`
+                    };
+                    break;
+                }
+                
+                case 'minDateTime': {
+                    finalRules.min = {
+                        value,
+                        message: `${label} date should be after ${new Date(value).toLocaleString()}`
+                    };
+                    break;
+                }
+                
+                case 'maxDateTime': {
+                    finalRules.max = {
+                        value,
+                        message: `${label} date should be before ${new Date(value).toLocaleString()}`
+                    };
+                    break;
+                }
 
                 case 'minSelected': {
                     finalRules.validate = {
