@@ -50,6 +50,7 @@ export const availableInputs = {
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
         ],
+        "availableRules": [],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -58,76 +59,6 @@ export const availableInputs = {
     "checkbox": {
         "type": "checkbox",
         "label": "Checkbox Group",
-        "placeholder": "",
-        "name": "",
-        "value": [],
-        "options": [
-            { "label": "Option1", "value": "Option1" },
-            { "label": "Option2", "value": "Option2" }
-        ],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "date": {
-        "type": "date",
-        "label": "Date Picker",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "datetime-local": {
-        "type": "datetime-local",
-        "label": "DateTime Picker",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "file": {
-        "type": "file",
-        "label": "File Upload",
-        "placeholder": "",
-        "name": "",
-        "value": "",
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "range": {
-        "type": "range",
-        "label": "Slider",
-        "placeholder": "",
-        "name": "",
-        "value": 20,
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "switch": {
-        "type": "switch",
-        "label": "Toggle Switch",
-        "placeholder": "",
-        "name": "",
-        "value": false,
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
-    "multiselect": {
-        "type": "multiselect",
-        "label": "Multi Select",
         "placeholder": "",
         "name": "",
         "value": [],
@@ -148,6 +79,83 @@ export const availableInputs = {
             { label: "Odisha", value: "odisha" },
             { label: "Telangana", value: "telangana" }
         ],
+        "availableRules": ["minSelected", "maxSelected"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "date": {
+        "type": "date",
+        "label": "Date Picker",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "availableRules": ["minDate", "maxDate"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "datetime-local": {
+        "type": "datetime-local",
+        "label": "DateTime Picker",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "availableRules": ["minDateTime", "maxDateTime"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "file": {
+        "type": "file",
+        "label": "File Upload",
+        "placeholder": "",
+        "name": "",
+        "value": "",
+        "availableRules": ["fileType", "maxSize"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "range": {
+        "type": "range",
+        "label": "Slider",
+        "placeholder": "",
+        "name": "",
+        "value": 20,
+        "availableRules": ["min", "max", "step"],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "switch": {
+        "type": "switch",
+        "label": "Toggle Switch",
+        "placeholder": "",
+        "name": "",
+        "value": false,
+        "availableRules": [],
+        "validationRules": [
+            { "type": "required", "value": false }
+        ]
+    },
+
+    "multiselect": {
+        "type": "multiselect",
+        "label": "Multi Select",
+        "placeholder": "",
+        "name": "",
+        "value": [],
+        "options": [
+            { "label": "Option1", "value": "Option1" },
+            { "label": "Option2", "value": "Option2" }
+        ],
+        "availableRules": ["minSelected", "maxSelected"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
