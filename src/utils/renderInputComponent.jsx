@@ -37,7 +37,7 @@ export const renderInputComponent = (field, error, index, type, setFormSchema) =
         case "checkbox": return <CheckboxGroup field={field} error={error} />;
         case "file": return <FileUpload field={field} error={error} />;
         case "range": return <Slider field={field} error={error} handleChange={handleChange} />;
-        case "switch": return <Switch field={field} error={error} handleChange={handleChange} />;
+        case "switch": return <Switch field={field} error={error}/>;
 
         default: return <div></div>
     }

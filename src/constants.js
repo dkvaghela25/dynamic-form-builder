@@ -119,7 +119,7 @@ export const availableInputs = {
         "label": "Toggle Switch",
         "placeholder": "",
         "name": "",
-        "value": "",
+        "value": false,
         "validationRules": [
             { "type": "required", "value": false }
         ]
