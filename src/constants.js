@@ -130,10 +130,23 @@ export const availableInputs = {
         "label": "Multi Select",
         "placeholder": "",
         "name": "",
-        "value": "",
-        "options": [
-            { "label": "Option1", "value": "Option1" },
-            { "label": "Option2", "value": "Option2" }
+        "value": [],
+        options: [
+            { label: "Gujarat", value: "gujarat" },
+            { label: "Delhi", value: "delhi" },
+            { label: "Maharashtra", value: "maharashtra" },
+            { label: "Rajasthan", value: "rajasthan" },
+            { label: "Karnataka", value: "karnataka" },
+            { label: "Tamil Nadu", value: "tamil_nadu" },
+            { label: "Kerala", value: "kerala" },
+            { label: "Punjab", value: "punjab" },
+            { label: "Haryana", value: "haryana" },
+            { label: "Uttar Pradesh", value: "uttar_pradesh" },
+            { label: "Madhya Pradesh", value: "madhya_pradesh" },
+            { label: "West Bengal", value: "west_bengal" },
+            { label: "Bihar", value: "bihar" },
+            { label: "Odisha", value: "odisha" },
+            { label: "Telangana", value: "telangana" }
         ],
         "validationRules": [
             { "type": "required", "value": false }

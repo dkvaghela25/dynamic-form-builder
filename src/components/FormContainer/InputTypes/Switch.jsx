@@ -21,7 +21,7 @@ const Switch = ({ field, error }) => {
       <div className="relative w-10 h-6">
         <input
           onChange={handleChange}
-          checked={value}
+          value={value}
           id="switch-component"
           type="checkbox"
           className="peer appearance-none p-1 w-full h-full bg-slate-300 rounded-full checked:bg-indigo-600 cursor-pointer transition-colors duration-300"

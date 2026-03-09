@@ -2,11 +2,11 @@ import CheckboxGroup from "../components/FormContainer/InputTypes/CheckboxGroup"
 import Dropdown from "../components/FormContainer/InputTypes/Dropdown";
 import FileUpload from "../components/FormContainer/InputTypes/FileUpload";
 import MultiLineInput from "../components/FormContainer/InputTypes/MultiLineInput";
-import MultiSelect from "../components/FormContainer/InputTypes/Slider";
 import RadioGroup from "../components/FormContainer/InputTypes/RadioGroup";
 import TextInput from "../components/FormContainer/InputTypes/TextInput";
 import Slider from "../components/FormContainer/InputTypes/Slider";
 import Switch from "../components/FormContainer/InputTypes/Switch";
+import MultiSelect from "../components/FormContainer/InputTypes/MultiSelect";
 
 export const renderInputComponent = (field, error, index, type, setFormSchema) => {
 
@@ -38,6 +38,7 @@ export const renderInputComponent = (field, error, index, type, setFormSchema) =
         case "file": return <FileUpload field={field} error={error} />;
         case "range": return <Slider field={field} error={error} handleChange={handleChange} />;
         case "switch": return <Switch field={field} error={error}/>;
+        case "multiselect": return <MultiSelect field={field} error={error}/>;
 
         default: return <div></div>
     }
