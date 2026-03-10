@@ -31,7 +31,7 @@ const InputField = ({ schema, index }) => {
                     <div className="relative flex flex-col">
                         <label htmlFor="" className="mb-1 font-medium text-slate-700">
                             <span>{label || "Untitled field"}</span>
-                            {validationRules.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
+                            {validationRules?.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
                         {renderInputComponent(field, error, index, type, setFormSchema)}
                         {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
