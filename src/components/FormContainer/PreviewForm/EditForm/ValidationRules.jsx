@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import Actions from "./Actions";
+import Select from "../../../ui/Select";
 
 const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
 
@@ -28,6 +29,8 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         if (inputFields.type === "minDate" && inputFields.value > getRuleValue("maxDate")) return setError("minDate value can not be grater than maxDate");
         if (inputFields.type === "maxDateTime" && inputFields.value < getRuleValue("minDateTime")) return setError("maxDateTime value can not be less than minDateTime");
         if (inputFields.type === "minDateTime" && inputFields.value > getRuleValue("maxDateTime")) return setError("minDateTime value can not be grater than maxDateTime");
+        if (inputFields.type === "maxFiles" && inputFields.value < getRuleValue("minFiles")) return setError("maxFiles value can not be less than minFiles");
+        if (inputFields.type === "minFiles" && inputFields.value > getRuleValue("maxFiles")) return setError("minFiles value can not be grater than maxFiles");
 
         const existingRule = validationRules.find(currRule => currRule.type === inputFields.type);
 
@@ -82,20 +85,23 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
     }, [validationRules])
 
     const getInputType = (validationRuleType) => {
-        switch(validationRuleType) {
-            case "min": 
-            case "max": 
-            case "minLength": 
-            case "maxLength":  
-            case "minSelected":  
-            case "maxSelected": return "number" 
-            case "pattern" : return "text"
-            case "minDate" : 
-            case "maxDate" : return "date" 
-            case "minDateTime" : 
-            case "maxDateTime" : return "datetime-local" 
+        switch (validationRuleType) {
+            case "pattern": return "text"
+            case "minDate":
+            case "maxDate": return "date"
+            case "minDateTime":
+            case "maxDateTime": return "datetime-local"
+            default: return "number"
         }
-    }    
+    }
+
+    const getPlaceholder = (validationRuleType) => {
+        switch (validationRuleType) {
+            case "": return "First select rule for defining it's value"
+            case "pattern": return "(e.g , ^\\+?\\d{10,15}$)"
+            case "maxSize": return "Enter file size in KB"
+        }
+    }
 
     return (
         <>
@@ -121,32 +127,29 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
 
                 <div className="flex items-center gap-3 rounded-lg bg-white p-3">
                     <input
+                        id="required-checkbox"
                         value="required"
                         type="checkbox"
                         className="h-4 w-4 accent-indigo-600"
                         checked={getRuleValue("required")}
                         onChange={handleChecked}
                     />
-                    <label htmlFor="" className="text-sm font-medium text-slate-700">Required</label>
+                    <label htmlFor="required-checkbox" className="text-sm font-medium text-slate-700">Required</label>
                 </div>
 
                 {(availableRules?.length !== 0) && <div className="mt-1 grid grid-cols-1 gap-3 md:grid-cols-[3fr_3fr_1fr] md:gap-4">
 
-                    <select
-                        disabled={isEditing}
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                    <Select
+                        multiple={false}
                         name="type"
                         value={inputFields.type}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select Rule</option>
-                        {availableRules?.map(rule => {
-                            return <option key={rule} value={rule}>{rule}</option>
-                        })}
-                    </select>
+                        placeholder="Select Rule"
+                        options={availableRules}
+                        handleChange={handleChange}
+                    />
 
                     <input
-                        placeholder={`${!inputFields.type ? "First select rule for defining it's value" : ""} ${inputFields.type === "pattern" ? "(e.g , ^\\+?\\d{10,15}$)" : ""}`}
+                        placeholder={getPlaceholder(inputFields.type)}
                         disabled={!inputFields.type}
                         name="value"
                         value={inputFields.value}

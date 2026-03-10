@@ -1,14 +1,11 @@
 import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
+import { getRuleValue } from "../../../utils/getRuleValue";
 
 const DatePicker = ({ field, error, handleChange }) => {
 
     const { schema } = useCurrentSchemaContext();
 
     const { type, placeholder, value, validationRules } = schema;
-
-    const getRuleValue = (ruleType) => {
-        return validationRules.find(rule => rule.type === ruleType)?.value
-    }
 
     return (
         <>
@@ -21,8 +18,8 @@ const DatePicker = ({ field, error, handleChange }) => {
                 error={error}
                 onChange={handleChange}
                 placeholder={placeholder}
-                min={getRuleValue(type === "date" ? "minDate" : "minDateTime")}
-                max={getRuleValue(type === "date" ? "maxDate" : "maxDateTime")}
+                min={getRuleValue(validationRules, type === "date" ? "minDate" : "minDateTime")}
+                max={getRuleValue(validationRules, type === "date" ? "maxDate" : "maxDateTime")}
             />
         </>
     );

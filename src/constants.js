@@ -38,7 +38,7 @@ export const availableInputs = {
             { "type": "required", "value": false }
         ]
     },
-    
+
     "radio": {
         "type": "radio",
         "label": "Radio Group",
@@ -97,10 +97,10 @@ export const availableInputs = {
     "file": {
         "type": "file",
         "label": "File Upload",
-        "placeholder": "",
+        "accept": [],
         "name": "",
         "value": "",
-        "availableRules": ["fileType", "maxSize"],
+        "availableRules": ["maxSize", "minFiles", "maxFiles"],
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -109,9 +109,9 @@ export const availableInputs = {
     "range": {
         "type": "range",
         "label": "Slider",
-        "step" : 1,
-        "min" : 0,
-        "max" : 100,
+        "step": 1,
+        "min": 0,
+        "max": 100,
         "name": "",
         "value": 20,
         "validationRules": [
@@ -149,3 +149,22 @@ export const availableInputs = {
 }
 
 export const textInputs = ["text", "number", "email", "password", "color"];
+
+export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept"];
+
+export const fileTypes = [
+    { label: "All", value: "" },
+    { label: "All Images", value: ".png,.jpg,.jpeg,.gif,.bmp,.webp,.svg,.ico,.tif,.tiff,.heic,.heif,.avif" },
+    { label: "All Videos", value: ".mp4,.webm,.ogg,.avi,.mov,.wmv,.flv,.mkv,.m4v,.3gp,.3g2,.mpeg,.mpg" },
+    { label: "All Audio", value: ".mp3,.wav,.ogg,.aac,.m4a,.flac,.wma,.aiff,.alac,.amr,.opus" },
+    { label: "All Documents", value: ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt" },
+    { label: "PDF Document (.pdf)", value: ".pdf" },
+    { label: "Word Document (.doc, .docx)", value: ".doc,.docx" },
+    { label: "Excel Spreadsheet (.xls, .xlsx)", value: ".xls,.xlsx" },
+    { label: "CSV File (.csv)", value: ".csv" },
+    { label: "PowerPoint (.ppt, .pptx)", value: ".ppt,.pptx" },
+    { label: "Text File (.txt)", value: ".txt" },
+    { label: "JSON File (.json)", value: ".json" },
+    { label: "ZIP Archive (.zip)", value: ".zip" },
+    { label: "RAR Archive (.rar)", value: ".rar" }
+]

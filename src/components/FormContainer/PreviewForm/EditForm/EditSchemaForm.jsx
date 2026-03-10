@@ -4,7 +4,8 @@ import ValidationRules from "./ValidationRules";
 import OptionsEditor from "./OptionsEditor";
 import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
-import { textInputs } from "../../../../constants";
+import { fileTypes, hiddenAttributes, textInputs } from "../../../../constants";
+import Select from "../../../ui/Select";
 
 const EditSchemaForm = () => {
 
@@ -37,6 +38,14 @@ const EditSchemaForm = () => {
 
         setFormData(prev => { return { ...prev, [name]: value } })
     }
+
+
+    const fileSelectChange = (e) => {
+        // Extract all selected values from the event target options
+        const value = Array.from(e.target.selectedOptions, (option) => option.value);
+        setFormData(prev => { return { ...prev, "accept": value } })
+    };
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -86,7 +95,7 @@ const EditSchemaForm = () => {
             {Object.entries(formData).map(([key, value]) => {
                 return (
                     <Fragment key={key}>
-                        {!(["type", "validationRules", "availableRules", "options"].includes(key)) &&
+                        {!(hiddenAttributes.includes(key)) &&
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
                                 <input
@@ -101,6 +110,18 @@ const EditSchemaForm = () => {
                     </Fragment>
                 )
             })}
+
+            <div className="flex flex-col gap-1">
+                <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Accept</label>
+                <Select
+                    name="accept"
+                    value={formData.accept}
+                    placeholder="Select File Type"
+                    options={fileTypes}
+                    handleChange={fileSelectChange}
+                    multiple={true}
+                />
+            </div>
 
             {formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
 

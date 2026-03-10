@@ -50,7 +50,15 @@ const useCustomRules = (label = "This field", rules = []) => {
                     };
                     break;
                 }
-                
+
+                case 'pattern': {
+                    finalRules.pattern = {
+                        value: RegExp(value),
+                        message: `Invalid ${label}`
+                    };
+                    break;
+                }
+
                 case 'minDate': {
                     finalRules.min = {
                         value,
@@ -58,7 +66,7 @@ const useCustomRules = (label = "This field", rules = []) => {
                     };
                     break;
                 }
-                
+
                 case 'maxDate': {
                     finalRules.max = {
                         value,
@@ -66,7 +74,7 @@ const useCustomRules = (label = "This field", rules = []) => {
                     };
                     break;
                 }
-                
+
                 case 'minDateTime': {
                     finalRules.min = {
                         value,
@@ -74,7 +82,7 @@ const useCustomRules = (label = "This field", rules = []) => {
                     };
                     break;
                 }
-                
+
                 case 'maxDateTime': {
                     finalRules.max = {
                         value,
@@ -101,19 +109,45 @@ const useCustomRules = (label = "This field", rules = []) => {
                     break;
                 }
 
-                case 'pattern': {
-                    finalRules.pattern = {
-                        value: RegExp(value),
-                        message: `Invalid ${label}`
-                    };
+                case 'minFiles': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        minFiles: (inputValue) =>
+                            inputValue.length >= value || `Upload at least ${value} files`
+                    }
+                    break;
+                }
+
+                case 'maxFiles': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        maxFiles: (inputValue) =>
+                            inputValue.length <= value || `More than ${value} files are not allowed`
+                    }
+                    break;
+                }
+
+                case 'maxSize': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        maxSize: (files) => {
+                            const fileArray = Array.from(files);
+                            for (const file of fileArray) {
+                                console.log(file.size);
+                                console.log(value * 1024);
+                                console.log(file.size > (value * 1024));
+                                if (file.size > (value * 1024)) {
+                                    return `Uploaded file ${file.name} exceeds file size limit. Please upload a file smaller than ${value} KB.`
+                                }
+                            }
+                            return true;
+                        }
+                    }
                     break;
                 }
 
             }
         })
-
-        console.log(finalRules);
-
         return finalRules;
     }, [label, rules])
 

@@ -3,12 +3,16 @@ import Icon from "../../ui/Icon";
 import { FaFileImage } from "react-icons/fa";
 import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../contexts/formSchemaContext";
+import { getRuleValue } from "../../../utils/getRuleValue";
 
 const FileUpload = ({ field, error }) => {
 
     const setFormData = useSetFormSchema();
     const { schema, index } = useCurrentSchemaContext();
-    const { value: uploadedFiles } = schema;
+    const { value: uploadedFiles, accept, validationRules } = schema;
+
+    const maxFileSize = getRuleValue(validationRules, "maxSize")
+    const acceptedFileExtensions = accept.flatMap(fileType => fileType.split(","));
 
     const updateUploadedFiles = (files) => {
         setFormData(prev => {
@@ -33,15 +37,24 @@ const FileUpload = ({ field, error }) => {
     const handleDrop = (e) => {
         e.preventDefault();
         const { files } = e.dataTransfer;
-        let newFiles = Object.values(files);
+
+        let newFiles = Object.values(files).filter(({ name }) => {
+            const extension = `.${name.split(".").at(-1)}`
+            return acceptedFileExtensions.includes(extension)
+        });
+
         updateUploadedFiles([...uploadedFiles, ...newFiles]);
     };
 
     const handleRemove = (e, index) => {
         e.preventDefault();
-        console.log(index);
         const filteredFiles = uploadedFiles.filter((currFile, currIndex) => currIndex !== index)
         updateUploadedFiles(filteredFiles);
+    }
+
+    const handleClearAll = (e) => {
+        e.preventDefault();
+        updateUploadedFiles([]);
     }
 
     return (
@@ -55,28 +68,42 @@ const FileUpload = ({ field, error }) => {
                     <div className="flex flex-col gap-2 items-center justify-center text-body pt-5 pb-6">
                         <IoCloudUploadOutline className="w-10 h-10" />
                         <p className="text-[20px]"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p className="text-[14px] w-[70%] flex gap-1 flex-wrap">
+                            {acceptedFileExtensions.map((extension, index) => {
+                                return <span className="" key={index}>{extension.slice(1).toUpperCase()}</span>
+                            })}
+                        </p>
+                        {maxFileSize && <p className="text-[14px]">(MAX. Filesize {maxFileSize} KB)</p>}
                     </div>
-                    <input type="file" multiple className="hidden z-10" onChange={handleChange} />
+                    <input accept={accept} type="file" multiple className="hidden z-10" onChange={handleChange} />
                 </label>
             </div>
             {uploadedFiles?.length !== 0 &&
-                <div className="grid grid-cols-2 gap-2">
-                    {uploadedFiles.map((file, index) => {
-                        return (
-                            <div key={index} className="flex justify-between w-full px-4 py-2 z-10 items-center gap-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
-                                <div className="flex items-center gap-3">
-                                    <FaFileImage />
-                                    <div className="font-semibold border-slate-300">{file.name}</div>
+                <>
+                    <div className="grid grid-cols-2 gap-2">
+                        {uploadedFiles.map((file, index) => {
+                            return (
+                                <div key={index} className="flex justify-between w-full px-4 py-2 z-10 items-center gap-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                                    <div className="flex items-center gap-3">
+                                        <FaFileImage />
+                                        <div className="font-semibold border-slate-300">{file.name}</div>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <div className="font-semibold border-r pr-2 border-slate-300">{Math.ceil(file.size / 1024)} K.B.</div>
+                                        <Icon helperText="Remove File" icon="delete" onClick={(e) => handleRemove(e, index)} />
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <div className="font-semibold border-r pr-2 border-slate-300">{Math.ceil(file.size / 1024)} K.B.</div>
-                                    <Icon helperText="Remove File" icon="delete" onClick={(e) => handleRemove(e, index)} />
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            }
+                            )
+                        })}
+                    </div>
+                    <button
+                        onClick={handleClearAll}
+                        className="w-fit mt-2 m-auto cursor-pointer rounded bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+                    >
+                        Clear All Files
+                    </button>
+                </>}
+
         </div>
     );
 };
