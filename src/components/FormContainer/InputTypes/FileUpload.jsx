@@ -1,6 +1,6 @@
 import { IoCloudUploadOutline } from "react-icons/io5";
 import Icon from "../../ui/Icon";
-import { FaFileImage } from "react-icons/fa";
+import { FaFolder } from "react-icons/fa";
 import { useCurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../contexts/formSchemaContext";
 import { getRuleValue } from "../../../utils/getRuleValue";
@@ -37,12 +37,10 @@ const FileUpload = ({ field, error }) => {
     const handleDrop = (e) => {
         e.preventDefault();
         const { files } = e.dataTransfer;
-
         let newFiles = Object.values(files).filter(({ name }) => {
             const extension = `.${name.split(".").at(-1)}`
-            return acceptedFileExtensions.includes(extension)
+            return acceptedFileExtensions.length !== 0 ? acceptedFileExtensions.includes(extension) : true;
         });
-
         updateUploadedFiles([...uploadedFiles, ...newFiles]);
     };
 
@@ -68,8 +66,8 @@ const FileUpload = ({ field, error }) => {
                     <div className="flex flex-col gap-2 items-center justify-center text-body pt-5 pb-6">
                         <IoCloudUploadOutline className="w-10 h-10" />
                         <p className="text-[20px]"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                        <p className="text-[14px] w-[70%] flex gap-1 flex-wrap">
-                            {acceptedFileExtensions.map((extension, index) => {
+                        <p className="text-[14px] w-[70%] flex gap-1 flex-wrap text-center justify-center">
+                            {acceptedFileExtensions?.map((extension, index) => {
                                 return <span className="" key={index}>{extension.slice(1).toUpperCase()}</span>
                             })}
                         </p>
@@ -85,7 +83,7 @@ const FileUpload = ({ field, error }) => {
                             return (
                                 <div key={index} className="flex justify-between w-full px-4 py-2 z-10 items-center gap-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
                                     <div className="flex items-center gap-3">
-                                        <FaFileImage />
+                                        <FaFolder />
                                         <div className="font-semibold border-slate-300">{file.name}</div>
                                     </div>
                                     <div className="flex items-center gap-3">

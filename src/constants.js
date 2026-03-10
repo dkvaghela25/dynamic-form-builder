@@ -146,7 +146,6 @@ export const textInputs = ["text", "number", "email", "password", "color"];
 export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept", "value"];
 
 export const fileTypes = [
-    { label: "All", value: "" },
     { label: "All Images", value: ".png,.jpg,.jpeg,.gif,.bmp,.webp,.svg,.ico,.tif,.tiff,.heic,.heif,.avif" },
     { label: "All Videos", value: ".mp4,.webm,.ogg,.avi,.mov,.wmv,.flv,.mkv,.m4v,.3gp,.3g2,.mpeg,.mpg" },
     { label: "All Audio", value: ".mp3,.wav,.ogg,.aac,.m4a,.flac,.wma,.aiff,.alac,.amr,.opus" },

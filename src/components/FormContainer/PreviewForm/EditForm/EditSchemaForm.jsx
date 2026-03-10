@@ -47,7 +47,8 @@ const EditSchemaForm = () => {
     }
 
     const fileSelectChange = (e) => {
-        const value = Array.from(e.target.selectedOptions, (option) => option.value);
+        console.log(e.target.selectedOptions);
+        const value = Array.from(e.target.selectedOptions, (option) => option?.value);
         setFormData(prev => { return { ...prev, "accept": value } })
     };
 
