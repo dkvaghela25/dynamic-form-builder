@@ -4,21 +4,28 @@ import ValidationRules from "./ValidationRules";
 import OptionsEditor from "./OptionsEditor";
 import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
 import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
-import { fileTypes, hiddenAttributes, textInputs } from "../../../../constants";
+import { datePickerTypes, fileTypes, hiddenAttributes, textInputs } from "../../../../constants";
 import Select from "../../../ui/Select";
 
 const EditSchemaForm = () => {
 
-    const { schema, setEditMode, index } = useCurrentSchemaContext();
-
-    const { unregister, setValue } = useFormContext();
-    const [formData, setFormData] = useState(schema)
     const setFormSchema = useSetFormSchema();
+    const { schema, setEditMode, index } = useCurrentSchemaContext();
+    const { unregister, setValue } = useFormContext();
+
+    const [formData, setFormData] = useState(schema);
+    const [displayId, setDisplayId] = useState(false);
+
+    const handleToggle = (id) => {
+        displayId !== id ? setDisplayId(id) : setDisplayId(false);
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name === "type") {
+
+            let newValue = "";
 
             const availableRules = (() => {
                 switch (value) {
@@ -26,17 +33,17 @@ const EditSchemaForm = () => {
                     case "number": return ["min", "max"];
                     case "password": return ["minLength", "maxLength", "pattern"];
                     case "email": return ["pattern"];
-                    case "color": {
-                        setFormData(prev => { return { ...prev, "value": "#000000" } })
-                        return []
-                    };
+                    case "color": return [];
+                    case "date": return ["minDate", "maxDate"];
+                    case "datetime-local": return ["minDateTime", "maxDateTime"];
+                    case "date-range": return [];
                 }
             })();
 
             setFormData(prev => {
                 return {
                     ...prev,
-                    value: "",
+                    value: newValue,
                     validationRules: [{ "type": "required", "value": false }],
                     availableRules
                 }
@@ -80,21 +87,36 @@ const EditSchemaForm = () => {
     return (
         <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
 
-            {textInputs.includes(formData.type) && <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Input Type</label>
-                <select
-                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
-                >
-                    <option value="text">text</option>
-                    <option value="number">number</option>
-                    <option value="password">password</option>
-                    <option value="email">email</option>
-                    <option value="color">color</option>
-                </select>
-            </div>}
+
+            {textInputs.includes(formData.type) &&
+                <div className="flex flex-col gap-1">
+                    <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Input Type</label>
+                    <Select
+                        name="type"
+                        value={formData.type}
+                        placeholder="Select Input Type"
+                        options={textInputs}
+                        handleChange={handleChange}
+                        multiple={false}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                    />
+                </div>
+            }
+
+            {datePickerTypes.includes(formData.type) &&
+                <div className="flex flex-col gap-1">
+                    <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Input Type</label>
+                    <Select
+                        name="type"
+                        value={formData.type}
+                        placeholder="Select Input Type"
+                        options={datePickerTypes}
+                        handleChange={handleChange}
+                        multiple={false}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                    />
+                </div>
+            }
 
             {Object.entries(formData).map(([key, value]) => {
                 return (
@@ -141,13 +163,13 @@ const EditSchemaForm = () => {
                 />
             </div>}
 
-            {formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
+            {formData.options && <OptionsEditor displayId={displayId} handleToggle={handleToggle} options={formData.options} setFormData={setFormData} />}
 
-            {formData.validationRules && <ValidationRules availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />}
+            {formData.validationRules && <ValidationRules displayId={displayId} handleToggle={handleToggle} availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />}
 
             <div className="ml-auto mt-2 flex gap-3">
-                <button className="cursor-pointer rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onClick={() => setEditMode(false)}>Cancel</button>
-                <button className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700" onClick={handleFormSubmit}>Edit Schema</button>
+                <button className="cursor-pointer rounded-sm border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onClick={() => setEditMode(false)}>Cancel</button>
+                <button className="cursor-pointer rounded-sm bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700" onClick={handleFormSubmit}>Edit Schema</button>
             </div>
         </div>
     );

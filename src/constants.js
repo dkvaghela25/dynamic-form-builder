@@ -79,17 +79,6 @@ export const availableInputs = {
         ]
     },
 
-    "datetime-local": {
-        "type": "datetime-local",
-        "label": "DateTime Picker",
-        "name": "",
-        "value": "",
-        "availableRules": ["minDateTime", "maxDateTime"],
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
-    },
-
     "file": {
         "type": "file",
         "label": "File Upload",
@@ -142,6 +131,8 @@ export const availableInputs = {
 }
 
 export const textInputs = ["text", "number", "email", "password", "color"];
+
+export const datePickerTypes = ["date", "datetime-local", "date-range"];
 
 export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept", "value"];
 

@@ -8,6 +8,7 @@ import Slider from "../components/FormContainer/InputTypes/Slider";
 import Switch from "../components/FormContainer/InputTypes/Switch";
 import MultiSelect from "../components/FormContainer/InputTypes/MultiSelect";
 import DatePicker from "../components/FormContainer/InputTypes/DatePicker";
+import DatePickerRange from "../components/FormContainer/InputTypes/DatePickerRange";
 
 export const renderInputComponent = (field, error, index, type, setFormSchema) => {
 
@@ -37,6 +38,7 @@ export const renderInputComponent = (field, error, index, type, setFormSchema) =
         case "file": return <FileUpload field={field} error={error} />;
         case "date":
         case "datetime-local": return <DatePicker field={field} error={error} handleChange={handleChange} />;
+        case "date-range": return <DatePickerRange field={field} error={error} handleChange={handleChange} />;
         case "range": return <Slider field={field} error={error} handleChange={handleChange} />;
         case "switch": return <Switch field={field} error={error} />;
         case "multiselect": return <MultiSelect field={field} error={error} />;

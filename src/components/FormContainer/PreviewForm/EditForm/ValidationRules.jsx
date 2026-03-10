@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 import Actions from "./Actions";
 import Select from "../../../ui/Select";
+import { GoChevronDown, GoChevronUp } from "react-icons/go";
 
-const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
+const ValidationRules = ({ displayId, availableRules, validationRules, setFormData, handleToggle }) => {
 
     const [inputFields, setInputFields] = useState({
         type: "",
@@ -131,65 +132,73 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
     }
 
     return (
-        <>
-            <div className="mt-1 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
-                <div className="text-base font-semibold text-slate-800">Validation Rules</div>
-
-                <div className="rounded-lg border border-slate-200 bg-white">
-                    <div className="grid grid-cols-3 bg-slate-100 text-xs font-extrabold uppercase tracking-wide text-slate-600">
-                        <div className="p-2 text-center">Rule</div>
-                        <div className="p-2 text-center">Value</div>
-                        <div className="p-2 text-center">Action</div>
-                    </div>
-                    {validationRules?.map((rule, index) => {
-                        return (
-                            <div className="grid grid-cols-3 font-semibold" key={index}>
-                                <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
-                                <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
-                                {rule.type !== "required" && <Actions text="Rule" index={index} handleEdit={handleEdit} handleDelete={handleDelete} />}
-                            </div>
-                        )
-                    })}
-                </div>
-
-                <div className="flex items-center gap-3 rounded-lg bg-white p-3">
-                    <input
-                        id="required-checkbox"
-                        value="required"
-                        type="checkbox"
-                        className="h-4 w-4 accent-indigo-600"
-                        checked={getRuleValue("required")}
-                        onChange={handleChecked}
-                    />
-                    <label htmlFor="required-checkbox" className="text-sm font-medium text-slate-700">Required</label>
-                </div>
-
-                {(availableRules?.length !== 0) && <div className="mt-1 grid grid-cols-1 gap-3 md:grid-cols-[3fr_3fr_1fr] md:gap-4">
-
-                    <Select
-                        multiple={false}
-                        name="type"
-                        value={inputFields.type}
-                        placeholder="Select Rule"
-                        options={availableRules}
-                        handleChange={handleChange}
-                    />
-
-                    <input
-                        placeholder={getPlaceholder(inputFields.type)}
-                        disabled={!inputFields.type}
-                        name="value"
-                        value={inputFields.value}
-                        onChange={handleChange}
-                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
-                        type={getInputType(inputFields.type)}
-                    />
-
-                    <button onClick={handleClick} className="cursor-pointer rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>
-                </div>}
-                {error && <p className="text-sm pl-3 text-red-500 -mt-2"> * {error}</p>}
+        <div className="mt-1 flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+            <div onClick={() => handleToggle("validation-rules")} className="text-base cursor-pointer flex items-center justify-between font-semibold text-slate-800">
+                <span>Validation Rules</span>
+                {displayId === "validation-rules" ? <GoChevronUp className="w-7 h-7" /> : <GoChevronDown className="w-7 h-7" />}
             </div>
-        </>
+
+
+            {displayId === "validation-rules" &&
+                <>
+                    <hr className="border-slate-300" />
+
+                    <div className="rounded-lg border border-slate-200 bg-white">
+                        <div className="grid grid-cols-3 bg-slate-100 text-xs font-extrabold uppercase tracking-wide text-slate-600">
+                            <div className="p-2 text-center">Rule</div>
+                            <div className="p-2 text-center">Value</div>
+                            <div className="p-2 text-center">Action</div>
+                        </div>
+                        {validationRules?.map((rule, index) => {
+                            return (
+                                <div className="grid grid-cols-3 font-semibold" key={index}>
+                                    <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
+                                    <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
+                                    {rule.type !== "required" && <Actions text="Rule" index={index} handleEdit={handleEdit} handleDelete={handleDelete} />}
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                    <div className="flex items-center gap-3 rounded-lg bg-white p-3">
+                        <input
+                            id="required-checkbox"
+                            value="required"
+                            type="checkbox"
+                            className="h-4 w-4 accent-indigo-600"
+                            checked={getRuleValue("required")}
+                            onChange={handleChecked}
+                        />
+                        <label htmlFor="required-checkbox" className="text-sm font-medium text-slate-700">Required</label>
+                    </div>
+
+                    {availableRules && <div className="mt-1 grid grid-cols-1 gap-3 md:grid-cols-[3fr_3fr_0.8fr]">
+
+                        <Select
+                            multiple={false}
+                            name="type"
+                            value={inputFields.type}
+                            placeholder="Select Rule"
+                            options={availableRules}
+                            handleChange={handleChange}
+                        />
+
+                        <input
+                            placeholder={getPlaceholder(inputFields.type)}
+                            disabled={!inputFields.type}
+                            name="value"
+                            value={inputFields.value}
+                            onChange={handleChange}
+                            className="w-full px-2 py-1.5 rounded-lg border border-slate-300 bg-white text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                            type={getInputType(inputFields.type)}
+                        />
+
+                        <button onClick={handleClick} className="cursor-pointer rounded-sm bg-indigo-600 text-[13px] font-semibold text-white transition hover:bg-indigo-700"> {isEditing ? "Edit" : "Add"}</button>
+                    </div>}
+                    {error && <p className="text-sm pl-3 text-red-500 -mt-2"> * {error}</p>}
+                </>
+            }
+        </div>
     )
 }
 
