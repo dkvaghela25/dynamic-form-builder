@@ -33,19 +33,23 @@ const EditSchemaForm = () => {
                 }
             })();
 
-            setFormData(prev => { return { ...prev, availableRules } })
+            setFormData(prev => {
+                return {
+                    ...prev,
+                    value: "",
+                    validationRules: [{ "type": "required", "value": false }],
+                    availableRules
+                }
+            })
         }
 
         setFormData(prev => { return { ...prev, [name]: value } })
     }
 
-
     const fileSelectChange = (e) => {
-        // Extract all selected values from the event target options
         const value = Array.from(e.target.selectedOptions, (option) => option.value);
         setFormData(prev => { return { ...prev, "accept": value } })
     };
-
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -91,11 +95,10 @@ const EditSchemaForm = () => {
                 </select>
             </div>}
 
-
             {Object.entries(formData).map(([key, value]) => {
                 return (
                     <Fragment key={key}>
-                        {!(hiddenAttributes.includes(key)) &&
+                        {!hiddenAttributes.includes(key) &&
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">{key}</label>
                                 <input
@@ -111,7 +114,21 @@ const EditSchemaForm = () => {
                 )
             })}
 
-            <div className="flex flex-col gap-1">
+            {(!formData.options && !(["file", "switch"].includes(formData.type))) && <div className="flex flex-col gap-1">
+                <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Value</label>
+                <div className="flex items-center gap-3">
+                    <input
+                        className={`w-full ${formData.type === "range" ? "my-2 p-0!" : ""} ${formData.type === "color" ? "h-12 p-0.5! rounded!" : ""} rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
+                        type={formData.type !== "password" ? formData.type : "text"}
+                        name={"value"}
+                        value={formData.value}
+                        onChange={handleChange}
+                    />
+                    {formData.type === "range" && <span className="text-[20px] font-semibold">{formData.value}</span>}
+                </div>
+            </div>}
+
+            {formData.type === "file" && <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Accept</label>
                 <Select
                     name="accept"
@@ -121,11 +138,11 @@ const EditSchemaForm = () => {
                     handleChange={fileSelectChange}
                     multiple={true}
                 />
-            </div>
+            </div>}
 
             {formData.options && <OptionsEditor options={formData.options} setFormData={setFormData} />}
 
-            <ValidationRules availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />
+            {formData.validationRules && <ValidationRules availableRules={formData.availableRules} validationRules={formData.validationRules} setFormData={setFormData} />}
 
             <div className="ml-auto mt-2 flex gap-3">
                 <button className="cursor-pointer rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onClick={() => setEditMode(false)}>Cancel</button>

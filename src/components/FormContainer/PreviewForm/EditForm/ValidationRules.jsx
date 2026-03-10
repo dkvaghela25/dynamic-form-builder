@@ -16,21 +16,48 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
         return validationRules?.find(currRule => currRule.type === rule)?.value
     }, [validationRules])
 
+    const validateRules = () => {
+
+        const validationMap = {
+            "max": "min",
+            "min": "max",
+            "maxLength": "minLength",
+            "minLength": "maxLength",
+            "maxDate": "minDate",
+            "minDate": "maxDate",
+            "maxDateTime": "minDateTime",
+            "minDateTime": "maxDateTime",
+            "maxFiles": "minFiles",
+            "minFiles": "maxFiles",
+        }
+
+        const { type, value } = inputFields;
+
+        let message = "";
+
+        if (!type) message = "Please Select Rule"
+        if (!value) message = "Please Select Value"
+
+        message = (type.startsWith("min") && !type.includes("Date"))
+            ? Number(value) > Number(getRuleValue(validationMap[type]))
+                ? `${type} value can not be grater than ${validationMap[type]}` : ""
+            : Number(value) < Number(getRuleValue(validationMap[type]))
+                ? `${type} value can not be less than ${validationMap[type]}` : ""
+
+        message = (type.startsWith("min") && type.includes("Date"))
+            ? value > getRuleValue(validationMap[type])
+                ? `${type} value can not be grater than ${validationMap[type]}` : ""
+            : value < getRuleValue(validationMap[type])
+                ? `${type} value can not be less than ${validationMap[type]}` : ""
+
+        return message;
+    }
+
     const handleClick = (e) => {
         e.preventDefault();
 
-        if (!inputFields.type) return setError("Please Select Rule");
-        if (!inputFields.value) return setError("Please Select Value");
-        if (inputFields.type === "max" && inputFields.value < getRuleValue("min")) return setError("max value can not be less than min");
-        if (inputFields.type === "min" && inputFields.value > getRuleValue("max")) return setError("min value can not be grater than max");
-        if (inputFields.type === "maxLength" && inputFields.value < getRuleValue("minLength")) return setError("maxLength value can not be less than minLength");
-        if (inputFields.type === "minLength" && inputFields.value > getRuleValue("maxLength")) return setError("minLength value can not be grater than maxLength");
-        if (inputFields.type === "maxDate" && inputFields.value < getRuleValue("minDate")) return setError("maxDate value can not be less than minDate");
-        if (inputFields.type === "minDate" && inputFields.value > getRuleValue("maxDate")) return setError("minDate value can not be grater than maxDate");
-        if (inputFields.type === "maxDateTime" && inputFields.value < getRuleValue("minDateTime")) return setError("maxDateTime value can not be less than minDateTime");
-        if (inputFields.type === "minDateTime" && inputFields.value > getRuleValue("maxDateTime")) return setError("minDateTime value can not be grater than maxDateTime");
-        if (inputFields.type === "maxFiles" && inputFields.value < getRuleValue("minFiles")) return setError("maxFiles value can not be less than minFiles");
-        if (inputFields.type === "minFiles" && inputFields.value > getRuleValue("maxFiles")) return setError("minFiles value can not be grater than maxFiles");
+        const validationErrorMessage = validateRules();
+        if (validationErrorMessage) return setError(validationErrorMessage);
 
         const existingRule = validationRules.find(currRule => currRule.type === inputFields.type);
 
@@ -114,7 +141,7 @@ const ValidationRules = ({ availableRules, validationRules, setFormData }) => {
                         <div className="p-2 text-center">Value</div>
                         <div className="p-2 text-center">Action</div>
                     </div>
-                    {validationRules.map((rule, index) => {
+                    {validationRules?.map((rule, index) => {
                         return (
                             <div className="grid grid-cols-3 font-semibold" key={index}>
                                 <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>

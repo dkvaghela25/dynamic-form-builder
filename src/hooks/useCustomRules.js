@@ -133,9 +133,6 @@ const useCustomRules = (label = "This field", rules = []) => {
                         maxSize: (files) => {
                             const fileArray = Array.from(files);
                             for (const file of fileArray) {
-                                console.log(file.size);
-                                console.log(value * 1024);
-                                console.log(file.size > (value * 1024));
                                 if (file.size > (value * 1024)) {
                                     return `Uploaded file ${file.name} exceeds file size limit. Please upload a file smaller than ${value} KB.`
                                 }
@@ -148,6 +145,7 @@ const useCustomRules = (label = "This field", rules = []) => {
 
             }
         })
+        console.log("Rules changed ...................................",finalRules);
         return finalRules;
     }, [label, rules])
 

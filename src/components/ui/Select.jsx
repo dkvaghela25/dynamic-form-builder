@@ -12,7 +12,7 @@ const Select = ({ name, value, multiple, placeholder, options, handleChange }) =
                 className={`w-full pr-10 appearance-none rounded-xl border ${((value.length === 0)) ? "text-slate-300" : "text-slate-900"} bg-white px-3 py-2.5 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
             >
                 <option className="text-slate-900" disabled hidden value="">{placeholder}</option>
-                {options.map((option, index) => {
+                {options?.map((option, index) => {
                     return <option className="text-slate-900" key={index} value={option?.value || option}>{option?.label || option}</option>
                 })}
             </select>

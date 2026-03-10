@@ -3,9 +3,9 @@ export const availableInputs = {
     "textInput": {
         "type": "text",
         "label": "Text Input",
-        "placeholder": "",
         "name": "",
         "value": "",
+        "placeholder": "",
         "availableRules": ["minLength", "maxLength", "pattern"],
         "validationRules": [
             { "type": "required", "value": false },
@@ -15,9 +15,9 @@ export const availableInputs = {
     "textarea": {
         "type": "textarea",
         "label": "Multi-line Input",
-        "placeholder": "",
         "name": "",
         "value": "",
+        "placeholder": "",
         "availableRules": ["minLength", "maxLength"],
         "validationRules": [
             { "type": "required", "value": false }
@@ -27,9 +27,9 @@ export const availableInputs = {
     "select": {
         "type": "select",
         "label": "Dropdown",
-        "placeholder": "",
         "name": "",
         "value": "",
+        "placeholder": "",
         "options": [
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
@@ -42,7 +42,6 @@ export const availableInputs = {
     "radio": {
         "type": "radio",
         "label": "Radio Group",
-        "placeholder": "",
         "name": "",
         "value": "",
         "options": [
@@ -57,7 +56,6 @@ export const availableInputs = {
     "checkbox": {
         "type": "checkbox",
         "label": "Checkbox Group",
-        "placeholder": "",
         "name": "",
         "value": [],
         "options": [
@@ -73,7 +71,6 @@ export const availableInputs = {
     "date": {
         "type": "date",
         "label": "Date Picker",
-        "placeholder": "",
         "name": "",
         "value": "",
         "availableRules": ["minDate", "maxDate"],
@@ -85,7 +82,6 @@ export const availableInputs = {
     "datetime-local": {
         "type": "datetime-local",
         "label": "DateTime Picker",
-        "placeholder": "",
         "name": "",
         "value": "",
         "availableRules": ["minDateTime", "maxDateTime"],
@@ -97,9 +93,9 @@ export const availableInputs = {
     "file": {
         "type": "file",
         "label": "File Upload",
-        "accept": [],
         "name": "",
         "value": "",
+        "accept": [],
         "availableRules": ["maxSize", "minFiles", "maxFiles"],
         "validationRules": [
             { "type": "required", "value": false }
@@ -109,11 +105,11 @@ export const availableInputs = {
     "range": {
         "type": "range",
         "label": "Slider",
+        "name": "",
+        "value": 20,
         "step": 1,
         "min": 0,
         "max": 100,
-        "name": "",
-        "value": 20,
         "validationRules": [
             { "type": "required", "value": false }
         ]
@@ -122,20 +118,17 @@ export const availableInputs = {
     "switch": {
         "type": "switch",
         "label": "Toggle Switch",
-        "placeholder": "",
         "name": "",
         "value": false,
-        "validationRules": [
-            { "type": "required", "value": false }
-        ]
+        "placeholder": "Placeholder",
     },
 
     "multiselect": {
         "type": "multiselect",
         "label": "Multi Select",
-        "placeholder": "",
         "name": "",
         "value": [],
+        "placeholder": "",
         "options": [
             { "label": "Option1", "value": "Option1" },
             { "label": "Option2", "value": "Option2" }
@@ -150,7 +143,7 @@ export const availableInputs = {
 
 export const textInputs = ["text", "number", "email", "password", "color"];
 
-export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept"];
+export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept", "value"];
 
 export const fileTypes = [
     { label: "All", value: "" },
