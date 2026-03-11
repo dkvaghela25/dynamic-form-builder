@@ -145,7 +145,6 @@ const useCustomRules = (label = "This field", rules = []) => {
 
             }
         })
-        console.log("Rules changed ...................................",finalRules);
         return finalRules;
     }, [label, rules])
 

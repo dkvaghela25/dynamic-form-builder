@@ -1,5 +1,5 @@
 import { memo } from "react";
-import Icon from "../../../ui/Icon";
+import Icon from "../../../../ui/Icon";
 
 const Actions = ({ text, index, handleEdit, handleDelete }) => {
     return (
