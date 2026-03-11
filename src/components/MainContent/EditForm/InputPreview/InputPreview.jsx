@@ -36,6 +36,7 @@ const InputPreview = () => {
             </div>
 
             <Controller
+                key={inputType}
                 control={control}
                 name={name}
                 rules={finalRules}
