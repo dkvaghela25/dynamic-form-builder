@@ -9,6 +9,8 @@ const TextInput = ({ field, error, handleChange }) => {
 
     const { type, placeholder, value, validationRules } = schema;
 
+    console.log("error changed =================================================", error);
+
     return (
         <>
             <input

@@ -68,7 +68,7 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
 
                 case 'pattern': {
                     finalRules.pattern = {
-                        value: RegExp(value),
+                        value: new RegExp(value),
                         message: `Invalid ${label}`
                     };
                     break;

@@ -28,7 +28,8 @@ const DatePickerRange = ({ field, error }) => {
     const getMaxEndDate = () => {
         if (startDate) {
             const startDateInMilliseconds = new Date(startDate).getTime();
-            const additionalMilliseconds = 1000 * 60 * 60 * 24 * getRuleValue(validationRules, "dateRange");
+            const additionalMilliseconds = 1000 * 60 * 60 * 24 * (getRuleValue(validationRules, "dateRange") || 30);
+            console.log(new Date(startDateInMilliseconds + additionalMilliseconds).toISOString().slice(0, 10));
             return new Date(startDateInMilliseconds + additionalMilliseconds).toISOString().slice(0, 10);
         }
     }

@@ -29,6 +29,7 @@ const InputPreview = () => {
         setEditMode(true);
     }, [setEditMode])
 
+    
     return (
         <div className="flex flex-col">
             <div className="mb-2 flex justify-between items-center gap-2 border-b border-b-slate-300 pb-3">

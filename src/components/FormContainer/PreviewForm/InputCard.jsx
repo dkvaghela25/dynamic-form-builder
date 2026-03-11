@@ -7,12 +7,12 @@ const EditSchemaForm = lazy(() => import("./EditForm/EditSchemaForm"))
 const InputCard = ({ schema, index }) => {
 
     const [editMode, setEditMode] = useState(false);
-
+    
     const value = {
         schema,
         index,
         editMode,
-        setEditMode
+        setEditMode,
     }
 
     return (
