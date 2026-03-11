@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { useFormSchema } from "../../../contexts/formSchemaContext";
 import InputField from "./InputField";
 
-const FinalForm = () => {
+const PreviewForm = () => {
 
   const formSchema = useFormSchema();
   const { handleSubmit } = useFormContext();
@@ -31,4 +31,4 @@ const FinalForm = () => {
   );
 };
 
-export default FinalForm;
+export default PreviewForm;

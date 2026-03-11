@@ -1,7 +1,7 @@
 import { useFormSchema } from "../../../contexts/formSchemaContext";
 import InputCard from "./InputCard";
 
-const PreviewForm = () => {
+const EditForm = () => {
 
     const formSchema = useFormSchema();
 
@@ -16,4 +16,4 @@ const PreviewForm = () => {
     );
 };
 
-export default PreviewForm;
+export default EditForm;

@@ -1,14 +1,14 @@
-import CheckboxGroup from "../components/FormContainer/InputTypes/CheckboxGroup";
-import Dropdown from "../components/FormContainer/InputTypes/Dropdown";
-import FileUpload from "../components/FormContainer/InputTypes/FileUpload";
-import MultiLineInput from "../components/FormContainer/InputTypes/MultiLineInput";
-import RadioGroup from "../components/FormContainer/InputTypes/RadioGroup";
-import TextInput from "../components/FormContainer/InputTypes/TextInput";
-import Slider from "../components/FormContainer/InputTypes/Slider";
-import Switch from "../components/FormContainer/InputTypes/Switch";
-import MultiSelect from "../components/FormContainer/InputTypes/MultiSelect";
-import DatePicker from "../components/FormContainer/InputTypes/DatePicker";
-import DatePickerRange from "../components/FormContainer/InputTypes/DatePickerRange";
+import CheckboxGroup from "../components/MainContent/InputTypes/CheckboxGroup";
+import Dropdown from "../components/MainContent/InputTypes/Dropdown";
+import FileUpload from "../components/MainContent/InputTypes/FileUpload";
+import MultiLineInput from "../components/MainContent/InputTypes/MultiLineInput";
+import RadioGroup from "../components/MainContent/InputTypes/RadioGroup";
+import TextInput from "../components/MainContent/InputTypes/TextInput";
+import Slider from "../components/MainContent/InputTypes/Slider";
+import Switch from "../components/MainContent/InputTypes/Switch";
+import MultiSelect from "../components/MainContent/InputTypes/MultiSelect";
+import DatePicker from "../components/MainContent/InputTypes/DatePicker";
+import DatePickerRange from "../components/MainContent/InputTypes/DatePickerRange";
 
 export const renderInputComponent = (field, error, index, type, setFormSchema) => {
 

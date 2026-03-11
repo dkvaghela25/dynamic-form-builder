@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { useFormSchema } from "../../contexts/formSchemaContext";
-import PreviewForm from "./PreviewForm/PreviewForm";
-import FinalForm from "./FinalForm/FinalForm";
 import { FormProvider, useForm } from "react-hook-form";
+import PreviewForm from './PreviewForm/PreviewForm' 
+import EditForm from "./EditForm/EditForm";
 
 const DevTool = lazy(() =>
     import('@hookform/devtools').then(module => ({ default: module.DevTool }))
@@ -24,8 +24,8 @@ const FormContainer = ({ editMode }) => {
                 : <FormProvider {...methods}>
                     <form className="h-[stretch] flex flex-col gap-4">
                         {editMode
-                            ? <PreviewForm />
-                            : <FinalForm />
+                            ? <EditForm />
+                            : <PreviewForm />
                         }
                     </form>
                     <DevTool control={methods.control} devToolsConfig={{ store: false }} />
