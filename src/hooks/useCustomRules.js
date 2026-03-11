@@ -12,7 +12,7 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
             switch (type) {
 
                 case 'required': {
-                    if (inputType === "date-range") {
+                    if (inputType === "date-range" && value === true) {
 
                         finalRules.validate = {
                             ...(finalRules.validate || {}),
