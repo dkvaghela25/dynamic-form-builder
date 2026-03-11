@@ -25,15 +25,18 @@ const DatePickerRange = ({ field, error }) => {
         field.onChange(newValue)
     }
 
-    const getMaxEndDate = () => { 
-        const startDateInMilliseconds = new Date(startDate).getTime();
-        const additionalMilliseconds = 1000 * 60 * 60 * 24 * getRuleValue(validationRules, "dateRange");
-        return new Date(startDateInMilliseconds + additionalMilliseconds).toISOString().slice(0, 10);
+    const getMaxEndDate = () => {
+        if (startDate) {
+            const startDateInMilliseconds = new Date(startDate).getTime();
+            const additionalMilliseconds = 1000 * 60 * 60 * 24 * getRuleValue(validationRules, "dateRange");
+            return new Date(startDateInMilliseconds + additionalMilliseconds).toISOString().slice(0, 10);
+        }
     }
 
     return (
         <div className="flex gap-3">
             <div className="w-[50%]">
+                <label htmlFor="" className="mb-1 text-sm font-medium text-slate-700">Start Date</label>
                 <input
                     {...field}
                     required={validationRules.required}
@@ -50,6 +53,7 @@ const DatePickerRange = ({ field, error }) => {
                 {(error && error.message.startsWith("Start")) && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
             </div>
             <div className="w-[50%]">
+                <label htmlFor="" className="mb-1 text-sm font-medium text-slate-700">End Date</label>
                 <input
                     {...field}
                     disabled={!startDate}
