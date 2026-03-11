@@ -28,7 +28,6 @@ const InputPreview = () => {
         e.preventDefault();
         setEditMode(true);
     }, [setEditMode])
-
     
     return (
         <div className="flex flex-col">
@@ -47,7 +46,7 @@ const InputPreview = () => {
                             {validationRules?.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
                         {renderInputComponent(field, error, index, type, setFormSchema)}
-                        {(error && type !== "date-range") && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
+                        {(error && !(["date-range", "file"].includes(type))) && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}
             />

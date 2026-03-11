@@ -76,6 +76,7 @@ const FileUpload = ({ field, error }) => {
                     <input accept={accept} type="file" multiple className="hidden z-10" onChange={handleChange} />
                 </label>
             </div>
+            {error && <p className="text-red-500 text-sm -mt-1">* {error.message}</p>}
             {uploadedFiles?.length !== 0 &&
                 <>
                     <div className="grid grid-cols-2 gap-2">
