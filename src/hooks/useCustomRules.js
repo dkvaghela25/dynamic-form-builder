@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-const useCustomRules = (label = "This field", rules = []) => {
+const useCustomRules = (inputType, label = "This field", rules = []) => {
 
     const finalRules = useMemo(() => {
         const finalRules = {};
@@ -12,9 +12,24 @@ const useCustomRules = (label = "This field", rules = []) => {
             switch (type) {
 
                 case 'required': {
-                    finalRules.required = {
-                        value,
-                        message: `${label} is required field`
+                    if (inputType === "date-range") {
+
+                        finalRules.validate = {
+                            ...(finalRules.validate || {}),
+                            requiredDateRange: (dateObject) => {
+                                const { startDate, endDate } = dateObject;
+                                if (!startDate) return "Start date is required"
+                                if (!endDate) return "End date is required"
+                                return true;
+                            }
+                        }
+
+                    } else {
+
+                        finalRules.required = {
+                            value,
+                            message: `${label} is required field`
+                        }
                     }
                     break;
                 }
@@ -91,6 +106,46 @@ const useCustomRules = (label = "This field", rules = []) => {
                     break;
                 }
 
+                case 'minStartDate': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        minStartDate: ({ startDate }) => {
+                            if (new Date(startDate) < new Date(value)) return `Start date should be after ${new Date(value).toLocaleDateString()}`
+                            return true;
+                        }
+                    }
+                    break;
+                }
+
+                case 'maxStartDate': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        maxStartDate: ({ startDate }) => {
+                            if (new Date(startDate) > new Date(value)) return `Start date should be before ${new Date(value).toLocaleDateString()}`
+                            return true;
+                        }
+                    }
+                    break;
+                }
+
+                case 'dateRange': {
+                    finalRules.validate = {
+                        ...(finalRules.validate || {}),
+                        rangeDate: ({ startDate, endDate }) => {
+
+                            const millisecondsInOneDay = 1000 * 60 * 60 * 24;
+                            const startDateDay = (new Date(startDate).getTime()) / (millisecondsInOneDay);
+                            const endDateDay = (new Date(endDate).getTime()) / millisecondsInOneDay;
+                            const dayDifference = endDateDay - startDateDay;
+
+                            if (dayDifference !== Math.abs(dayDifference)) return `End date should be after ${new Date(startDate).toLocaleDateString()}`
+                            if (dayDifference > value) return `End date should not exceed limit of ${value} days range`
+                            return true;
+                        }
+                    }
+                    break;
+                }
+
                 case 'minSelected': {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
@@ -145,8 +200,9 @@ const useCustomRules = (label = "This field", rules = []) => {
 
             }
         })
+        console.log(finalRules);
         return finalRules;
-    }, [label, rules])
+    }, [inputType, label, rules])
 
     return finalRules;
 

@@ -14,7 +14,7 @@ const InputPreview = () => {
 
     const { name, type, label, validationRules } = schema;
 
-    const finalRules = useCustomRules(label, validationRules);
+    const finalRules = useCustomRules(type, label, validationRules);
 
     const inputType = useMemo(() => type, [type])
 
@@ -46,7 +46,7 @@ const InputPreview = () => {
                             {validationRules?.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </label>
                         {renderInputComponent(field, error, index, type, setFormSchema)}
-                        {error && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
+                        {(error && type !== "date-range") && <p className="text-red-500 text-sm mt-1">* {error.message}</p>}
                     </div>
                 )}
             />

@@ -4,7 +4,6 @@ import Select from "../../../../ui/Select";
 const Accept = ({ formData, updateFormData }) => {
 
     const fileSelectChange = (e) => {
-        console.log(e.target.selectedOptions);
         const newAcceptValue = Array.from(e.target.selectedOptions, (option) => option?.value);
         const newFormData = { ...formData, "accept": newAcceptValue }
         updateFormData(newFormData)

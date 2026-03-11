@@ -15,7 +15,6 @@ const FileUpload = ({ field, error }) => {
     const acceptedFileExtensions = accept.flatMap(fileType => fileType.split(","));
 
     const updateUploadedFiles = (files) => {
-        console.log(files);
         setFormData(prev => {
             return prev.map((currSchema, currIndex) => {
                 return currIndex === index ? { ...currSchema, value: files } : currSchema

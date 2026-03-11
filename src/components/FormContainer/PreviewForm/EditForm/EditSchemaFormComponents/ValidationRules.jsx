@@ -28,6 +28,8 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
             "minDate": "maxDate",
             "maxDateTime": "minDateTime",
             "minDateTime": "maxDateTime",
+            "maxStartDate": "minStartDate",
+            "minStartDate": "maxStartDate",
             "maxFiles": "minFiles",
             "minFiles": "maxFiles",
         }
@@ -40,8 +42,6 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
 
         if (!value) return message = "Please Select Value"
 
-        console.log();
-
         const val1 = type.includes("Date")
             ? new Date(value)
             : Number(value);
@@ -49,9 +49,6 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
         const val2 = type.includes("Date")
             ? new Date(getRuleValue(validationMap[type]))
             : Number(getRuleValue(validationMap[type]));
-
-        console.log(val1);
-        console.log(val2);
 
         message = type.startsWith("min")
             ? val1 > val2
@@ -66,7 +63,6 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
         e.preventDefault();
 
         const validationErrorMessage = validateRules();
-        console.log(validationErrorMessage);
         if (validationErrorMessage) return setError(validationErrorMessage);
 
         const existingRule = validationRules.find(currRule => currRule.type === inputFields.type);
@@ -139,6 +135,7 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
             case "": return "First select rule for defining it's value"
             case "pattern": return "(e.g , ^\\+?\\d{10,15}$)"
             case "maxSize": return "Enter file size in KB"
+            case "dateRange": return "Enter range in Days"
         }
     }
 
