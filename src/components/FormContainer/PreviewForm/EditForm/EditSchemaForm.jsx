@@ -23,13 +23,15 @@ const EditSchemaForm = () => {
     }
 
     const updateFormData = (obj) => {
-        if (obj.constructor.name === 'SyntheticBaseEvent') {
+        const isSyntheticEvent = obj && !!obj.nativeEvent && typeof obj.persist === 'function';
+        if (isSyntheticEvent) {
             const { name, value } = obj.target;
-            setFormData(prev => { return { ...prev, [name]: value } })
+            setFormData(prev => ({ ...prev, [name]: value }));
         } else {
-            setFormData(obj)
+            setFormData(obj);
         }
-    }
+    };
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
