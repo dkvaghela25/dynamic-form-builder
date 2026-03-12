@@ -1,17 +1,10 @@
 import { useState } from "react";
 import FormContainer from "./FormContainer";
-import { useFormSchema } from "../../contexts/formSchemaContext";
+import PreviewButton from "../ui/PreviewButton";
 
 const MainContent = () => {
 
     const [editMode, setEditMode] = useState(true);
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        setEditMode(!editMode)
-    }
-
-    const formSchema = useFormSchema();
 
     return (
         <>
@@ -22,12 +15,7 @@ const MainContent = () => {
                         <p className="mt-1 text-sm text-slate-500">Configure fields and see your form update instantly.</p>
                     </div>
 
-                    {formSchema.length !== 0 && <button
-                        onClick={handleClick}
-                        className="cursor-pointer h-fit rounded bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
-                    >
-                        {editMode ? "Preview Form" : "Edit Form"}
-                    </button>}
+                   <PreviewButton editMode={editMode} setEditMode={setEditMode} />
                 </div>
 
                 <FormContainer editMode={editMode} />

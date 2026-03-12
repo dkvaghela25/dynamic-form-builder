@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
 import DynamicForm from "./pages/DynamicForm";
+import FinalForm from "./pages/FinalForm";
 
 const App = () => {
 
@@ -12,7 +13,11 @@ const App = () => {
         {
           path: "/",
           element: <DynamicForm />
-        }
+        },
+        {
+          path: "/final-form",
+          element: <FinalForm />
+        },
       ]
     }
   ])

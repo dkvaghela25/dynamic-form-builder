@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useCurrentSchemaContext } from "../../../../contexts/CurrentSchemaContext";
-import { useSetFormSchema } from "../../../../contexts/formSchemaContext";
-import { hiddenAttributes } from "../../../../constants";
+import { useCurrentSchemaContext } from "../../../../../contexts/CurrentSchemaContext";
+import { useSetFormSchema } from "../../../../../contexts/formSchemaContext";
+import { hiddenAttributes } from "../../../../../constants";
 import Value from "./EditSchemaFormComponents/Value";
 import Accept from "./EditSchemaFormComponents/Accept";
 import Type from "./EditSchemaFormComponents/Type";
@@ -59,7 +59,7 @@ const EditSchemaForm = () => {
     }
 
     return (
-        <div className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4">
+        <div className="flex flex-col gap-3 mt-4 rounded-xl border border-slate-200 bg-white p-4">
 
             <Type
                 formData={formData}

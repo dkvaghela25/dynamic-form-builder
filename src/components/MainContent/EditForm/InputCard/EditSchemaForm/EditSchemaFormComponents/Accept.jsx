@@ -1,5 +1,5 @@
-import { fileTypes } from "../../../../../constants";
-import Select from "../../../../ui/Select";
+import { fileTypes } from "../../../../../../constants";
+import Select from "../../../../../ui/Select";
 
 const Accept = ({ formData, updateFormData }) => {
 

@@ -1,5 +1,5 @@
-import { datePickerTypes, textInputs } from "../../../../../constants";
-import Select from "../../../../ui/Select";
+import { datePickerTypes, textInputs } from "../../../../../../constants";
+import Select from "../../../../../ui/Select";
 
 const Type = ({ formData, updateFormData }) => {
 
