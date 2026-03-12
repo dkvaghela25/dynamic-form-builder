@@ -1,5 +1,5 @@
 import { lazy, useState } from "react";
-import InputPreview from "./InputPreview/InputPreview";
+import InputPreview from "./InputField/InputField";
 import { CurrentSchemaContext } from "../../../contexts/CurrentSchemaContext";
 
 const EditSchemaForm = lazy(() => import("./EditSchemaForm/EditSchemaForm"))
