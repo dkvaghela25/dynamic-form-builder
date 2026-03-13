@@ -14,7 +14,7 @@ const EditForm = () => {
         setDisplayId(prev => prev === index ? false : index)
     }
 
-    const itemIds = formSchema.map((_, i) => i.toString());
+    const itemIds = formSchema.map(schema => schema.id);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -24,14 +24,17 @@ const EditForm = () => {
         })
     );
 
+    const findIndex = (schemaId) => {
+        return formSchema.findIndex(schema => schema.id === schemaId)
+    }
 
     const handleDragEnd = (e) => {
         const { active, over } = e;
         if (!over || active.id === over.id) return;
 
         setFormSchema((prev) => {
-            const oldIndex = parseInt(active.id);
-            const newIndex = parseInt(over.id);
+            const oldIndex = findIndex(active.id);
+            const newIndex = findIndex(over.id);
             return arrayMove(prev, oldIndex, newIndex);
         });
     };
@@ -44,7 +47,14 @@ const EditForm = () => {
             >
                 {formSchema.map((schema, index) => {
                     return (
-                        <InputCard key={index.toString()} displayId={displayId} handleToggle={handleToggle} schema={schema} id={index.toString()} />
+                        <InputCard
+                            key={schema.id}
+                            displayId={displayId}
+                            handleToggle={handleToggle}
+                            schema={schema}
+                            index={index}
+                            id={schema.id}
+                        />
                     )
                 })}
             </SortableContext>

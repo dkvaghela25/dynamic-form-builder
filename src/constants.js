@@ -1,6 +1,7 @@
 export const availableInputs = {
 
     "textInput": {
+        "id": "",
         "type": "text",
         "label": "Text Input",
         "name": "",
@@ -13,6 +14,7 @@ export const availableInputs = {
     },
 
     "textarea": {
+        "id": "",
         "type": "textarea",
         "label": "Multi-line Input",
         "name": "",
@@ -25,6 +27,7 @@ export const availableInputs = {
     },
 
     "select": {
+        "id": "",
         "type": "select",
         "label": "Dropdown",
         "name": "",
@@ -40,6 +43,7 @@ export const availableInputs = {
     },
 
     "radio": {
+        "id": "",
         "type": "radio",
         "label": "Radio Group",
         "name": "",
@@ -54,6 +58,7 @@ export const availableInputs = {
     },
 
     "checkbox": {
+        "id": "",
         "type": "checkbox",
         "label": "Checkbox Group",
         "name": "",
@@ -69,6 +74,7 @@ export const availableInputs = {
     },
 
     "date": {
+        "id": "",
         "type": "date",
         "label": "Date Picker",
         "name": "",
@@ -80,6 +86,7 @@ export const availableInputs = {
     },
 
     "file": {
+        "id": "",
         "type": "file",
         "label": "File Upload",
         "name": "",
@@ -92,6 +99,7 @@ export const availableInputs = {
     },
 
     "range": {
+        "id": "",
         "type": "range",
         "label": "Slider",
         "name": "",
@@ -105,6 +113,7 @@ export const availableInputs = {
     },
 
     "switch": {
+        "id": "",
         "type": "switch",
         "label": "Toggle Switch",
         "name": "",
@@ -113,6 +122,7 @@ export const availableInputs = {
     },
 
     "multiselect": {
+        "id": "",
         "type": "multiselect",
         "label": "Multi Select",
         "name": "",
@@ -134,7 +144,7 @@ export const textInputs = ["text", "number", "email", "password", "color"];
 
 export const datePickerTypes = ["date", "datetime-local", "date-range"];
 
-export const hiddenAttributes = ["type", "validationRules", "availableRules", "options", "accept", "value"];
+export const hiddenAttributes = ["id", "type", "validationRules", "availableRules", "options", "accept", "value"];
 
 export const fileTypes = [
     { label: "All Images", value: ".png,.jpg,.jpeg,.gif,.bmp,.webp,.svg,.ico,.tif,.tiff,.heic,.heif,.avif" },

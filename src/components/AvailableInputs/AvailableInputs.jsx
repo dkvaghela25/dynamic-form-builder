@@ -11,7 +11,7 @@ const AvailableInputs = () => {
     };
 
     const addInput = (newSchema) => {
-        setFormSchema(prev => [...prev, { ...newSchema, name: generateUniqueName(newSchema.type) }])
+        setFormSchema(prev => [...prev, { ...newSchema, name: generateUniqueName(newSchema.type), id: generateUniqueName(newSchema.type) }])
         const top = document.documentElement.scrollHeight;
         window.scrollTo({
             top,

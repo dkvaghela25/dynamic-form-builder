@@ -12,7 +12,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
 import { RxDragHandleDots2 } from "react-icons/rx";
 
-const FinalForm = () => {
+const Skills = () => {
   const [skills, setSkills] = useState(["JavaScript", "TypeScript", "Python", "Java", "C", "C++", "C#", "Go", "PHP"]);
 
   const itemIds = skills.map((_, i) => i.toString());
@@ -47,7 +47,7 @@ const FinalForm = () => {
 };
 
 
-export default FinalForm;
+export default Skills;
 
 const Skill = ({ id, children }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });

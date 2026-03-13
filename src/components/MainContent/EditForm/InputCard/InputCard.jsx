@@ -11,11 +11,11 @@ import { CSS } from "@dnd-kit/utilities";
 
 const EditSchemaForm = lazy(() => import("./EditSchemaForm/EditSchemaForm"))
 
-const InputCard = ({ displayId, handleToggle, schema, id }) => {
+const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
+
+    console.log("id==================================", id);
 
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
-
-    const index = Number(id);
 
     const [editMode, setEditMode] = useState(false);
     const { unregister } = useFormContext();
