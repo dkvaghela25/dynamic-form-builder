@@ -32,11 +32,10 @@ const EditForm = () => {
         const { active, over } = e;
         if (!over || active.id === over.id) return;
 
-        setFormSchema((prev) => {
-            const oldIndex = findIndex(active.id);
-            const newIndex = findIndex(over.id);
-            return arrayMove(prev, oldIndex, newIndex);
-        });
+        const oldIndex = findIndex(active.id);
+        const newIndex = findIndex(over.id);
+
+        setFormSchema((prev) => arrayMove(prev, oldIndex, newIndex));
     };
 
     return (

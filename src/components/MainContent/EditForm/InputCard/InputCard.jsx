@@ -13,8 +13,6 @@ const EditSchemaForm = lazy(() => import("./EditSchemaForm/EditSchemaForm"))
 
 const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
 
-    console.log("id==================================", id);
-
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
     const [editMode, setEditMode] = useState(false);
@@ -27,7 +25,7 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
         setEditMode,
     }
 
-    const { label, name } = schema;
+    const { label, name, id : schemaId } = schema;
 
     const setFormSchema = useSetFormSchema();
 
@@ -50,13 +48,13 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
             <div
                 ref={setNodeRef}
                 style={{
-                    transform: CSS.Transform.toString(transform),
+                    transform: CSS.Translate.toString(transform),
                     transition
                 }}
                 className="rounded-xl border border-slate-200 bg-slate-100 p-5 shadow-sm"
             >
                 <div className="flex gap-2 w-full">
-                    {displayId !== index &&
+                    {displayId !== schemaId &&
                         <button
                             {...attributes}
                             {...listeners}
@@ -66,11 +64,11 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
                         </button>
                     }
 
-                    <div onClick={() => handleToggle(index)} className={`w-full cursor-pointer flex justify-between items-center ${displayId === index ? "mb-2 border-b pb-3" : ""} border-b-slate-300`}>
+                    <div onClick={() => handleToggle(schema.id)} className={`w-full cursor-pointer flex justify-between items-center ${displayId === schemaId ? "mb-2 border-b pb-3" : ""} border-b-slate-300`}>
                         <div className="font-medium text-[18px] text-slate-700 h-fit">
                             Label : {label}
                         </div>
-                        {displayId !== index
+                        {displayId !== schemaId
                             ? <GoChevronDown className="w-7 h-7" />
                             : <div className="flex gap-2">
                                 <Icon icon="edit" helperText="Edit Schema" onClick={editSchema} />
@@ -80,7 +78,7 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
                     </div>
                 </div>
 
-                {displayId === index &&
+                {displayId === schemaId &&
                     <>
                         {editMode ? <EditSchemaForm /> : <InputPreview />}
                     </>
