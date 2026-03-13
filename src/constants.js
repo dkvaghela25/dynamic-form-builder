@@ -161,3 +161,22 @@ export const fileTypes = [
     { label: "ZIP Archive (.zip)", value: ".zip" },
     { label: "RAR Archive (.rar)", value: ".rar" }
 ]
+
+export const defaultValuesMap = {
+  "text": "",
+  "email": "",
+  "password": "",
+  "date": "",
+  "datetime-local": "",
+  "textarea": "",
+  "select": "",
+  "radio": "",
+  "number": "",
+  "color": undefined,
+  "date-range": { startDate: "", endDate: "" },
+  "checkbox": [],
+  "file": [],
+  "multiselect": [],
+  "range": 20,
+  "switch": false,
+}
