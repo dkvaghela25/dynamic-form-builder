@@ -1,11 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const FormStateContext = createContext();
 const FormDispatchContext = createContext();
 
 export const FormSchemaProvider = ({ children }) => {
-    const [formSchema, setFormSchema] = useState([]);
+
+    const localStorageFormSchema = JSON.parse(localStorage.getItem("formSchema"));
+    const [formSchema, setFormSchema] = useState(localStorageFormSchema || []);
+
+    useEffect(() => {
+        localStorage.setItem("formSchema", JSON.stringify(formSchema));
+    }, [formSchema])
 
     return (
         <FormDispatchContext.Provider value={setFormSchema}>

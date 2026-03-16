@@ -1,1 +1,7 @@
+:root {
+    --foreground: #151b23;
+    --muted-foreground: #65758b;
+    --destructive: #ef4343;
+}
+
 @import "tailwindcss";
