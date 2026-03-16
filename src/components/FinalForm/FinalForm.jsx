@@ -11,6 +11,7 @@ const FinalForm = ({ formSchema }) => {
     console.log(defaultValues);
 
     const methods = useForm({
+        mode: "onBlur",
         defaultValues,
     });
 
