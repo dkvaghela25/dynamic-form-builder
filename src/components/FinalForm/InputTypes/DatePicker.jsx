@@ -1,11 +1,14 @@
 import CustomDatePicker from "../../ui/CustomDatePicker";
 
-const DatePicker = ({ field, error, schema }) => {
+const DatePicker = ({ field, schema }) => {
   const { type } = schema;
+
+  const {value, onChange} = field;
 
   return (
     <>
-      {type === "date" && <CustomDatePicker schema={schema} error={error} field={field} />}
+      {type === "date" && <CustomDatePicker selectedDate={value} onChange={onChange} />}
+      {type === "datetime-local" && <CustomDatePicker type="datetime-local" selectedDate={value} onChange={onChange} />}
     </>
   );
 };

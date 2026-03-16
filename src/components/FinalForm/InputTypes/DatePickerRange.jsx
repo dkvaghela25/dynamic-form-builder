@@ -1,12 +1,42 @@
 import CustomDatePicker from "../../ui/CustomDatePicker";
 
-const DatePickerRange = ({ schema, field, error }) => {
-  const { value: { startDate, endDate } } = field;
+const DatePickerRange = ({ field }) => {
+  const {value : { startDate, endDate }, onChange} = field;
+
+  const handleStartChange = (newDate) => {
+    onChange?.({
+      ...field.value,
+      startDate: newDate
+    });
+  };
+
+  const handleEndChange = (newDate) => {
+    onChange?.({
+      ...field.value,
+      endDate: newDate
+    });
+  };
 
   return (
-    <div className="flex gap-2">
-      <CustomDatePicker schema={schema} error={error} currValue={startDate}/>
-      <CustomDatePicker schema={schema} error={error} currValue={endDate} />
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <div className="flex-1">
+          <label className="text-xs font-semibold mb-1 block text-[var(--secondary-text)]">From</label>
+          <CustomDatePicker
+            selectedDate={startDate}
+            onChange={handleStartChange}
+          />
+        </div>
+
+        <div className="flex-1">
+          <label className="text-xs font-semibold mb-1 block text-[var(--secondary-text)]">To</label>
+          <CustomDatePicker
+            selectedDate={endDate}
+            onChange={handleEndChange}
+          />
+        </div>
+      </div>
+
     </div>
   );
 };

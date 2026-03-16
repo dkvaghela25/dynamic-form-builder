@@ -10,7 +10,6 @@ import MultiSelect from "./InputTypes/MultiSelect";
 import DatePicker from "./InputTypes/DatePicker";
 import DatePickerRange from "./InputTypes/DatePickerRange";
 import ColorPicker from "./InputTypes/ColorPicker";
-import DateTimePicker from "./InputTypes/DateTimePicker";
 
 const ComponentSwitch = ({ field, error, schema }) => {
 
@@ -27,8 +26,8 @@ const ComponentSwitch = ({ field, error, schema }) => {
         case "radio": return <RadioGroup field={field} schema={schema} />;
         case "checkbox": return <CheckboxGroup field={field} schema={schema} />;
         case "file": return <FileUpload field={field} error={error} schema={schema} />;
-        case "date": return <DatePicker field={field} error={error} schema={schema} />;
-        case "datetime-local": return <DateTimePicker field={field} error={error} schema={schema} />;
+        case "date":
+        case "datetime-local": return <DatePicker field={field} error={error} schema={schema} />;
         case "date-range": return <DatePickerRange field={field} error={error} />;
         case "range": return <Slider field={field} error={error} schema={schema} />;
         case "switch": return <Switch field={field} schema={schema} />;
