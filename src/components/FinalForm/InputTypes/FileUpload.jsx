@@ -18,7 +18,7 @@ const FileUpload = ({ field, error, schema }) => {
   const handleChange = (e) => {
     e.preventDefault();
     let { files } = e.target;
-    let newFiles = Object.values(files);
+    let newFiles = Object.values(files).map(({ name, size }) => ({ name, size }));
     updateUploadedFiles([...uploadedFiles, ...newFiles]);
   }
 
@@ -32,13 +32,13 @@ const FileUpload = ({ field, error, schema }) => {
     let newFiles = Object.values(files).filter(({ name }) => {
       const extension = `.${name.split(".").at(-1)}`
       return acceptedFileExtensions.length !== 0 ? acceptedFileExtensions.includes(extension) : true;
-    });
+    }).map(({ name, size }) => ({ name, size }));
     updateUploadedFiles([...uploadedFiles, ...newFiles]);
   };
 
   const handleRemove = (e, index) => {
     e.preventDefault();
-    const filteredFiles = uploadedFiles.filter((currFile, currIndex) => currIndex !== index)
+    const filteredFiles = uploadedFiles.filter((_, currIndex) => currIndex !== index)
     updateUploadedFiles(filteredFiles);
   }
 

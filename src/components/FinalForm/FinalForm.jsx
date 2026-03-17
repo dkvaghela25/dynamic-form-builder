@@ -16,10 +16,14 @@ const FinalForm = ({ formSchema }) => {
         defaultValues,
     });
 
-    console.log("data.........................", methods.getValues("date-range"));
     const { handleSubmit } = methods;
     const handleFormSubmit = async (data) => {
-        localStorage.setItem("submittedFormData", JSON.stringify({data: {...data}, submissionTime: new Date()}));
+        localStorage.setItem("submittedFormData", JSON.stringify({
+            data: {
+                ...data,
+            },
+            submissionTime: new Date()
+        }));
         toastNotification("Form submitted successfully", "success")
         navigate("/confirmation-page")
     }

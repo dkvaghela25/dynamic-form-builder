@@ -57,9 +57,6 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
             newDate.setHours(safeDate.getHours(), safeDate.getMinutes());
         }
 
-        console.log(newDate);
-        console.log(formatOutput(newDate));
-
         handleChange?.(formatOutput(newDate));
         if (type === "date") setIsOpen(false);
     };

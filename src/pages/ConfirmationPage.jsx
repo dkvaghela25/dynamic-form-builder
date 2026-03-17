@@ -7,7 +7,6 @@ const ConfirmationPage = () => {
     const navigate = useNavigate();
     const formSchema = JSON.parse(localStorage.getItem("formSchema")) || [];
     const submittedFormData = JSON.parse(localStorage.getItem("submittedFormData")) || {};
-    console.log(submittedFormData);
     const { data, submissionTime } = submittedFormData;
 
     const displayData = [];
@@ -22,6 +21,8 @@ const ConfirmationPage = () => {
     const handlePrint = () => {
         window.print();
     };
+
+    console.log(displayData);
 
     return (
         <div className="max-w-3xl mx-auto">
@@ -70,14 +71,21 @@ const ConfirmationPage = () => {
     );
 };
 
-// Helper function to handle different data types in the display
 const renderFormattedValue = (inputType, value) => {
     if (value === null || value === undefined || value === "") return <span className="text-slate-300 italic">Not provided</span>;
     if (value instanceof Boolean) return value ? "Yes" : "No";
-    if (Array.isArray(value)) return value.join(", ");
+    if (Array.isArray(value) && inputType !== "file") return value.join(", ");
+    if (inputType === "file") {
+        return <ul className="flex flex-col">
+            {value.map(file => {
+                return <li className="text-sm text-slate-900 font-medium">{file.name}</li>
+            })}
+        </ul>
+    };
     if (inputType === "date") return new Date(value).toLocaleDateString();
     if (inputType === "datetime-local") return new Date(value).toLocaleString();
     if (inputType === "date-range") return `${value.startDate} to ${value.endDate}`;
+
     return String(value);
 };
 

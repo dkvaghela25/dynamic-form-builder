@@ -110,7 +110,6 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
                         minStartDate: (dateObject) => {
-                            console.log(dateObject);
                             if(!dateObject?.startDate) return;
                             if (new Date(dateObject?.startDate) < new Date(value)) return `Start date should be after ${new Date(value).toLocaleDateString()}`
                             return true;

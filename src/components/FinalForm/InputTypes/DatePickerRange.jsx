@@ -6,10 +6,8 @@ const DatePickerRange = ({ field }) => {
   const { trigger } = useFormContext();
   const { value: { startDate, endDate }, onChange, name } = field;
 
-  console.log(field.value);
 
   const handleStartChange = (newDate) => {
-    console.log(newDate);
     onChange?.({
       ...field.value,
       startDate: newDate
@@ -18,7 +16,6 @@ const DatePickerRange = ({ field }) => {
   };
   
   const handleEndChange = (newDate) => {
-    console.log(newDate);
     onChange?.({
       ...field.value,
       endDate: newDate
