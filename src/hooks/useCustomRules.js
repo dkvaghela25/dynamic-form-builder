@@ -109,18 +109,21 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
                 case 'minStartDate': {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
-                        minStartDate: ({ startDate }) => {
-                            if (new Date(startDate) < new Date(value)) return `Start date should be after ${new Date(value).toLocaleDateString()}`
+                        minStartDate: (dateObject) => {
+                            console.log(dateObject);
+                            if(!dateObject?.startDate) return;
+                            if (new Date(dateObject?.startDate) < new Date(value)) return `Start date should be after ${new Date(value).toLocaleDateString()}`
                             return true;
                         }
                     }
                     break;
                 }
-
+                
                 case 'maxStartDate': {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
                         maxStartDate: ({ startDate }) => {
+                            if(!startDate) return;
                             if (new Date(startDate) > new Date(value)) return `Start date should be before ${new Date(value).toLocaleDateString()}`
                             return true;
                         }
@@ -200,7 +203,6 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
 
             }
         })
-        console.log(finalRules);
         return finalRules;
     }, [inputType, label, rules])
 

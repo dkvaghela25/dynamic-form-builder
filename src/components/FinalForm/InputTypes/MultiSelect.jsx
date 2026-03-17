@@ -27,8 +27,6 @@ const MultiSelect = ({ field, error, schema }) => {
 
   const updateValue = (updatedValue) => {
     onChange(updatedValue);
-    console.log(updatedValue);
-    console.log(availableOptions.filter(({ value }) => !(updatedValue.includes(value))));
     setFilteredOptions(availableOptions.filter(({ value }) => !(updatedValue.includes(value))))
   }
 

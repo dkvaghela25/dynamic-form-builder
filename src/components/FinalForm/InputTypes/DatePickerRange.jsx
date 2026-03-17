@@ -1,20 +1,29 @@
+import { useFormContext } from "react-hook-form";
 import CustomDatePicker from "../../ui/CustomDatePicker";
 
 const DatePickerRange = ({ field }) => {
-  const {value : { startDate, endDate }, onChange} = field;
+
+  const { trigger } = useFormContext();
+  const { value: { startDate, endDate }, onChange, name } = field;
+
+  console.log(field.value);
 
   const handleStartChange = (newDate) => {
+    console.log(newDate);
     onChange?.({
       ...field.value,
       startDate: newDate
     });
+    trigger(name);
   };
-
+  
   const handleEndChange = (newDate) => {
+    console.log(newDate);
     onChange?.({
       ...field.value,
       endDate: newDate
     });
+    trigger(name);
   };
 
   return (
@@ -24,7 +33,7 @@ const DatePickerRange = ({ field }) => {
           <label className="text-xs font-semibold mb-1 block text-(--secondary-text)">Start Date</label>
           <CustomDatePicker
             selectedDate={startDate}
-            onChange={handleStartChange}
+            handleChange={handleStartChange}
           />
         </div>
 
@@ -32,7 +41,7 @@ const DatePickerRange = ({ field }) => {
           <label className="text-xs font-semibold mb-1 block text-(--secondary-text)">End Date</label>
           <CustomDatePicker
             selectedDate={endDate}
-            onChange={handleEndChange}
+            handleChange={handleEndChange}
           />
         </div>
       </div>

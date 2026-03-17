@@ -111,8 +111,19 @@ const EditSchemaForm = () => {
             />
 
             <div className="ml-auto mt-2 flex gap-3">
-                <button className="cursor-pointer rounded-sm border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onClick={() => setEditMode(false)}>Cancel</button>
-                <button className="cursor-pointer rounded-sm bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700" onClick={handleFormSubmit}>Edit Schema</button>
+                <button
+                    onClick={() => setEditMode(false)}
+                    className="cursor-pointer rounded-sm border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    className="cursor-pointer rounded-sm bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                    onClick={handleFormSubmit}
+                >
+                    Edit Schema
+                </button>
             </div>
         </div>
     );

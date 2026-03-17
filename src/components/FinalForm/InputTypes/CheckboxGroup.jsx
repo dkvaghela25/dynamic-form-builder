@@ -15,9 +15,6 @@ const RadioGroup = ({ field, schema }) => {
   return (
     <div className={`grid grid-cols-3 gap-2 w-full`}>
       {options?.map(({ label, value }) => {
-        console.log(fieldValue);
-        console.log(value);
-        console.log(fieldValue === value);
 
         return (
           <label
@@ -26,6 +23,7 @@ const RadioGroup = ({ field, schema }) => {
             key={label}
           >
             <input
+              checked={fieldValue.includes(value)}
               onChange={() => handleChange(value)}
               id={label}
               className="h-4 w-4 accent-(--input-text) cursor-pointer"

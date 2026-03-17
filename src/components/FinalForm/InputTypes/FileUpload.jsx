@@ -63,10 +63,9 @@ const FileUpload = ({ field, error, schema }) => {
           <input accept={accept} type="file" multiple className="hidden z-10" onChange={handleChange} />
         </label>
       </div>
-      {error && <p className="text-red-500 text-sm -mt-1">* {error.message}</p>}
       {uploadedFiles?.length !== 0 &&
         <>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 gap-2">
             {uploadedFiles.map((file, index) => {
               return (
                 <div key={index} className="flex justify-between w-full px-4 py-2 z-10 items-center gap-2 rounded-lg border border-slate-200 bg-white cursor-pointer">

@@ -2,20 +2,26 @@ import { FormProvider, useForm } from "react-hook-form";
 import { getDefaultValues } from "../../utils/getDefaultValues";
 import { DevTool } from "@hookform/devtools";
 import InputController from "./InputController";
+import { useNavigate } from "react-router-dom";
+import { toastNotification } from "../../utils/toastHelper";
 
 const FinalForm = ({ formSchema }) => {
 
-    const defaultValues = getDefaultValues(formSchema);
+    const navigate = useNavigate();
+    const submittedFormData = JSON.parse(localStorage.getItem("submittedFormData"));
+    const defaultValues = submittedFormData.data || getDefaultValues(formSchema);
 
     const methods = useForm({
         mode: "onBlur",
         defaultValues,
     });
 
+    console.log("data.........................", methods.getValues("date-range"));
     const { handleSubmit } = methods;
     const handleFormSubmit = async (data) => {
-        alert(JSON.stringify(data, null, 2));
-        console.log(data);
+        localStorage.setItem("submittedFormData", JSON.stringify({data: {...data}, submissionTime: new Date()}));
+        toastNotification("Form submitted successfully", "success")
+        navigate("/confirmation-page")
     }
 
     return (
@@ -23,7 +29,7 @@ const FinalForm = ({ formSchema }) => {
             <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(handleFormSubmit)} action="" className="flex flex-col gap-3">
                     {formSchema.map(schema => {
-                        return <InputController schema={schema} />
+                        return <InputController key={schema.id} schema={schema} />
                     })}
                     <input
                         type="submit"

@@ -6,6 +6,7 @@ const ColorPicker = ({ field, schema }) => {
   return (
     <div className={`flex gap-3 items-center w-full bg-white`}>
       <input
+        {...field}
         type="color"
         className="w-10 h-11 cursor-pointer rounded-2xl transition-colors duration-300"
       />
