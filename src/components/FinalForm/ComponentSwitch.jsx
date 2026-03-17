@@ -28,7 +28,7 @@ const ComponentSwitch = ({ field, error, schema }) => {
         case "file": return <FileUpload field={field} error={error} schema={schema} />;
         case "date":
         case "datetime-local": return <DatePicker field={field} error={error} schema={schema} />;
-        case "date-range": return <DatePickerRange field={field} error={error} />;
+        case "date-range": return <DatePickerRange field={field} error={error} schema={schema} />;
         case "range": return <Slider field={field} error={error} schema={schema} />;
         case "switch": return <Switch field={field} schema={schema} />;
         case "multiselect": return <MultiSelect field={field} error={error} schema={schema} />;

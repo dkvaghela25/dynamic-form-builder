@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { CiCalendar } from 'react-icons/ci';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
+const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [dropUp, setDropUp] = useState(false);
     const [showSelectors, setShowSelectors] = useState(false);
@@ -119,7 +119,6 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
                         : "top-full mt-2 origin-top"
                     }
                 `}
-            // className="absolute z-50 mt-2 bg-white rounded-xl shadow-2xl border border-(--input-border-color) p-5 animate-in fade-in zoom-in duration-150 w-[320px]"
             >
 
                 {/* Navigation */}
@@ -180,15 +179,17 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
                     {calendarDays.map((day, i) => {
                         const isSelected = day && safeDate && day.toDateString() === safeDate.toDateString();
                         return (
-                            <div
+                            <button
+                                disabled={day < new Date(min) || day > new Date(max)}
+                                type='button'
                                 key={i}
                                 onClick={() => handleSelect(day)}
-                                className={`h-8 flex items-center justify-center text-sm rounded-lg transition-all
+                                className={`h-8 flex items-center justify-center text-sm rounded-lg transition-all disabled:text-slate-400
                                         ${!day ? '' : 'cursor-pointer hover:bg-(--secondary-bg)'}
                                         ${isSelected ? 'bg-(--primary-bg) text-white hover:bg-(--primary-bg)' : ''}`}
                             >
                                 {day?.getDate()}
-                            </div>
+                            </button>
                         );
                     })}
                 </div>
