@@ -1,0 +1,90 @@
+import { IoCloudUploadOutline } from "react-icons/io5";
+import Icon from "../../ui/Icon";
+import { FaFolder } from "react-icons/fa";
+import { getRuleValue } from "../../../utils/getRuleValue";
+
+const FileUpload = ({ field, error, schema }) => {
+
+  const { accept, validationRules } = schema;
+  const { value: uploadedFiles, onChange } = field;
+
+  const maxFileSize = getRuleValue(validationRules, "maxSize")
+  const acceptedFileExtensions = accept.flatMap(fileType => fileType.split(","));
+
+  const updateUploadedFiles = (files) => {
+    onChange(files)
+  }
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    let { files } = e.target;
+    let newFiles = Object.values(files).map(({ name, size }) => ({ name, size }));
+    updateUploadedFiles([...uploadedFiles, ...newFiles]);
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  }
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const { files } = e.dataTransfer;
+    let newFiles = Object.values(files).filter(({ name }) => {
+      const extension = `.${name.split(".").at(-1)}`
+      return acceptedFileExtensions.length !== 0 ? acceptedFileExtensions.includes(extension) : true;
+    }).map(({ name, size }) => ({ name, size }));
+    updateUploadedFiles([...uploadedFiles, ...newFiles]);
+  };
+
+  const handleRemove = (e, index) => {
+    e.preventDefault();
+    const filteredFiles = uploadedFiles.filter((_, currIndex) => currIndex !== index)
+    updateUploadedFiles(filteredFiles);
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className={`w-full ${error ? "border-red-300" : "border-slate-300"} bg-slate-50 text-slate-900 transition`}
+      >
+        <label className="py-10 flex flex-col rounded-xl items-center justify-center w-full border border-dashed cursor-pointer">
+          <div className="flex flex-col gap-2 items-center justify-center text-body">
+            <IoCloudUploadOutline className="w-10 h-10" />
+            <p className="text-[20px]"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+            <p className="text-[14px] w-[70%] flex gap-1 flex-wrap text-center justify-center">
+              {acceptedFileExtensions?.map((extension, index) => {
+                return <span className="" key={index}>{extension.slice(1).toUpperCase()}</span>
+              })}
+            </p>
+            {maxFileSize && <p className="text-[14px]">(MAX. Filesize {maxFileSize} KB)</p>}
+          </div>
+          <input accept={accept} type="file" multiple className="hidden z-10" onChange={handleChange} />
+        </label>
+      </div>
+      {uploadedFiles?.length !== 0 &&
+        <>
+          <div className="grid grid-cols-1 gap-2">
+            {uploadedFiles.map((file, index) => {
+              return (
+                <div key={index} className="flex justify-between w-full px-4 py-2 z-10 items-center gap-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <FaFolder />
+                    <div className="font-semibold border-slate-300">{file.name}</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="font-semibold border-r pr-2 border-slate-300">{Math.ceil(file.size / 1024)} K.B.</div>
+                    <Icon helperText="Remove File" icon="delete" onClick={(e) => handleRemove(e, index)} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </>}
+
+    </div>
+  );
+};
+
+export default FileUpload;

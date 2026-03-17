@@ -25,7 +25,7 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
         setEditMode,
     }
 
-    const { label, name, id : schemaId } = schema;
+    const { label, name, id : schemaId, validationRules } = schema;
 
     const setFormSchema = useSetFormSchema();
 
@@ -66,7 +66,7 @@ const InputCard = ({ displayId, handleToggle, schema, index, id }) => {
 
                     <div onClick={() => handleToggle(schema.id)} className={`w-full cursor-pointer flex justify-between items-center ${displayId === schemaId ? "mb-2 border-b pb-3" : ""} border-b-slate-300`}>
                         <div className="font-medium text-[18px] text-slate-700 h-fit">
-                            Label : {label}
+                            Label : {label} {validationRules?.find(rule => rule.type === "required").value && <span className="text-red-500"> *</span>}
                         </div>
                         {displayId !== schemaId
                             ? <GoChevronDown className="w-7 h-7" />

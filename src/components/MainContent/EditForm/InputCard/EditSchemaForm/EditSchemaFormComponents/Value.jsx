@@ -15,7 +15,7 @@ const Value = ({ formData, updateFormData }) => {
         <>
             {!options &&
                 <div className="flex flex-col gap-1">
-                    {type !== "file" && <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Value</label>}
+                    {(type !== "file" && type !== "switch") && <label htmlFor="" className="text-sm font-medium capitalize text-slate-700">Value</label>}
 
                     {!(["file", "switch", "date-range"].includes(type)) &&
                         <div className="flex items-center gap-3">

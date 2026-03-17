@@ -24,6 +24,8 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
             "min": "max",
             "maxLength": "minLength",
             "minLength": "maxLength",
+            "maxSelected": "minSelected",
+            "minSelected": "maxSelected",
             "maxDate": "minDate",
             "minDate": "maxDate",
             "maxDateTime": "minDateTime",
