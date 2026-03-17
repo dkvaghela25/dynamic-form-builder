@@ -1,14 +1,21 @@
+import { useFormContext } from "react-hook-form";
 import CustomDatePicker from "../../ui/CustomDatePicker";
 
 const DatePicker = ({ field, schema }) => {
-  const { type } = schema;
 
-  const {value, onChange} = field;
+  const { trigger } = useFormContext();
+  const { type, name } = schema;
+  const { value, onChange } = field;
+
+  const handleChange = (newValue) => {
+    onChange(newValue);
+    trigger(name);
+  }
 
   return (
     <>
-      {type === "date" && <CustomDatePicker selectedDate={value} onChange={onChange} />}
-      {type === "datetime-local" && <CustomDatePicker type="datetime-local" selectedDate={value} onChange={onChange} />}
+      {type === "date" && <CustomDatePicker selectedDate={value} handleChange={handleChange} />}
+      {type === "datetime-local" && <CustomDatePicker type="datetime-local" selectedDate={value} handleChange={handleChange} />}
     </>
   );
 };

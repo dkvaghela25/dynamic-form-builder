@@ -8,6 +8,8 @@ const InputController = ({ schema }) => {
     const { control } = useFormContext();
     const finalRules = useCustomRules(type, label, validationRules);
 
+    console.log("finalRules.........................", finalRules);
+
     return (
         <Controller
             control={control}

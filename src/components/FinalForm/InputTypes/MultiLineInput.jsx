@@ -2,7 +2,7 @@ const MultiLineInput = ({ field, error, schema }) => {
 
   const { placeholder, validationRules } = schema;
   const { value } = field;
-  const maxLength = validationRules.find(rule => rule.type === "maxLength").value
+  const maxLength = validationRules.find(rule => rule.type === "maxLength")?.value
 
   return (
     <div className="relative">

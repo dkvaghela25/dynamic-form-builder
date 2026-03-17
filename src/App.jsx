@@ -16,7 +16,12 @@ const App = () => {
         },
         {
           path: "/final-form",
-          element: <FinalFormPage />
+          element: <FinalFormPage />,
+          children: [
+            {
+              path: "",
+            }
+          ]
         },
       ]
     }

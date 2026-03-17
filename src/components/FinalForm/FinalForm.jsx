@@ -7,21 +7,28 @@ const FinalForm = ({ formSchema }) => {
 
     const defaultValues = getDefaultValues(formSchema);
 
-    console.log(formSchema);
-    console.log(defaultValues);
-
     const methods = useForm({
         mode: "onBlur",
         defaultValues,
     });
 
+    const { handleSubmit } = methods;
+    const handleFormSubmit = async (data) => {
+        alert(JSON.stringify(data, null, 2));
+        console.log(data);
+    }
+
     return (
         <>
             <FormProvider {...methods}>
-                <form action="" className="flex flex-col gap-3">
+                <form onSubmit={handleSubmit(handleFormSubmit)} action="" className="flex flex-col gap-3">
                     {formSchema.map(schema => {
                         return <InputController schema={schema} />
                     })}
+                    <input
+                        type="submit"
+                        className="cursor-pointer rounded w-fit self-center bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700"
+                    />
                 </form>
             </FormProvider>
             <DevTool control={methods.control} />
