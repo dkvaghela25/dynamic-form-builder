@@ -5,9 +5,20 @@ const Dropdown = ({ field, error, schema }) => {
 
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [dropUp, setDropUp] = useState(false);
   const { value, onChange } = field;
   const { placeholder, options } = schema;
   const selectedOption = options.find((opt) => opt.value === value) || {};
+
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const dropdownHeight = options.length * 50;
+
+      setDropUp(spaceBelow < dropdownHeight);
+    }
+  }, [isOpen, options]);
 
   const changeValue = (option) => {
     onChange(option.value)
@@ -48,11 +59,15 @@ const Dropdown = ({ field, error, schema }) => {
 
       <ul
         className={`
-          absolute z-50 bg-white w-full border overflow-hidden border-(--input-border-color) rounded-lg mt-2 flex flex-col 
-          transition-all duration-200 ease-out origin-top shadow-lg
+          absolute z-50 bg-white w-full border overflow-hidden border-(--input-border-color) rounded-lg mt-2 
+          transition-all duration-200 ease-out origin-top shadow-lg hidden
           ${isOpen
-            ? "opacity-100 scale-100 translate-y-0 visible"
-            : "opacity-0 scale-95 -translate-y-2 invisible"
+            ? "opacity-100 scale-100 translate-y-0  flex! flex-col"
+            : "opacity-0 scale-95 -translate-y-2 "
+          }
+          ${dropUp
+            ? "bottom-full mb-2 origin-bottom" 
+            : "top-full mt-2 origin-top"      
           }
         `}
       >

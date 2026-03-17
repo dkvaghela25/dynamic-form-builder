@@ -4,6 +4,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [dropUp, setDropUp] = useState(false);
     const [showSelectors, setShowSelectors] = useState(false);
 
     const safeDate = useMemo(() => selectedDate ? new Date(selectedDate) : null, [selectedDate]);
@@ -14,6 +15,16 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const years = Array.from({ length: 201 }, (_, i) => new Date().getFullYear() - 100 + i);
+
+    useEffect(() => {
+        if (isOpen && containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            const dropdownHeight = 350;
+
+            setDropUp(spaceBelow < dropdownHeight);
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         const handleClick = (e) => {
@@ -52,7 +63,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
     const handleSelect = (day) => {
         if (!day) return;
         const newDate = new Date(day);
-        
+
         if (type === "datetime-local" && safeDate) {
             newDate.setHours(safeDate.getHours(), safeDate.getMinutes());
         }
@@ -95,103 +106,115 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange }) => {
                 <CiCalendar className='w-5 h-5' />
             </div>
 
-            {isOpen && (
-                <div className="absolute z-50 mt-2 bg-white rounded-xl shadow-2xl border border-(--input-border-color) p-5 animate-in fade-in zoom-in duration-150 w-[320px]">
+            <div
+                className={`
+                    absolute z-50 mt-2 bg-white rounded-xl shadow-2xl border border-(--input-border-color) p-5 animate-in fade-in zoom-in duration-150 w-[320px] overflow-hidden  hidden
+                    transition-all ease-out origin-top
+                    ${isOpen
+                        ? "opacity-100 scale-100 translate-y-0 flex! flex-col"
+                        : "opacity-0 scale-95 -translate-y-2 "
+                    }
+                    ${dropUp
+                        ? "bottom-full mb-2 origin-bottom"
+                        : "top-full mt-2 origin-top"
+                    }
+                `}
+            // className="absolute z-50 mt-2 bg-white rounded-xl shadow-2xl border border-(--input-border-color) p-5 animate-in fade-in zoom-in duration-150 w-[320px]"
+            >
 
-                    {/* Navigation */}
-                    <div className="flex items-center justify-between mb-6">
-                        <button
-                            type='button'
-                            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
-                            className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                {/* Navigation */}
+                <div className="flex items-center justify-between mb-6">
+                    <button
+                        type='button'
+                        onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
+                        className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                    >
+                        <FaChevronLeft className='w-3 h-3' />
+                    </button>
+
+                    <div className="relative flex gap-1 px-2 py-1 text-base font-bold text-(--primary-text) cursor-pointer select-none">
+                        <span
+                            onClick={() => setShowSelectors(showSelectors === 'month' ? null : 'month')}
+                            className="hover:text-(--primary-bg)"
                         >
-                            <FaChevronLeft className='w-3 h-3' />
-                        </button>
-
-                        <div className="relative flex gap-1 px-2 py-1 text-base font-bold text-(--primary-text) cursor-pointer select-none">
-                            <span
-                                onClick={() => setShowSelectors(showSelectors === 'month' ? null : 'month')}
-                                className="hover:text-(--primary-bg)"
-                            >
-                                {months[viewDate.getMonth()]},
-                            </span>
-                            <span
-                                onClick={() => setShowSelectors(showSelectors === 'year' ? null : 'year')}
-                                className="hover:text-(--primary-bg)"
-                            >
-                                {viewDate.getFullYear()}
-                            </span>
-
-                            {showSelectors === 'month' && (
-                                <div className="absolute top-full left-0 mt-2 w-32 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
-                                    {months.map((m, i) => (
-                                        <div key={m} onClick={() => { setViewDate(new Date(viewDate.getFullYear(), i, 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{m}</div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {showSelectors === 'year' && (
-                                <div className="absolute top-full right-0 mt-2 w-24 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
-                                    {years.map((y) => (
-                                        <div key={y} onClick={() => { setViewDate(new Date(y, viewDate.getMonth(), 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{y}</div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <button
-                            type='button'
-                            onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
-                            className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                            {months[viewDate.getMonth()]},
+                        </span>
+                        <span
+                            onClick={() => setShowSelectors(showSelectors === 'year' ? null : 'year')}
+                            className="hover:text-(--primary-bg)"
                         >
-                            <FaChevronRight className='w-3 h-3' />
-                        </button>
-                    </div>
+                            {viewDate.getFullYear()}
+                        </span>
 
-                    <div className="grid grid-cols-7 gap-1 mb-2 text-center text-[10px] font-bold text-(--secondary-text) uppercase tracking-tighter">
-                        {days.map(d => <div key={d}>{d}</div>)}
-                    </div>
+                        {showSelectors === 'month' && (
+                            <div className="absolute top-full left-0 mt-2 w-32 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
+                                {months.map((m, i) => (
+                                    <div key={m} onClick={() => { setViewDate(new Date(viewDate.getFullYear(), i, 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{m}</div>
+                                ))}
+                            </div>
+                        )}
 
-                    <div className="grid grid-cols-7 gap-1">
-                        {calendarDays.map((day, i) => {
-                            const isSelected = day && safeDate && day.toDateString() === safeDate.toDateString();
-                            return (
-                                <div
-                                    key={i}
-                                    onClick={() => handleSelect(day)}
-                                    className={`h-8 flex items-center justify-center text-sm rounded-lg transition-all
-                                        ${!day ? '' : 'cursor-pointer hover:bg-(--secondary-bg)'}
-                                        ${isSelected ? 'bg-(--primary-bg) text-white hover:bg-(--primary-bg)' : ''}`}
-                                >
-                                    {day?.getDate()}
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Footer Actions */}
-                    <div className="mt-5 pt-4 border-t border-(--input-border-color) flex items-center justify-between">
-                        <button
-                            type="button"
-                            onClick={handleGoToToday}
-                            className="text-[11px] font-bold text-(--primary-bg) hover:underline uppercase"
-                        >
-                            Today
-                        </button>
-
-                        {type === "datetime-local" ? (
-                            <input
-                                type="time"
-                                value={safeDate ? `${safeDate.getHours().toString().padStart(2, '0')}:${safeDate.getMinutes().toString().padStart(2, '0')}` : "00:00"}
-                                onChange={handleTimeChange}
-                                className="bg-(--secondary-bg) text-(--primary-bg) text-xs font-bold px-2 py-1 rounded-md outline-none"
-                            />
-                        ) : (
-                            <span className="text-[10px] font-bold text-(--secondary-text) uppercase">Date Only</span>
+                        {showSelectors === 'year' && (
+                            <div className="absolute top-full right-0 mt-2 w-24 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
+                                {years.map((y) => (
+                                    <div key={y} onClick={() => { setViewDate(new Date(y, viewDate.getMonth(), 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{y}</div>
+                                ))}
+                            </div>
                         )}
                     </div>
+
+                    <button
+                        type='button'
+                        onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
+                        className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                    >
+                        <FaChevronRight className='w-3 h-3' />
+                    </button>
                 </div>
-            )}
+
+                <div className="grid grid-cols-7 gap-1 mb-2 text-center text-[10px] font-bold text-(--secondary-text) uppercase tracking-tighter">
+                    {days.map(d => <div key={d}>{d}</div>)}
+                </div>
+
+                <div className="grid grid-cols-7 gap-1">
+                    {calendarDays.map((day, i) => {
+                        const isSelected = day && safeDate && day.toDateString() === safeDate.toDateString();
+                        return (
+                            <div
+                                key={i}
+                                onClick={() => handleSelect(day)}
+                                className={`h-8 flex items-center justify-center text-sm rounded-lg transition-all
+                                        ${!day ? '' : 'cursor-pointer hover:bg-(--secondary-bg)'}
+                                        ${isSelected ? 'bg-(--primary-bg) text-white hover:bg-(--primary-bg)' : ''}`}
+                            >
+                                {day?.getDate()}
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* Footer Actions */}
+                <div className="mt-5 pt-4 border-t border-(--input-border-color) flex items-center justify-between">
+                    <button
+                        type="button"
+                        onClick={handleGoToToday}
+                        className="text-[11px] font-bold text-(--primary-bg) hover:underline uppercase"
+                    >
+                        Today
+                    </button>
+
+                    {type === "datetime-local" ? (
+                        <input
+                            type="time"
+                            value={safeDate ? `${safeDate.getHours().toString().padStart(2, '0')}:${safeDate.getMinutes().toString().padStart(2, '0')}` : "00:00"}
+                            onChange={handleTimeChange}
+                            className="bg-(--secondary-bg) text-(--primary-bg) text-xs font-bold px-2 py-1 rounded-md outline-none"
+                        />
+                    ) : (
+                        <span className="text-[10px] font-bold text-(--secondary-text) uppercase">Date Only</span>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

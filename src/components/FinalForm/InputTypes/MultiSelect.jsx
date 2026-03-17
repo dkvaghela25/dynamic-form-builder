@@ -6,6 +6,7 @@ const MultiSelect = ({ field, error, schema }) => {
 
   const inputRef = useRef(null);
   const containerRef = useRef(null);
+  const [dropUp, setDropUp] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
@@ -14,6 +15,16 @@ const MultiSelect = ({ field, error, schema }) => {
 
   const initialOptions = availableOptions.filter(({ value }) => !(selectedOptions.includes(value)));
   const [filteredOptions, setFilteredOptions] = useState(initialOptions);
+
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const dropdownHeight = filteredOptions.length * 50;
+
+      setDropUp(spaceBelow < dropdownHeight);
+    }
+  }, [isOpen, filteredOptions]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -121,11 +132,15 @@ const MultiSelect = ({ field, error, schema }) => {
 
       <ul
         className={`
-          absolute z-50 bg-white w-full border overflow-hidden border-(--input-border-color) rounded-lg mt-2 flex flex-col 
-          transition-all duration-200 ease-out origin-top shadow-lg
+          absolute z-50 bg-white w-full border overflow-hidden border-(--input-border-color) rounded-lg mt-2 
+          transition-all duration-200 ease-out origin-top shadow-lg hidden
           ${isOpen
-            ? "opacity-100 scale-100 translate-y-0 visible"
-            : "opacity-0 scale-95 -translate-y-2 invisible"
+            ? "opacity-100 scale-100 translate-y-0 flex! flex-col"
+            : "opacity-0 scale-95 -translate-y-2 "
+          }
+          ${dropUp
+            ? "bottom-full mb-2 origin-bottom"
+            : "top-full mt-2 origin-top"
           }
         `}
       >
