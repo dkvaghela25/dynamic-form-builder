@@ -108,7 +108,7 @@ const MultiSelect = ({ field, error }) => {
             </div>
 
             {isOpen &&
-                <div className={`absolute mt-2 w-full max-h-70 overflow-auto rounded-lg bg-white border border-slate-300`}>
+                <div className={`absolute mt-2 z-10 w-full max-h-70 overflow-auto rounded-lg bg-white border border-slate-300`}>
                     {filteredOptions.length !== 0
                         ? filteredOptions.map(({ label, value }, index) => {
                             return <option onClick={(e) => addOption(e, value)} className="hover:bg-indigo-50 text-sm hover:text-indigo-700 hover:font-medium text-slate-900 cursor-pointer p-2 w-full border-slate-300 border-b last:border-0" key={index} value={value}>{label}</option>

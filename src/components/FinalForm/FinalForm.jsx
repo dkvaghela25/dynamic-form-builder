@@ -1,7 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { getDefaultValues } from "../../utils/getDefaultValues";
 import { DevTool } from "@hookform/devtools";
-import InputField from "./InputField";
 import InputController from "./InputController";
 
 const FinalForm = ({ formSchema }) => {
