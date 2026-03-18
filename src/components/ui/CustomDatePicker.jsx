@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { CiCalendar } from 'react-icons/ci';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max }) => {
+const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max, errorMessage }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [dropUp, setDropUp] = useState(false);
     const [showSelectors, setShowSelectors] = useState(false);
@@ -88,22 +88,30 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max 
 
     return (
         <div className="relative w-full font-sans" ref={containerRef}>
-            <div
-                onClick={() => setIsOpen(!isOpen)}
-                className={`flex items-center justify-between px-4 py-2.5 rounded-lg border cursor-pointer transition-all
-                    ${isOpen ? 'border-(--primary-bg) shadow-(--shadow-input-focus)' : 'border-(--input-border-color) hover:shadow-(--shadow-input-hover)'}`
-                }
-            >
-                {safeDate ? (
-                    <span className="font-semibold">
-                        {type === "date"
-                            ? safeDate.toLocaleDateString()
-                            : safeDate.toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })}
-                    </span>
-                ) : (
-                    <span className="text-(--secondary-text)">Select Date</span>
-                )}
-                <CiCalendar className='w-5 h-5' />
+            <div className='flex flex-col gap-1.5 w-full'>
+                <div
+                    onClick={() => setIsOpen(!isOpen)}
+                    className={`flex items-center justify-between px-4 py-2.5 rounded-lg border cursor-pointer transition-all
+                    ${isOpen && !errorMessage ? 'border-(--primary-bg) shadow-(--shadow-input-focus)' : 'border-(--input-border-color) hover:shadow-(--shadow-input-hover)'}
+                    ${errorMessage ? " shadow-(--shadow-input-error)!" : "shadow-(--shadow-input)"}
+                    `}
+                >
+                    {safeDate ? (
+                        <span className="font-semibold">
+                            {type === "date"
+                                ? safeDate.toLocaleDateString()
+                                : safeDate.toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })}
+                        </span>
+                    ) : (
+                        <span className="text-(--secondary-text)">Select Date</span>
+                    )}
+                    <CiCalendar className='w-5 h-5' />
+                </div>
+                <div className={`grid transition-all duration-300 ease-in-out ${errorMessage ? "grid-rows-[1fr] opacity-100 mt-1" : "grid-rows-[0fr] opacity-0"}`}>
+                    <p className={`-mt-1 text-(--input-error-border-color) text-[13px]`}>
+                        * {errorMessage}
+                    </p>
+                </div>
             </div>
 
             <div

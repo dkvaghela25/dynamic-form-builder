@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import CustomDatePicker from "../../ui/CustomDatePicker";
 import { getRuleValue } from "../../../utils/getRuleValue";
 
-const DatePicker = ({ field, schema }) => {
+const DatePicker = ({ field, error, schema }) => {
 
   const { trigger } = useFormContext();
   const { type, name, validationRules } = schema;
@@ -18,8 +18,8 @@ const DatePicker = ({ field, schema }) => {
 
   return (
     <>
-      {type === "date" && <CustomDatePicker selectedDate={value} handleChange={handleChange} min={min} max={max} />}
-      {type === "datetime-local" && <CustomDatePicker type="datetime-local" selectedDate={value} handleChange={handleChange} min={min} max={max} />}
+      {type === "date" && <CustomDatePicker selectedDate={value} handleChange={handleChange} min={min} max={max} errorMessage={error?.message} />}
+      {type === "datetime-local" && <CustomDatePicker type="datetime-local" selectedDate={value} handleChange={handleChange} min={min} max={max} errorMessage={error?.message} />}
     </>
   );
 };

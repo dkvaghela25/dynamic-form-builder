@@ -177,7 +177,7 @@ export const defaultValuesMap = {
     "checkbox": [],
     "file": [],
     "multiselect": [],
-    "range": 20,
+    "range": "",
     "switch": false,
 }
 

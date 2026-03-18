@@ -1,5 +1,5 @@
 
-const RadioGroup = ({ field, schema }) => {
+const RadioGroup = ({ field, error, schema }) => {
 
   const { name, options } = schema;
   const { value: fieldValue, onChange } = field;
@@ -13,7 +13,15 @@ const RadioGroup = ({ field, schema }) => {
   }
 
   return (
-    <div className={`grid grid-cols-3 gap-2 w-full`}>
+    <div
+      className={`
+          grid grid-cols-3 gap-2 w-full
+          border border-(--input-border-color) p-2 rounded  
+          transition-all duration-300 ease-in-out
+          hover:shadow-(--shadow-input-hover) 
+          ${error ? "shadow-(--shadow-input-error)!" : "shadow-(--shadow-input)"}
+        `}
+    >
       {options?.map(({ label, value }) => {
 
         return (

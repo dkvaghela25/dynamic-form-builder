@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import CustomDatePicker from "../../ui/CustomDatePicker";
 import { getRuleValue } from "../../../utils/getRuleValue";
 
-const DatePickerRange = ({ field, schema }) => {
+const DatePickerRange = ({ field, error, schema }) => {
 
   const { trigger } = useFormContext();
   const { value: { startDate, endDate }, onChange, name } = field;
@@ -28,6 +28,9 @@ const DatePickerRange = ({ field, schema }) => {
   const min = getRuleValue(validationRules, "minStartDate")
   const max = getRuleValue(validationRules, "maxStartDate")
 
+  const startDateError = error?.message?.startsWith("Start") ? error?.message : "";
+  const endDateError = error?.message?.startsWith("End") ? error?.message : "";
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
@@ -38,7 +41,8 @@ const DatePickerRange = ({ field, schema }) => {
             handleChange={handleStartChange}
             min={min}
             max={max}
-          />
+            errorMessage={startDateError}
+            />
         </div>
 
         <div className="flex-1">
@@ -46,6 +50,7 @@ const DatePickerRange = ({ field, schema }) => {
           <CustomDatePicker
             selectedDate={endDate}
             handleChange={handleEndChange}
+            errorMessage={endDateError}
           />
         </div>
       </div>

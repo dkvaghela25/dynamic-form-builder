@@ -1,10 +1,18 @@
-const ColorPicker = ({ field, schema }) => {
+const ColorPicker = ({ field, error, schema }) => {
 
   const { value } = field;
   const { placeholder } = schema;
 
   return (
-    <div className={`flex gap-3 items-center w-full bg-white`}>
+    <div
+      className={`
+          flex gap-3 items-center w-full bg-white
+          border border-(--input-border-color) py-1 px-2 rounded  
+          transition-all duration-300 ease-in-out
+          hover:shadow-(--shadow-input-hover) 
+          ${error ? "shadow-(--shadow-input-error)!" : "shadow-(--shadow-input)"}
+        `}
+    >
       <input
         {...field}
         type="color"

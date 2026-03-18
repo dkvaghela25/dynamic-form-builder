@@ -1,14 +1,22 @@
-const Switch = ({ field, schema }) => {
+const Switch = ({ field, error, schema }) => {
 
   const { id, placeholder } = schema;
-  const { value ,onChange} = field;
+  const { value, onChange } = field;
 
   const handleChange = (e) => {
     onChange(e);
   }
 
   return (
-    <div className={`flex gap-3 items-center py-3 w-full bg-white`}>
+    <div
+      className={`
+          flex w-full gap-2
+          border border-(--input-border-color) py-3 px-4 rounded  
+          transition-all duration-300 ease-in-out
+          hover:shadow-(--shadow-input-hover) 
+          ${error ? "shadow-(--shadow-input-error)!" : "shadow-(--shadow-input)"}
+        `}
+    >
       <div className="relative w-10 h-6">
         <input
           checked={value}

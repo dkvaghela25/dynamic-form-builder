@@ -27,11 +27,11 @@ const InputController = ({ schema }) => {
 
                     <ComponentSwitch field={field} error={error} schema={schema} />
 
-                    <div className={`grid transition-all duration-300 ease-in-out ${error ? "grid-rows-[1fr] opacity-100 mt-1" : "grid-rows-[0fr] opacity-0"}`}>
+                    { !type.includes("date") && <div className={`grid transition-all duration-300 ease-in-out ${error ? "grid-rows-[1fr] opacity-100 mt-1" : "grid-rows-[0fr] opacity-0"}`}>
                         <p className="overflow-hidden -mt-1 text-(--input-error-border-color) text-[13px]">
                             * {error?.message}
                         </p>
-                    </div>
+                    </div>}
                 </div>
             )}
         />
