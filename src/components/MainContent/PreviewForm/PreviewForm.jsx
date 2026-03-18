@@ -8,7 +8,7 @@ const PreviewForm = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/final-form");
+    navigate("/form");
   }
 
   return (

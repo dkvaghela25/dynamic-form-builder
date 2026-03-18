@@ -2,12 +2,12 @@ import CustomTable from "../components/DisplayData/CustomTable";
 
 const DisplayData = () => {
     return (
-        <div className="flex flex-col gap-5 max-w-3xl mx-auto">
-            <h2 className="text-2xl underline text-slate-900 m-auto font-semibold tracking-wide">Summary Report</h2>
+        <div className="flex flex-col items-center gap-5 mx-auto w-[90vw] bg-white py-20 rounded-2xl min-h-[90vh]">
+            <h2 className="text-2xl underline text-slate-900 font-semibold">Summary Report</h2>
             <CustomTable />
         </div>
     );
 };
 
 
-export default DisplayData;
+export default DisplayData; 

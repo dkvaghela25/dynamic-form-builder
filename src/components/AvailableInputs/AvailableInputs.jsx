@@ -1,17 +1,14 @@
 import { useSetFormSchema } from "../../contexts/formSchemaContext";
 import { availableInputs } from "../../constants";
+import { generateUniqueId } from "../../utils/generateUniqueId";
 
 const AvailableInputs = () => {
 
     const setFormSchema = useSetFormSchema();
-
-    const generateUniqueName = (type) => {
-        const timestampPart = new Date().getTime();
-        return `${type}${timestampPart}`;
-    };
-
+    
     const addInput = (newSchema) => {
-        setFormSchema(prev => [...prev, { ...newSchema, name: generateUniqueName(newSchema.type), id: generateUniqueName(newSchema.type) }])
+        const uniqueId = generateUniqueId(newSchema.type);
+        setFormSchema(prev => [...prev, { ...newSchema, name: uniqueId, id: uniqueId }])
         const top = document.documentElement.scrollHeight;
         window.scrollTo({
             top,

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import Actions from "./Actions";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
+import Actions from "../../../../../ui/Actions";
 
 const OptionsEditor = ({ displayId, options, setFormData, handleToggle }) => {
 

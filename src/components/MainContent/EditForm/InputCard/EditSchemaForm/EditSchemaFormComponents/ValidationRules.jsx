@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import Actions from "./Actions";
 import Select from "../../../../../ui/Select";
 import { GoChevronDown, GoChevronUp } from "react-icons/go";
+import Actions from "../../../../../ui/Actions";
 
 const ValidationRules = ({ displayId, availableRules, validationRules, setFormData, handleToggle }) => {
 
