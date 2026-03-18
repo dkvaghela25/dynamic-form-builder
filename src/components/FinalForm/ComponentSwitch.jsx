@@ -11,30 +11,32 @@ import DatePicker from "./InputTypes/DatePicker";
 import DatePickerRange from "./InputTypes/DatePickerRange";
 import ColorPicker from "./InputTypes/ColorPicker";
 
+const componentSwitchMap = {
+    "text": TextInput,
+    "number": TextInput,
+    "password": TextInput,
+    "email": TextInput,
+    "color": ColorPicker,
+    "textarea": MultiLineInput,
+    "select": Dropdown,
+    "radio": RadioGroup,
+    "checkbox": CheckboxGroup,
+    "file": FileUpload,
+    "date": DatePicker,
+    "datetime-local": DatePicker,
+    "date-range": DatePickerRange,
+    "range": Slider,
+    "switch": Switch,
+    "multiselect": MultiSelect,
+}
+
 const ComponentSwitch = ({ field, error, schema }) => {
 
     const { type } = schema;
+    const Component = componentSwitchMap[type];
 
-    switch (type) {
-        case "text":
-        case "number":
-        case "password":
-        case "email": return <TextInput field={field} error={error} schema={schema} />;
-        case "color": return <ColorPicker field={field} error={error} schema={schema} />;
-        case "textarea": return <MultiLineInput field={field} error={error} schema={schema} />;
-        case "select": return <Dropdown field={field} error={error} schema={schema} />;
-        case "radio": return <RadioGroup field={field} schema={schema} />;
-        case "checkbox": return <CheckboxGroup field={field} schema={schema} />;
-        case "file": return <FileUpload field={field} error={error} schema={schema} />;
-        case "date":
-        case "datetime-local": return <DatePicker field={field} error={error} schema={schema} />;
-        case "date-range": return <DatePickerRange field={field} error={error} schema={schema} />;
-        case "range": return <Slider field={field} error={error} schema={schema} />;
-        case "switch": return <Switch field={field} schema={schema} />;
-        case "multiselect": return <MultiSelect field={field} error={error} schema={schema} />;
+    return <Component field={field} error={error} schema={schema} />
 
-        default: return <div></div>
-    }
 };
 
 export default ComponentSwitch;

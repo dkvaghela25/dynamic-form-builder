@@ -9,7 +9,7 @@ const FinalForm = ({ formSchema }) => {
 
     const navigate = useNavigate();
     const submittedFormData = JSON.parse(localStorage.getItem("submittedFormData"));
-    const defaultValues = submittedFormData.data || getDefaultValues(formSchema);
+    const defaultValues = submittedFormData?.data || getDefaultValues(formSchema);
 
     const methods = useForm({
         mode: "onBlur",
