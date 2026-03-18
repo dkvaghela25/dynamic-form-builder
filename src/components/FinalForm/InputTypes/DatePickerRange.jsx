@@ -25,8 +25,18 @@ const DatePickerRange = ({ field, error, schema }) => {
     trigger(name);
   };
 
-  const min = getRuleValue(validationRules, "minStartDate")
-  const max = getRuleValue(validationRules, "maxStartDate")
+  const getMaxEndDate = () => {
+    if (startDate) {
+      const startDateInMilliseconds = new Date(startDate).getTime();
+      const additionalMilliseconds = 1000 * 60 * 60 * 24 * (getRuleValue(validationRules, "dateRange") || 30);
+      return new Date(startDateInMilliseconds + additionalMilliseconds).toISOString().slice(0, 10);
+    }
+  }
+
+  const minStartDate = getRuleValue(validationRules, "minStartDate")
+  const maxStartDate = getRuleValue(validationRules, "maxStartDate")
+  const minEndDate = startDate;
+  const maxEndDate = getMaxEndDate();
 
   const startDateError = error?.message?.startsWith("Start") ? error?.message : "";
   const endDateError = error?.message?.startsWith("End") ? error?.message : "";
@@ -39,10 +49,10 @@ const DatePickerRange = ({ field, error, schema }) => {
           <CustomDatePicker
             selectedDate={startDate}
             handleChange={handleStartChange}
-            min={min}
-            max={max}
+            min={minStartDate}
+            max={maxStartDate}
             errorMessage={startDateError}
-            />
+          />
         </div>
 
         <div className="flex-1">
@@ -50,6 +60,8 @@ const DatePickerRange = ({ field, error, schema }) => {
           <CustomDatePicker
             selectedDate={endDate}
             handleChange={handleEndChange}
+            min={minEndDate}
+            max={maxEndDate}
             errorMessage={endDateError}
           />
         </div>

@@ -49,7 +49,12 @@ const FileUpload = ({ field, error, schema }) => {
         onDrop={handleDrop}
         className={`w-full bg-slate-50 text-slate-900 transition`}
       >
-        <label className={`py-10 ${error ? "border-red-300" : "border-slate-300"} flex flex-col rounded-xl items-center justify-center w-full border border-dashed cursor-pointer`}>
+        <label className={`py-10 flex flex-col rounded-xl items-center justify-center w-full border border-dashed cursor-pointer
+          ${error
+            ? "border-(--input-error-border-color) drop-shadow-(--shadow-input-error)!"
+            : "drop-shadow-(--shadow-input)"
+          }`}
+        >
           <div className="flex flex-col gap-2 items-center justify-center text-body">
             <IoCloudUploadOutline className="w-10 h-10" />
             <p className="text-[20px]"><span className="font-semibold">Click to upload</span> or drag and drop</p>
