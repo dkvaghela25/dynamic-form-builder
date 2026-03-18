@@ -3,7 +3,7 @@ import AppLayout from "./layout/AppLayout";
 import DynamicForm from "./pages/DynamicForm";
 import FinalFormPage from "./pages/FinalFormPage";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
-import ConfirmationPage from "./pages/ConfirmationPage";
+import DisplayData from "./pages/DisplayData";
 
 const App = () => {
 
@@ -20,12 +20,12 @@ const App = () => {
           element: <ProtectedRoutes />,
           children: [
             {
-              path: "/final-form",
+              path: "/form",
               element: <FinalFormPage />,
             },
             {
-              path: "confirmation-page",
-              element: <ConfirmationPage />
+              path: "/list",
+              element: <DisplayData />
             }
           ]
         },
