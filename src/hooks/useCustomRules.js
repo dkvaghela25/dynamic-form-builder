@@ -12,15 +12,26 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
             switch (type) {
 
                 case 'required': {
-                    if (inputType === "date-range" && value === true) {
+                    if (inputType === "date-range") {
 
-                        finalRules.validate = {
-                            ...(finalRules.validate || {}),
-                            requiredDateRange: (dateObject) => {
-                                const { startDate, endDate } = dateObject;
-                                if (!startDate) return "Start date is required"
-                                if (!endDate) return "End date is required"
-                                return true;
+                        if (value === true) {
+                            finalRules.validate = {
+                                ...(finalRules.validate || {}),
+                                requiredDateRange: (dateObject) => {
+                                    const { startDate, endDate } = dateObject;
+                                    if (!startDate) return "Start date is required"
+                                    if (!endDate) return "End date is required"
+                                    return true;
+                                }
+                            }
+                        } else {
+                            finalRules.validate = {
+                                ...(finalRules.validate || {}),
+                                requiredDateRange: (dateObject) => {
+                                    const { startDate, endDate } = dateObject;
+                                    if (startDate && !endDate) return "End date is required"
+                                    return true;
+                                }
                             }
                         }
 
@@ -110,19 +121,19 @@ const useCustomRules = (inputType, label = "This field", rules = []) => {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
                         minStartDate: (dateObject) => {
-                            if(!dateObject?.startDate) return;
+                            if (!dateObject?.startDate) return;
                             if (new Date(dateObject?.startDate) < new Date(value)) return `Start date should be after ${new Date(value).toLocaleDateString()}`
                             return true;
                         }
                     }
                     break;
                 }
-                
+
                 case 'maxStartDate': {
                     finalRules.validate = {
                         ...(finalRules.validate || {}),
                         maxStartDate: ({ startDate }) => {
-                            if(!startDate) return;
+                            if (!startDate) return;
                             if (new Date(startDate) > new Date(value)) return `Start date should be before ${new Date(value).toLocaleDateString()}`
                             return true;
                         }

@@ -92,7 +92,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                 <div
                     onClick={() => setIsOpen(!isOpen)}
                     className={`flex items-center justify-between px-4 py-2.5 rounded-lg border cursor-pointer transition-all
-                    ${isOpen && !errorMessage ? 'border-(--primary-bg) shadow-(--shadow-input-focus)' : 'border-(--input-border-color) hover:shadow-(--shadow-input-hover)'}
+                    ${isOpen && !errorMessage ? 'border-(--primary-button-bg) shadow-(--shadow-input-focus)' : 'border-(--input-border-color) hover:shadow-(--shadow-input-hover)'}
                     ${errorMessage ? " shadow-(--shadow-input-error)!" : "shadow-(--shadow-input)"}
                     `}
                 >
@@ -134,7 +134,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                     <button
                         type='button'
                         onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
-                        className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                        className="p-2 cursor-pointer hover:bg-(--secondary-button-bg) rounded-full transition-colors"
                     >
                         <FaChevronLeft className='w-3 h-3' />
                     </button>
@@ -142,13 +142,13 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                     <div className="relative flex gap-1 px-2 py-1 text-base font-bold text-(--primary-text) cursor-pointer select-none">
                         <span
                             onClick={() => setShowSelectors(showSelectors === 'month' ? null : 'month')}
-                            className="hover:text-(--primary-bg)"
+                            className="hover:text-(--primary-button-bg)"
                         >
                             {months[viewDate.getMonth()]},
                         </span>
                         <span
                             onClick={() => setShowSelectors(showSelectors === 'year' ? null : 'year')}
-                            className="hover:text-(--primary-bg)"
+                            className="hover:text-(--primary-button-bg)"
                         >
                             {viewDate.getFullYear()}
                         </span>
@@ -156,7 +156,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                         {showSelectors === 'month' && (
                             <div className="absolute top-full left-0 mt-2 w-32 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
                                 {months.map((m, i) => (
-                                    <div key={m} onClick={() => { setViewDate(new Date(viewDate.getFullYear(), i, 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{m}</div>
+                                    <div key={m} onClick={() => { setViewDate(new Date(viewDate.getFullYear(), i, 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-button-bg)">{m}</div>
                                 ))}
                             </div>
                         )}
@@ -164,7 +164,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                         {showSelectors === 'year' && (
                             <div className="absolute top-full right-0 mt-2 w-24 max-h-48 overflow-y-auto bg-white border border-(--input-border-color) shadow-xl rounded-lg z-60">
                                 {years.map((y) => (
-                                    <div key={y} onClick={() => { setViewDate(new Date(y, viewDate.getMonth(), 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-bg)">{y}</div>
+                                    <div key={y} onClick={() => { setViewDate(new Date(y, viewDate.getMonth(), 1)); setShowSelectors(null); }} className="px-3 py-2 text-sm hover:bg-(--secondary-button-bg)">{y}</div>
                                 ))}
                             </div>
                         )}
@@ -173,7 +173,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                     <button
                         type='button'
                         onClick={() => setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
-                        className="p-2 cursor-pointer hover:bg-(--secondary-bg) rounded-full transition-colors"
+                        className="p-2 cursor-pointer hover:bg-(--secondary-button-bg) rounded-full transition-colors"
                     >
                         <FaChevronRight className='w-3 h-3' />
                     </button>
@@ -193,8 +193,8 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                                 key={i}
                                 onClick={() => handleSelect(day)}
                                 className={`h-8 flex items-center justify-center text-sm rounded-lg transition-all disabled:text-slate-400
-                                        ${!day ? '' : 'cursor-pointer hover:bg-(--secondary-bg)'}
-                                        ${isSelected ? 'bg-(--primary-bg) text-white hover:bg-(--primary-bg)' : ''}`}
+                                        ${!day ? '' : 'cursor-pointer hover:bg-(--secondary-button-bg)'}
+                                        ${isSelected ? 'bg-(--primary-button-bg) text-white hover:bg-(--primary-button-bg)' : ''}`}
                             >
                                 {day?.getDate()}
                             </button>
@@ -207,7 +207,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                     <button
                         type="button"
                         onClick={handleGoToToday}
-                        className="text-[11px] font-bold text-(--primary-bg) hover:underline uppercase"
+                        className="text-[11px] font-bold text-(--input-text) hover:underline uppercase"
                     >
                         Today
                     </button>
@@ -217,7 +217,7 @@ const CustomDatePicker = ({ type = "date", selectedDate, handleChange, min, max,
                             type="time"
                             value={safeDate ? `${safeDate.getHours().toString().padStart(2, '0')}:${safeDate.getMinutes().toString().padStart(2, '0')}` : "00:00"}
                             onChange={handleTimeChange}
-                            className="bg-(--secondary-bg) text-(--primary-bg) text-xs font-bold px-2 py-1 rounded-md outline-none"
+                            className="bg-(--secondary-button-bg) text-(--primary-button-bg) text-xs font-bold px-2 py-1 rounded-md outline-none"
                         />
                     ) : (
                         <span className="text-[10px] font-bold text-(--secondary-text) uppercase">Date Only</span>

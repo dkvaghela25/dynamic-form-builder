@@ -21,7 +21,7 @@ const Slider = ({ field, error, schema }) => {
           required={validationRules?.required}
           value={currentValue}
           className={`
-            h-2 w-full cursor-pointer rounded-lg focus:outline-none accent-(--primary-bg)
+            h-2 w-full cursor-pointer rounded-lg focus:outline-none accent-(--primary-button-bg)
             transition-all duration-300
             
           `}

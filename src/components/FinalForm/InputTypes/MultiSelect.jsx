@@ -101,7 +101,7 @@ const MultiSelect = ({ field, error, schema }) => {
           {selectedOptions.map((option) => (
             <span
               key={option}
-              className="flex items-center gap-1 rounded-lg bg-(--secondary-bg) border border-(--input-focus-border-color) px-2 py-0.5 text-sm font-medium text-(--input-text)"
+              className="flex items-center gap-1 rounded-lg bg-(--secondary-button-bg) border border-(--input-focus-border-color) px-2 py-0.5 text-sm font-medium text-(--input-text)"
             >
               {availableOptions?.find((currOption) => currOption.value == option)?.label}
               <button

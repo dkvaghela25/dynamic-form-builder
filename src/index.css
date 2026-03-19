@@ -1,17 +1,20 @@
 :root {
 
-    --primary-bg: #5048e5;
-    --secondary-bg: #F2F2FD;
+    --primary-button-bg: #5048e5;
+    --secondary-button-bg: #F2F2FD;
+    
     --table-header-bg: #36304A;
     --table-row-primary-color: #ffffff;
     --table-row-secondary-color: #F5F5F5;
-
 
     --primary-text: #151b23;
     --secondary-text: #65758b;
     --input-text: #5048e5;
     --destructive: #ef4343;
-    --table-row-text: #555;
+    
+    --table-row-text: #1d1d1d;
+
+    --border : #dadada;
 
     --input-border-color: #3535352c;
     --input-focus-border-color: #5048e5;

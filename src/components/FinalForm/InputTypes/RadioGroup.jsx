@@ -23,7 +23,7 @@ const RadioGroup = ({ field, error, schema }) => {
         return (
           <label
             htmlFor={`${id}-${label}`}
-            className={`flex rounded-lg border border-(--input-border-color) cursor-pointer ${fieldValue === value ? "bg-(--secondary-bg) border-(--input-focus-border-color)" : ""} p-3 gap-3 items-center`}
+            className={`flex rounded-lg border border-(--input-border-color) cursor-pointer ${fieldValue === value ? "bg-(--secondary-button-bg) border-(--input-focus-border-color)" : ""} p-3 gap-3 items-center`}
             key={label}
           >
             <input

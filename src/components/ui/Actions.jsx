@@ -3,9 +3,9 @@ import Icon from "./Icon";
 
 const Actions = ({ text, index, handleEdit, handleDelete }) => {
     return (
-        <div className="flex justify-center items-center border-t border-slate-200 gap-5 p-1">
-            <Icon helperText={`Edit ${text}`} icon="edit" onClick={(e) => handleEdit(e, index)} />
-            <Icon helperText={`Remove ${text}`} icon="delete" onClick={(e) => handleDelete(e, index)} />
+        <div className="flex justify-center items-center gap-5 p-1">
+            <Icon helperText={text ? `Edit ${text}` : ""} icon="edit" onClick={(e) => handleEdit(e, index)} />
+            <Icon helperText={text ? `Remove ${text}` : ""} icon="delete" onClick={(e) => handleDelete(e, index)} />
         </div>
     );
 };

@@ -18,7 +18,7 @@ const Icon = ({ helperText, icon, onClick }) => {
 
     return (
         <Tooltip helperText={helperText}>
-            <button className={`flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white cursor-pointer ${getDynamicStyles()}`} onClick={onClick}>
+            <button type="button" className={`flex h-7 w-7 items-center justify-center rounded-sm border border-slate-200 bg-white cursor-pointer ${getDynamicStyles()}`} onClick={onClick}>
                 {icons[icon]}
             </button>
         </Tooltip>

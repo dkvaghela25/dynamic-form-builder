@@ -163,9 +163,9 @@ const ValidationRules = ({ displayId, availableRules, validationRules, setFormDa
                                 </div>
                                 {validationRules?.map((rule, index) => {
                                     return (
-                                        <div className="grid grid-cols-3 font-semibold" key={index}>
-                                            <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
-                                            <div className="flex justify-center items-center border-t border-slate-200 p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
+                                        <div className="grid grid-cols-3 font-semibold border-t border-slate-200" key={index}>
+                                            <div className="flex justify-center items-center p-2 text-center text-sm capitalize text-slate-700"><span>{rule.type}</span></div>
+                                            <div className="flex justify-center items-center p-2 text-center text-sm text-slate-700">{rule?.value?.toString()}</div>
                                             {rule.type !== "required" && <Actions text="Rule" index={index} handleEdit={handleEdit} handleDelete={handleDelete} />}
                                         </div>
                                     )

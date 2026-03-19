@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
             }
         } else if (pathname === "/list") {
             if (isMissingFormData) {
-                toastNotification("Please fill the form before viewing confirmation page", "error");
+                toastNotification("Please fill at least one form before viewing submission details", "error");
             }
         }
     }, [isMissingSchema, defaultLabelInFormSchema, pathname, isMissingFormData]);
@@ -36,7 +36,7 @@ const ProtectedRoutes = () => {
     if (pathname === "/form" && (isMissingSchema || defaultLabelInFormSchema)) {
         return <Navigate to="/" replace />;
     } else if (pathname === "/list" && isMissingFormData) {
-        return <Navigate to="/form" replace />;
+        // return <Navigate to="/form" replace />;
     }
 
     return <Outlet />;

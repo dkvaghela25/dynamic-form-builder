@@ -77,7 +77,7 @@ const Dropdown = ({ field, error, schema }) => {
             onClick={() => changeValue(option)}
             className={`
               cursor-pointer border-b border-(--input-border-color) last:border-0 py-2 px-3
-              ${value === option.value ? "bg-(--secondary-bg) text-(--input-text) font-medium" : "text-slate-700"}
+              ${value === option.value ? "bg-(--secondary-button-bg) text-(--input-text) font-medium" : "text-slate-700"}
             `}
           >
             {option.label}

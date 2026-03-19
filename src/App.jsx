@@ -3,7 +3,7 @@ import AppLayout from "./layout/AppLayout";
 import DynamicForm from "./pages/DynamicForm";
 import FinalFormPage from "./pages/FinalFormPage";
 import ProtectedRoutes from "./auth/ProtectedRoutes";
-import DisplayData from "./pages/DisplayData";
+import SubmissionDetails from "./pages/SubmissionDetails";
 
 const App = () => {
 
@@ -25,7 +25,7 @@ const App = () => {
             },
             {
               path: "/list",
-              element: <DisplayData />
+              element: <SubmissionDetails />
             }
           ]
         },
