@@ -32,7 +32,8 @@ const FilterInputs = ({ formSchema, tableData, setTableRows }) => {
         }, 500);
 
         return () => clearTimeout(handler);
-    }, [filters, tableData, setTableRows]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filters]);
 
     const options = formSchema.map(({ label, name }) => ({ label, value: name }));
 

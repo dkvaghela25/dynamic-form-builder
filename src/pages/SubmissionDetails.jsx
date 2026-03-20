@@ -9,7 +9,7 @@ const SubmissionDetails = () => {
                     <h2 className="text-2xl font-semibold text-slate-800">Submission Details</h2>
                     <p className="mt-1 text-sm text-slate-500">Review the information captured from your recent submission.</p>
                 </div>
-                <Link to="/form"><button className="cursor-pointer h-fit rounded bg-(--table-header-bg) px-4 py-2.5 text-sm font-semibold text-white transition">Add Row</button></Link>
+                <Link to="/form"><button className="text-[16px]! cursor-pointer h-fit rounded bg-(--table-header-bg) px-4 py-2.5 text-sm font-semibold text-white transition">Add Row</button></Link>
             </div>
             <FormSubmissionsTable />
         </div>

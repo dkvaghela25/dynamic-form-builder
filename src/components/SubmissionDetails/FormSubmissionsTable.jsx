@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import Icon from "../ui/Icon";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Table from "../ui/Table";
 import Actions from "../ui/Actions";
 import ConfirmationPopup from "../ui/ConfirmationPopup";
 import { toastNotification } from "../../utils/toastHelper";
 import EmptyMessage from "./EmptyMessage";
 import PaginationBar from "../ui/PaginationBar";
-import Select from "../ui/Select";
 import FilterInputs from "./FilterInputs";
+import { getSortingLogic } from "../../utils/getSortingLogic";
 
 const FormSubmissionsTable = () => {
 
@@ -25,7 +24,6 @@ const FormSubmissionsTable = () => {
         localStorage.setItem("submittedFormData", JSON.stringify(formData));
     }, [formData]);
 
-    const tableColumns = [...formSchema.map(({ label }) => label), "Actions"];
     const tableData = formData.map(({ data, submissionId }) => {
         return {
             ...data,
@@ -41,6 +39,12 @@ const FormSubmissionsTable = () => {
     const handleEdit = (submissionId) => {
         navigate(`/form?submissionId=${submissionId}`)
     }
+
+    const tableColumns = [...formSchema.map(({ name, label, type }) => ({
+        name,
+        label,
+        sortBy: getSortingLogic(type, setTableRows)
+    })), { name: "actions", label: "Actions" }];
 
     const handleDelete = (submissionId) => {
         const newFormData = formData.filter(({ submissionId: currId }) => currId !== submissionId);
