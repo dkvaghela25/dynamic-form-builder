@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Select from "../ui/Select";
 
-const FilterInputs = ({ formSchema, tableData, setTableRows }) => {
+const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
 
     const [filters, setFilters] = useState({
         name: "",
@@ -22,13 +22,13 @@ const FilterInputs = ({ formSchema, tableData, setTableRows }) => {
             const { name, value } = filters;
             
             if (!value || !name) {
-                setTableRows(tableData);
+                setFilteredRows(tableData);
                 return;
             }
 
             const regex = new RegExp(value, "i");
             const filteredData = tableData.filter(row => regex.test(row[name]));
-            setTableRows(filteredData);
+            setFilteredRows(filteredData);
         }, 500);
 
         return () => clearTimeout(handler);
@@ -38,8 +38,8 @@ const FilterInputs = ({ formSchema, tableData, setTableRows }) => {
     const options = formSchema.map(({ label, name }) => ({ label, value: name }));
 
     return (
-        <div className="grid grid-cols-[1fr_2fr_2fr] gap-5 w-[65%] items-center rounded-2xl bg-(--table-row-secondary-color) p-6">
-            <label className="font-semibold! text-xl uppercase">Filter Table Data :</label>
+        <div className="grid grid-cols-[1fr_2fr_2fr] gap-5 w-[68%] items-center rounded-2xl bg-(--table-row-secondary-color) p-6">
+            <label className="font-semibold! text-xl uppercase">Search Table Data :</label>
             <Select
                 options={options}
                 handleChange={handleChange}

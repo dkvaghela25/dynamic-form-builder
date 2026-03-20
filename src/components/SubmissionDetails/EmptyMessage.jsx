@@ -7,7 +7,7 @@ const EmptyMessage = () => {
             <p className="text-(--secondary-text) mt-2">Start by adding some data to see your table come alive.</p>
             <Link to="/form">
                 <button
-                    onClick={() => console.log("Add new entry")}
+                    type="button"
                     className="cursor-pointer mt-4 px-4 py-2 bg-(--table-header-bg) text-white rounded-md shadow"
                 >
                     Add New Entry

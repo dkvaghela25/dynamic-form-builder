@@ -34,8 +34,6 @@ const FormActions = ({ submittedFormData, submissionId, defaultValues }) => {
     }
 
     const handleReset = () => {
-        console.log("Reset")
-        console.log(defaultValues)
         reset(defaultValues);
     }
 

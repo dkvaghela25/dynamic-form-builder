@@ -16,7 +16,6 @@ export const getSortingLogic = (inputType, setTableRows) => {
             });
         };
 
-
         case "number":
         case "range": return (name, sortingOrder) => {
             if (!sortingOrder) return;

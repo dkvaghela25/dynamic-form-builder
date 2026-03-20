@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../ui/Table";
 import Actions from "../ui/Actions";
@@ -10,59 +10,83 @@ import FilterInputs from "./FilterInputs";
 import { getSortingLogic } from "../../utils/getSortingLogic";
 
 const FormSubmissionsTable = () => {
-
+    const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
 
-    const rawFormSchema = localStorage.getItem("formSchema")
-    const rawFormData = localStorage.getItem("submittedFormData")
+    const rawFormSchema = localStorage.getItem("formSchema");
+    const rawFormData = localStorage.getItem("submittedFormData");
     const formSchema = JSON.parse(rawFormSchema) || [];
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState(JSON.parse(rawFormData) || []);
+    console.log(rawFormData)
+    const [filteredRows, setFilteredRows] = useState([]);
+    const [tableRows, setTableRows] = useState([]);
 
     useEffect(() => {
         localStorage.setItem("submittedFormData", JSON.stringify(formData));
     }, [formData]);
 
-    const tableData = formData.map(({ data, submissionId }) => {
-        return {
+    const tableData = useMemo(() => {
+        return formData.map(({ data, submissionId }) => ({
             ...data,
-            actions: <Actions
-                handleEdit={() => handleEdit(submissionId)}
-                handleDelete={() => setSelectedId(submissionId)}
-            />
-        }
-    })
+            actions: (
+                <Actions
+                    handleEdit={() => handleEdit(submissionId)}
+                    handleDelete={() => setSelectedId(submissionId)}
+                />
+            )
+        }));
+    }, [formData]);
 
-    const [tableRows, setTableRows] = useState(tableData);
+    useEffect(() => {
+        setFilteredRows(tableData);
+    }, [tableData]);
 
     const handleEdit = (submissionId) => {
-        navigate(`/form?submissionId=${submissionId}`)
-    }
-
-    const tableColumns = [...formSchema.map(({ name, label, type }) => ({
-        name,
-        label,
-        sortBy: getSortingLogic(type, setTableRows)
-    })), { name: "actions", label: "Actions" }];
+        navigate(`/form?submissionId=${submissionId}`);
+    };
 
     const handleDelete = (submissionId) => {
-        const newFormData = formData.filter(({ submissionId: currId }) => currId !== submissionId);
-        setFormData(newFormData);
-        setSelectedId(null)
+        setFormData(prev => prev.filter(({ submissionId: currId }) => currId !== submissionId));
+        setSelectedId(null);
         toastNotification("Row deleted successfully", "success");
-    }
+    };
+
+    const tableColumns = [
+        ...formSchema.map(({ name, label, type }) => ({
+            name,
+            label,
+            sortBy: getSortingLogic(type, setTableRows)
+        })),
+        { name: "actions", label: "Actions" }
+    ];
 
     return (
         <>
-            {formData && tableData.length !== 0
-                ? <>
-                    <FilterInputs formSchema={formSchema} setTableRows={setTableRows} tableData={tableData} />
+            {formData.length !== 0 ? (
+                <>
+                    <FilterInputs
+                        formSchema={formSchema}
+                        setFilteredRows={setFilteredRows}
+                        tableData={tableData}
+                    />
                     <Table columns={tableColumns} rows={tableRows} />
-                    {tableRows.length !== 0 && <PaginationBar setTableRows={setTableRows} tableData={tableRows} />}
+                    {filteredRows.length !== 0 && (
+                        <PaginationBar
+                            setTableRows={setTableRows}
+                            filteredRows={filteredRows}
+                        />
+                    )}
                 </>
-                : <EmptyMessage />}
-            {selectedId && <ConfirmationPopup setSelectedId={setSelectedId} onConfirm={() => handleDelete(selectedId)} />}
+            ) : (
+                <EmptyMessage />
+            )}
+            {selectedId && (
+                <ConfirmationPopup
+                    setSelectedId={setSelectedId}
+                    onConfirm={() => handleDelete(selectedId)}
+                />
+            )}
         </>
     );
 };

@@ -1,21 +1,47 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
-const PaginationBar = ({ tableData, setTableRows }) => {
+const PaginationBar = ({ filteredRows, setTableRows }) => {
     const [currPage, setCurrPage] = useState(1);
     const rowsPerPage = 10;
-    const pages = Math.ceil(tableData.length / rowsPerPage);
-    const pagesArr = Array.from({ length: pages }, (_, index) => index + 1);
+    const pages = Math.ceil(filteredRows.length / rowsPerPage);
+    
+    const getPagesArr = () => {
+        let arr = Array.from({ length: pages }, (_, index) => index + 1);
+        if(pages <= 10) {
+            return arr;
+        } else {
+            const starting = arr.slice(0,3);
+            const ending = arr.slice(arr.length - 3);
+            const middle = ["..."]
+
+            if(![...starting, ...ending].includes(currPage)) {
+                middle.push(currPage - 1)
+                middle.push(currPage)
+                middle.push(currPage + 1)
+                middle.push("...")
+            }
+
+            return [...starting, ...middle, ...ending]
+        }
+    }
+
+    const pagesArr = getPagesArr();
+
+    useEffect(() => {
+        if (pages < currPage) setCurrPage(pages);
+    }, [pages]);
 
     useEffect(() => {
         const sliceStart = (currPage - 1) * rowsPerPage;
-        setTableRows(tableData.slice(sliceStart, sliceStart + rowsPerPage));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currPage]);
+        setTableRows(filteredRows.slice(sliceStart, sliceStart + rowsPerPage));
+    }, [currPage, filteredRows]);
 
     const gotoPage = (pageNo) => {
         if (pageNo >= 1 && pageNo <= pages) setCurrPage(pageNo);
     };
+
 
     return (
         <div className="flex items-center justify-center py-6">
