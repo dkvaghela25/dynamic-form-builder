@@ -1,6 +1,10 @@
 import { GoChevronDown } from "react-icons/go";
 
 const Select = ({ name, value, multiple = false, placeholder, options, handleChange, className = "" }) => {
+    const isEmptyValue = Array.isArray(value)
+        ? value.length === 0
+        : value === "" || value === null || value === undefined;
+
     return (
         <div className="relative w-full">
             <select
@@ -9,7 +13,7 @@ const Select = ({ name, value, multiple = false, placeholder, options, handleCha
                 name={name}
                 value={value}
                 onChange={handleChange}
-                className={`${className} w-full pr-10 appearance-none rounded-lg border ${((value.length === 0)) ? "text-slate-300" : "text-slate-900"} bg-white px-2 py-1.5 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
+                className={`${className} w-full pr-10 appearance-none rounded-lg border ${isEmptyValue ? "text-slate-300" : "text-slate-900"} bg-white px-2 py-1.5 outline-none transition placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100`}
             >
                 <option className="text-slate-900" disabled hidden value="">{placeholder}</option>
                 {options?.map((option, index) => {

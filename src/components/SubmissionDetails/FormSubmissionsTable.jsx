@@ -10,14 +10,25 @@ import FilterInputs from "./FilterInputs";
 import { getSortingLogic } from "../../utils/getSortingLogic";
 
 const FormSubmissionsTable = () => {
+
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState(null);
 
-    const rawFormSchema = localStorage.getItem("formSchema");
-    const rawFormData = localStorage.getItem("submittedFormData");
-    const formSchema = JSON.parse(rawFormSchema) || [];
+    const formSchema = useMemo(() => {
+        try {
+            return JSON.parse(localStorage.getItem("formSchema") || "[]") || [];
+        } catch {
+            return [];
+        }
+    }, []);
 
-    const [formData, setFormData] = useState(JSON.parse(rawFormData) || []);
+    const [formData, setFormData] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("submittedFormData") || "[]") || [];
+        } catch {
+            return [];
+        }
+    });
     const [filteredRows, setFilteredRows] = useState([]);
     const [tableRows, setTableRows] = useState([]);
 
@@ -37,6 +48,7 @@ const FormSubmissionsTable = () => {
 
     const tableData = useMemo(() => {
         return formData.map(({ data, submissionId }) => ({
+            rowId: submissionId,
             ...data,
             actions: (
                 <Actions
@@ -51,15 +63,20 @@ const FormSubmissionsTable = () => {
         setFilteredRows(tableData);
     }, [tableData]);
 
+    useEffect(() => {
+        if (filteredRows.length === 0) {
+            setTableRows([]);
+        }
+    }, [filteredRows]);
 
-    const tableColumns = [
+    const tableColumns = useMemo(() => ([
         ...formSchema.map(({ name, label, type }) => ({
             name,
             label,
-            sortBy: getSortingLogic(type, setTableRows)
+            sortBy: getSortingLogic(type, setFilteredRows)
         })),
         { name: "actions", label: "Actions" }
-    ];
+    ]), [formSchema, setFilteredRows]);
 
     return (
         <>

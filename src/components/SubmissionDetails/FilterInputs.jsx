@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Select from "../ui/Select";
 
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
 
     const [filters, setFilters] = useState({
@@ -20,20 +22,18 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
     useEffect(() => {
         const handler = setTimeout(() => {
             const { name, value } = filters;
-            
             if (!value || !name) {
                 setFilteredRows(tableData);
                 return;
             }
 
-            const regex = new RegExp(value, "i");
-            const filteredData = tableData.filter(row => regex.test(row[name]));
+            const regex = new RegExp(escapeRegExp(value), "i");
+            const filteredData = tableData.filter((row) => regex.test(String(row[name] ?? "")));
             setFilteredRows(filteredData);
         }, 500);
 
         return () => clearTimeout(handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filters]);
+    }, [filters, tableData, setFilteredRows]);
 
     const options = formSchema.map(({ label, name }) => ({ label, value: name }));
 
