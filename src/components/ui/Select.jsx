@@ -13,7 +13,7 @@ const Select = ({ name, value, multiple = false, placeholder, options, handleCha
             >
                 <option className="text-slate-900" disabled hidden value="">{placeholder}</option>
                 {options?.map((option, index) => {
-                    return <option className="text-slate-900" key={index} value={option?.value || option?.label || option}>{option?.label || option}</option>
+                    return <option className="text-slate-900" key={index} value={option?.value || option}>{option?.label || option}</option>
                 })}
             </select>
             <span className="flex justify-end items-center h-0 text-slate-500 pointer-events-none absolute top-5 right-2">

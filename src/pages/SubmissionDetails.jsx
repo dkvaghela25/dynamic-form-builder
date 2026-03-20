@@ -3,7 +3,7 @@ import FormSubmissionsTable from "../components/SubmissionDetails/FormSubmission
 
 const SubmissionDetails = () => {
     return (
-        <div className="flex flex-col items-center gap-5 bg-white p-10 mx-auto rounded-2xl">
+        <div className="flex flex-col min-h-[90vh] items-center gap-5 bg-white p-10 mx-auto rounded-2xl">
             <div className="w-full flex justify-between items-center border-b pb-5 border-(--border)">
                 <div>
                     <h2 className="text-2xl font-semibold text-slate-800">Submission Details</h2>
@@ -16,5 +16,4 @@ const SubmissionDetails = () => {
     );
 };
 
-
-export default SubmissionDetails; 
+export default SubmissionDetails;
