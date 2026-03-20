@@ -46,8 +46,8 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
 
 
     return (
-        <div className="flex items-center justify-between w-full">
-            <div className="grid grid-cols-2 items-center">
+        <div className="flex items-center justify-end w-full">
+            {/* <div className="grid grid-cols-2 items-center">
                 <label className="text-xl font-semibold text-(--primary-text)" htmlFor="">Rows Per Page : </label>
                 <Select
                     name="type"
@@ -56,11 +56,9 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
                     options={availableRowsPerPage}
                     handleChange={(e) => setRowsPerPage(e.target.value)}
                     multiple={false}
-                className="focus:border-(--table-header-bg)!"
-
-                    // className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:bg-slate-100"
+                    className="focus:border-(--table-header-bg)!"
                 />
-            </div>
+            </div> */}
             <div className="flex items-center justify-center py-6">
                 <div className="inline-flex -space-x-px rounded-md shadow-sm bg-white border border-slate-200 overflow-hidden">
                     <button
@@ -75,7 +73,7 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
                         <button
                             key={pageNumber}
                             onClick={() => gotoPage(pageNumber)}
-                            className={`relative inline-flex items-center px-4 py-2 cursor-pointer font-semibold border-r border-(--border) transition-all
+                            className={`relative inline-flex items-center px-4 py-2 cursor-pointer font-semibold border-r border-slate-200 transition-all
                             ${currPage === pageNumber
                                     ? "bg-(--table-header-bg) text-white"
                                     : "text-(--primary-text) hover:bg-slate-50"
