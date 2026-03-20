@@ -193,3 +193,5 @@ export const defaultLabels = [
     "Multi Select",
     "Slider",
 ]
+
+export const availableRowsPerPage = [5, 10, 15, 20, 25]

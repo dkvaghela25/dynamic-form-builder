@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "../ui/Table";
 import Actions from "../ui/Actions";
@@ -26,6 +26,16 @@ const FormSubmissionsTable = () => {
         localStorage.setItem("submittedFormData", JSON.stringify(formData));
     }, [formData]);
 
+    const handleEdit = useCallback((submissionId) => {
+        navigate(`/form?submissionId=${submissionId}`);
+    }, [navigate]);
+
+    const handleDelete = useCallback((submissionId) => {
+        setFormData(prev => prev.filter(({ submissionId: currId }) => currId !== submissionId));
+        setSelectedId(null);
+        toastNotification("Row deleted successfully", "success");
+    }, [])
+
     const tableData = useMemo(() => {
         return formData.map(({ data, submissionId }) => ({
             ...data,
@@ -36,21 +46,12 @@ const FormSubmissionsTable = () => {
                 />
             )
         }));
-    }, [formData]);
+    }, [formData, handleEdit]);
 
     useEffect(() => {
         setFilteredRows(tableData);
     }, [tableData]);
 
-    const handleEdit = (submissionId) => {
-        navigate(`/form?submissionId=${submissionId}`);
-    };
-
-    const handleDelete = (submissionId) => {
-        setFormData(prev => prev.filter(({ submissionId: currId }) => currId !== submissionId));
-        setSelectedId(null);
-        toastNotification("Row deleted successfully", "success");
-    };
 
     const tableColumns = [
         ...formSchema.map(({ name, label, type }) => ({
