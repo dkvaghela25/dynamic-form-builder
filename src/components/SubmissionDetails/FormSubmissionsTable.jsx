@@ -18,7 +18,6 @@ const FormSubmissionsTable = () => {
     const formSchema = JSON.parse(rawFormSchema) || [];
 
     const [formData, setFormData] = useState(JSON.parse(rawFormData) || []);
-    console.log(rawFormData)
     const [filteredRows, setFilteredRows] = useState([]);
     const [tableRows, setTableRows] = useState([]);
 

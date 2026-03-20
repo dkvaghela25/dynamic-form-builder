@@ -6,7 +6,7 @@ import { availableRowsPerPage } from "../../constants";
 
 const PaginationBar = ({ filteredRows, setTableRows }) => {
     const [currPage, setCurrPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const pages = Math.ceil(filteredRows.length / rowsPerPage);
 
     const getPagesArr = () => {
@@ -37,6 +37,9 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
 
     useEffect(() => {
         const sliceStart = (currPage - 1) * rowsPerPage;
+        console.log(sliceStart)
+        console.log(sliceStart + rowsPerPage)
+        console.log(filteredRows.slice(sliceStart, sliceStart + rowsPerPage))
         setTableRows(filteredRows.slice(sliceStart, sliceStart + rowsPerPage));
     }, [currPage, filteredRows, rowsPerPage]);
 
@@ -46,19 +49,19 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
 
 
     return (
-        <div className="flex items-center justify-end w-full">
-            {/* <div className="grid grid-cols-2 items-center">
+        <div className="flex items-center justify-between w-full">
+            <div className="grid grid-cols-2 items-center">
                 <label className="text-xl font-semibold text-(--primary-text)" htmlFor="">Rows Per Page : </label>
                 <Select
                     name="type"
                     value={rowsPerPage}
                     placeholder="Select Input Type"
                     options={availableRowsPerPage}
-                    handleChange={(e) => setRowsPerPage(e.target.value)}
+                    handleChange={(e) => setRowsPerPage(+e.target.value)}
                     multiple={false}
                     className="focus:border-(--table-header-bg)!"
                 />
-            </div> */}
+            </div>
             <div className="flex items-center justify-center py-6">
                 <div className="inline-flex -space-x-px rounded-md shadow-sm bg-white border border-slate-200 overflow-hidden">
                     <button
