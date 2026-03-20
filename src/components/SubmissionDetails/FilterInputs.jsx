@@ -38,7 +38,7 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
     const options = formSchema.map(({ label, name }) => ({ label, value: name }));
 
     return (
-        <div className="grid grid-cols-[1fr_2fr_2fr] gap-5 w-[68%] items-center rounded-2xl bg-(--table-row-secondary-color) p-6">
+        <div className="grid grid-cols-[1fr_2fr_2fr] gap-5 w-[80%] items-center rounded-2xl bg-(--table-row-secondary-color) p-6">
             <label className="font-semibold! text-xl uppercase">Search Table Data :</label>
             <Select
                 options={options}
