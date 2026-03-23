@@ -1,6 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import { generateUniqueId } from "../../utils/generateUniqueId";
 import { useSetFormSchema } from "../../contexts/formSchemaContext";
 import { availableInputs } from "../../constants";
@@ -10,15 +9,10 @@ const DraggableButton = memo(({ inputType }) => {
     const setFormSchema = useSetFormSchema();
     const schema = availableInputs[inputType];
 
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
         id: inputType,
         data: inputType
     });
-
-    const style = useMemo(() => ({
-        transform: CSS.Translate.toString(transform),
-        transition: "none",
-    }), [transform]);
 
     const addInput = (e) => {
         e.preventDefault();
@@ -37,13 +31,12 @@ const DraggableButton = memo(({ inputType }) => {
                 ref={setNodeRef}
                 {...attributes}
                 {...listeners}
-                style={style}
                 onClick={(e) => {
                     if (!isDragging) addInput(e, schema);
                 }}
                 className={`
                     w-full cursor-move px-4 py-2.5 text-left text-sm font-medium  capitalize text-slate-700 transition hover:bg-slate-50 last:border-b-0
-                    ${isDragging ? "border border-slate-300 rounded-sm" : "border-b border-slate-200"}
+                    ${isDragging ? "border border-slate-300 rounded-sm opacity-50" : "border-b border-slate-200 opacity-100"}
                 `}
             >
                 {schema.label}
