@@ -1,54 +1,66 @@
+const normalizeString = (value) => String(value ?? "").toLowerCase();
 
-export const getSortingLogic = (inputType, setTableRows) => {
+const normalizeNumber = (value) => {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : Number.NEGATIVE_INFINITY;
+};
+
+const normalizeDate = (value) => {
+    const parsed = new Date(value).getTime();
+    return Number.isFinite(parsed) ? parsed : Number.NEGATIVE_INFINITY;
+};
+
+const getCompareValue = (row, name, inputType) => {
+    const value = row[name];
 
     switch (inputType) {
-
         case "text":
         case "email":
         case "password":
-        case "textarea": return (name, sortingOrder) => {
-            if (!sortingOrder) return;
-            setTableRows(prev => {
-                const sortedData = [...prev];
-                return sortingOrder === "Asc"
-                    ? sortedData.sort((a, b) => a[name].localeCompare(b[name]))
-                    : sortedData.sort((a, b) => b[name].localeCompare(a[name]));
-            });
-        };
-
+        case "textarea":
+            return normalizeString(value);
         case "number":
-        case "range": return (name, sortingOrder) => {
-            if (!sortingOrder) return;
-            setTableRows(prev => {
-                const sortedData = [...prev];
-                return sortingOrder === "Asc"
-                    ? sortedData.sort((a, b) => a[name] - b[name])
-                    : sortedData.sort((a, b) => b[name] - a[name]);
-            });
-        };
-
+        case "range":
+            return normalizeNumber(value);
         case "date":
-        case "datetime-local": return (name, sortingOrder) => {
-            if (!sortingOrder) return;
-            setTableRows(prev => {
-                const sortedData = [...prev];
-                return sortingOrder === "Asc"
-                    ? sortedData.sort((a, b) => new Date(a[name]) - new Date(b[name]))
-                    : sortedData.sort((a, b) => new Date(b[name]) - new Date(a[name]));
-            });
-        };
-
-        case "date-range": return (name, sortingOrder) => {
-            if (!sortingOrder) return;
-            setTableRows(prev => {
-                const sortedData = [...prev];
-                return sortingOrder === "Asc"
-                    ? sortedData.sort((a, b) => new Date(a[name].startDate) - new Date(b[name].startDate))
-                    : sortedData.sort((a, b) => new Date(b[name].startDate) - new Date(a[name].startDate));
-            });
-        };
-
-        default: return undefined
+        case "datetime-local":
+            return normalizeDate(value);
+        case "date-range":
+            return normalizeDate(value?.startDate);
+        default:
+            return normalizeString(value);
     }
+};
 
-}
+export const getSortingLogic = (inputType, setRows) => {
+    switch (inputType) {
+        case "text":
+        case "email":
+        case "password":
+        case "textarea":
+        case "number":
+        case "range":
+        case "date":
+        case "datetime-local":
+        case "date-range":
+            return (name, sortingOrder) => {
+                if (!sortingOrder) return;
+
+                setRows((prevRows) => {
+                    const sortedData = [...prevRows].sort((a, b) => {
+                        const first = getCompareValue(a, name, inputType);
+                        const second = getCompareValue(b, name, inputType);
+
+                        if (first < second) return sortingOrder === "Asc" ? -1 : 1;
+                        if (first > second) return sortingOrder === "Asc" ? 1 : -1;
+                        return 0;
+                    });
+
+                    return sortedData;
+                });
+            };
+
+        default:
+            return undefined;
+    }
+};

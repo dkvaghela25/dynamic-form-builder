@@ -11,7 +11,7 @@ const SortingButton = ({ sortBy, name }) => {
 
     useEffect(() => {
         if (sortingOrder) sortBy(name, sortingOrder);
-    }, [sortingOrder]);
+    }, [sortingOrder, sortBy, name]);
 
     const renderIcon = () => {
         if (sortingOrder === "Asc") return <FaSortUp className="w-5 h-5 cursor-pointer" />;
