@@ -4,8 +4,9 @@
     --secondary-button-bg: #F2F2FD;
     
     --table-header-bg: #36304A;
-    --table-row-primary-color: #ffffff;
-    --table-row-secondary-color: #F5F5F5;
+    --table-row-primary-bg: #ffffff;
+    --table-row-secondary-bg: #F5F5F5;
+    --table-row-hover-bg: #e6e6e6;
 
     --primary-text: #151b23;
     --secondary-text: #65758b;

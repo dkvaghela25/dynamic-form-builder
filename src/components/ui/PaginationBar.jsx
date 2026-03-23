@@ -4,10 +4,18 @@ import Select from "./Select";
 import { availableRowsPerPage } from "../../constants";
 
 const PaginationBar = ({ filteredRows, setTableRows }) => {
+    console.log("filteredRows....................................", filteredRows)
     const [currPage, setCurrPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const pages = Math.ceil(filteredRows.length / rowsPerPage);
     const currentPage = pages === 0 ? 1 : Math.min(currPage, pages);
+
+    useEffect(() => {
+        if (filteredRows.length < rowsPerPage) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setRowsPerPage(Math.ceil((filteredRows.length + 1)/ 5) * 5)
+        }
+    }, [filteredRows, setRowsPerPage, rowsPerPage]);
 
     const getPagesArr = () => {
         let arr = Array.from({ length: pages }, (_, index) => index + 1);
@@ -68,17 +76,17 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
                         <MdArrowBackIos className="w-4 h-4" />
                     </button>
 
-                        {pagesArr.map((pageNumber, index) => (
+                    {pagesArr.map((pageNumber, index) => (
                         <button
                             key={`page-${pageNumber}-${index}`}
                             onClick={() => gotoPage(pageNumber)}
                             disabled={pageNumber === "..."}
                             className={`relative inline-flex items-center px-4 py-2 cursor-pointer font-semibold border-r border-slate-200 transition-all
                             ${pageNumber === "..."
-                                ? "cursor-default text-(--primary-text)"
+                                    ? "cursor-default text-(--primary-text)"
                                     : currentPage === pageNumber
-                                    ? "bg-(--table-header-bg) text-white"
-                                    : "text-(--primary-text) hover:bg-slate-50"
+                                        ? "bg-(--table-header-bg) text-white"
+                                        : "text-(--primary-text) hover:bg-slate-50"
                                 }`}
                         >
                             {pageNumber}

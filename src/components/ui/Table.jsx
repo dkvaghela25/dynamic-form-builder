@@ -22,7 +22,7 @@ const Table = ({ columns, rows }) => {
                     {rows.length === 0
                         ? <tr className="p-10 text-xl text-(--secondary-text)"><td className="text-center p-5" colSpan={columns.length}>No Data Found</td></tr>
                         : rows.map((row, index) => (
-                            <tr key={row.rowId ?? `${index}-${row.id ?? "row"}`} className={`transition-colors ${index % 2 === 0 ? "bg-(--table-row-primary-color)" : "bg-(--table-row-secondary-color)"}`}>
+                            <tr key={row.rowId ?? `${index}-${row.id ?? "row"}`} className={`transition-colors ${index % 2 === 0 ? "bg-(--table-row-primary-bg)" : "bg-(--table-row-secondary-bg)"}  hover:bg-(--table-row-hover-bg)`}>
                                 {columns.map(({ name }) => (
                                     <td key={name} className={`px-4 py-3 text-(--table-row-text) font-medium max-w-80 whitespace-nowrap`}>
                                         {renderFormattedValue(row[name])}
