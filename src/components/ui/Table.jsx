@@ -6,7 +6,7 @@ const Table = ({ columns, rows }) => {
 
     return (
         <div className="w-full overflow-visible overflow-x-auto rounded-lg border border-slate-200 m-4 ">
-            <table className="w-full text-left">
+            <table className="w-full text-left text-sm">
                 <thead className="bg-(--table-header-bg) text-white uppercase">
                     <tr>
                         {columns.map(({ label, sortBy, name }, index) => (

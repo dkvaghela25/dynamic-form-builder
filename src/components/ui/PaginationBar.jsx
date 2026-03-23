@@ -50,8 +50,8 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
 
     return (
         <div className="flex items-center justify-between w-full">
-            <div className="grid grid-cols-2 items-center">
-                <label className="text-xl font-semibold text-(--primary-text)" htmlFor="">Rows Per Page : </label>
+            <div className="grid grid-cols-2 items-center w-[18%]">
+                <label className="font-semibold text-(--primary-text)" htmlFor="">Rows Per Page : </label>
                 <Select
                     name="type"
                     value={rowsPerPage}
@@ -63,7 +63,7 @@ const PaginationBar = ({ filteredRows, setTableRows }) => {
                 />
             </div>
             <div className="flex items-center justify-center py-6">
-                <div className="inline-flex -space-x-px rounded-md shadow-sm bg-white border border-slate-200 overflow-hidden">
+                <div className="inline-flex -space-x-px rounded-md text-sm shadow-sm bg-white border border-slate-200 overflow-hidden">
                     <button
                         disabled={currPage === 1}
                         onClick={() => gotoPage(currPage - 1)}
