@@ -1,8 +1,9 @@
 import { lazy } from "react";
 import { useFormSchema } from "../../contexts/formSchemaContext";
 import { FormProvider, useForm } from "react-hook-form";
-import PreviewForm from './PreviewForm/PreviewForm' 
+import PreviewForm from './PreviewForm/PreviewForm'
 import EditForm from "./EditForm/EditForm";
+import { useDroppable } from "@dnd-kit/core";
 
 const DevTool = lazy(() =>
     import('@hookform/devtools').then(module => ({ default: module.DevTool }))
@@ -17,8 +18,12 @@ const FormContainer = ({ editMode }) => {
         defaultValues: {}
     });
 
+    const { setNodeRef } = useDroppable({
+        id: "droppable-container"
+    })
+
     return (
-        <>
+        <div className="h-full" ref={setNodeRef}>
             {formSchema.length === 0
                 ? <div className="flex h-full w-full items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center text-2xl font-semibold text-slate-600">Select an input type from the left panel</div>
                 : <FormProvider {...methods}>
@@ -31,7 +36,7 @@ const FormContainer = ({ editMode }) => {
                     <DevTool control={methods.control} devToolsConfig={{ store: false }} />
                 </FormProvider>
             }
-        </>
+        </div>
     );
 };
 

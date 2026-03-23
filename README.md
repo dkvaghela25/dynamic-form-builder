@@ -1,22 +1,124 @@
-In a standard data table, "sortable" usually means the data has a clear alphanumeric, chronological, or magnitude-based order.
-Based on your list, here are the types that are effectively sortable:
-🟢 Highly Sortable
-These have a logical, built-in order:
+Got it — right now your dragged item (“replica”) sticks near the source instead of appearing in the empty drop area. In **@dnd-kit**, this happens because you’re not using a proper **drag overlay** or placeholder logic.
 
-* text / email / password / textarea: Alphabetical (A-Z).
-* date / datetime-local / date-range: Chronological (Oldest-Newest).
-* number / range: Numerical (1-10).
-* select / radio / switch / checkbox: These are usually sorted by their underlying value (e.g., true vs false) or the alphabetical label.
+### ✅ What you actually want
 
-🟡 Technically Sortable (But limited)
+When dragging:
 
-* color: Can be sorted by Hex code or RGB values, but this rarely looks "organized" to a human user unless sorted by Hue/Saturation.
+* The original item stays (or becomes faded)
+* A **floating replica follows the cursor**
+* The drop area shows space (placeholder)
 
-🔴 Generally Not Sortable
+---
 
-* file: Since this represents a binary object, you can't sort the "file" itself. You would typically sort by a metadata property instead, like File Name or Upload Date.
-* multiselect: Sorting these is messy because a record can have multiple values. Usually, tables sort these by the first item in the array or the total count of items.
+## 🔧 Fix: Use `DragOverlay` (recommended)
 
-Pro-tip: For select and radio types, it’s best to sort by the human-readable Label rather than the database ID so the order makes sense to the user.
-Would you like a JavaScript sort function snippet to handle these specific data types?
+You should NOT rely on `useDraggable` rendering a second div like you're doing. Instead, use `DragOverlay` from `@dnd-kit/core`.
 
+---
+
+### 1. Add DragOverlay in your parent component
+
+```jsx
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { useState } from "react";
+
+const FormBuilder = () => {
+  const [activeItem, setActiveItem] = useState(null);
+
+  return (
+    <DndContext
+      onDragStart={(event) => {
+        setActiveItem(event.active.data.current);
+      }}
+      onDragEnd={() => {
+        setActiveItem(null);
+      }}
+      onDragCancel={() => {
+        setActiveItem(null);
+      }}
+    >
+      {/* Your layout */}
+      
+      <DragOverlay>
+        {activeItem ? (
+          <div className="px-4 py-2.5 bg-slate-100 border rounded shadow">
+            {activeItem.label}
+          </div>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
+  );
+};
+```
+
+---
+
+### 2. Pass full schema in draggable `data`
+
+Update your draggable:
+
+```js
+const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: inputType,
+    data: schema // 👈 IMPORTANT (not just inputType)
+});
+```
+
+---
+
+### 3. Remove this fake replica ❌
+
+```jsx
+{isDragging && (
+    <div className="px-4 py-2.5 text-slate-400 bg-slate-50 border-b border-slate-200">
+        {schema.label}
+    </div>
+)}
+```
+
+This is why it's showing in the wrong place.
+
+---
+
+## ✨ Bonus: Show empty drop space (placeholder)
+
+In your drop zone (form preview), you should:
+
+* Detect `isOver`
+* Insert a temporary placeholder
+
+Example:
+
+```jsx
+const { isOver, setNodeRef } = useDroppable({
+  id: "form-drop-area"
+});
+
+return (
+  <div ref={setNodeRef} className="min-h-[200px]">
+    {formItems.map(...)}
+
+    {isOver && (
+      <div className="h-12 border-2 border-dashed border-blue-400 rounded" />
+    )}
+  </div>
+);
+```
+
+---
+
+## 🧠 Key takeaway
+
+* `useDraggable` → handles drag source
+* `DragOverlay` → handles floating replica (cursor-following)
+* `useDroppable` → handles empty space feedback
+
+---
+
+If you want, I can help you:
+
+* Add **sortable reordering**
+* Smooth **drop animations**
+* Or fix **cursor alignment issue (offset bug)**
+
+Just tell me 👍

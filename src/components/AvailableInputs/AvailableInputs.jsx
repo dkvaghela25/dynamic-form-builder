@@ -1,37 +1,17 @@
-import { useSetFormSchema } from "../../contexts/formSchemaContext";
 import { availableInputs } from "../../constants";
-import { generateUniqueId } from "../../utils/generateUniqueId";
+import DraggableButton from "./DraggableButton";
 
 const AvailableInputs = () => {
-
-    const setFormSchema = useSetFormSchema();
-    
-    const addInput = (newSchema) => {
-        const uniqueId = generateUniqueId(newSchema.type);
-        setFormSchema(prev => [...prev, { ...newSchema, name: uniqueId, id: uniqueId }])
-        const top = document.documentElement.scrollHeight;
-        window.scrollTo({
-            top,
-            behavior: 'smooth'
-        });
-    };
-
     return (
         <div
-            className="sticky top-6 h-fit w-[15%] shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+            className="sticky top-6 h-fit w-[15%] shrink-0 rounded-2xl border border-slate-200 bg-white shadow-sm"
         >
             <div className="border-b border-slate-200 px-4 py-3">
                 <div className="font-semibold text-slate-800">Input Library</div>
                 <div className="mt-1 text-xs text-slate-500">Select a field type to add it</div>
             </div>
-            {Object.entries(availableInputs).map(([key, value]) => {
-                return <button
-                    onClick={() => addInput(value)}
-                    className="w-full cursor-pointer border-b border-slate-200 px-4 py-2.5 text-left text-sm font-medium capitalize text-slate-700 transition hover:bg-slate-50 last:border-b-0"
-                    key={key}
-                >
-                    {value.label}
-                </button>
+            {Object.keys(availableInputs).map((inputType) => {
+                return <DraggableButton key={inputType} inputType={inputType} />
             })}
         </div>
     );
