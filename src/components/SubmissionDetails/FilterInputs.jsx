@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Select from "../ui/Select";
-import { IoIosCloseCircle, IoIosSearch } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -42,7 +42,7 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
     };
 
     return (
-        <div className="grid grid-cols-2 items-center gap-3 justify-self-left rounded-lg w-full max-w-3xl bg-(--table-row-secondary-bg) p-4 justify-between border border-gray-100 shadow-sm">
+        <div className={`grid ${!(filters.value && filters.name) ? "grid-cols-2" : "grid-cols-[2fr_2fr_0.1fr]"}  items-center gap-3 justify-self-left rounded-lg w-full max-w-3xl bg-(--table-row-secondary-bg) p-4 justify-between border border-gray-100 shadow-sm`}>
             <div className="">
                 <Select
                     options={options}
@@ -71,16 +71,18 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
                         text-(--primary-text)`}
                 />
 
-                {filters.value && (
-                    <button
-                        type="button"
-                        onClick={clearFilters}
-                        className="absolute inset-y-0 right-2 flex items-center px-1 text-gray-400 hover:text-red-500 transition-colors"
-                    >
-                        <IoIosCloseCircle className="w-5 h-5" />
-                    </button>
-                )}
             </div>
+
+            {filters.value && (
+                <button
+                    type="button"
+                    onClick={clearFilters}
+                    className="inset-y-0 px-4 py-1.5 rounded-md  flex items-center bg-(--destructive) text-white cursor-pointer transition-colors"
+                >
+                    Reset
+                </button>
+            )}
+
         </div>
     );
 };
