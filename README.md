@@ -1,56 +1,90 @@
-# Dynamic Form Builder
+# 🧩 Dynamic Form Builder
 
-A drag-and-drop form builder built with React, Vite, and Tailwind CSS.
+A modern **drag-and-drop form builder** built with **React, Vite, and Tailwind CSS**.
 
-This project lets you:
+Design, configure, and manage fully dynamic forms with ease — all within a sleek UI and powered by local storage persistence.
 
-- Build custom forms by dragging input types into a canvas
-- Configure labels, names, placeholders, options, and validation rules
-- Preview generated schema in JSON format
-- Fill and submit the generated form
-- View, filter, sort, edit, and delete submission rows
+---
 
-The app stores schema and submissions in browser local storage, so you can continue where you left off during development.
+## 🚀 Overview
 
-## Features
+This project allows you to:
 
-- Drag-and-drop form input creation using `@dnd-kit`
-- Supported inputs:
-  - Text input (text, number, email, password, color)
-  - Multi-line input (textarea)
-  - Dropdown
-  - Radio group
-  - Checkbox group
-  - Date picker (date, datetime-local, date-range)
-  - File upload
-  - Slider (range)
-  - Toggle switch
-  - Multi-select
-- Editable validation rules (required, min/max length, pattern, selection limits, file constraints, date limits)
-- Form rendering powered by `react-hook-form`
-- Submission listing with:
-  - Column-based sorting
-  - Filtering by schema fields
-  - Pagination
-  - Edit and delete actions
-- Toast notifications for user feedback
+* 🏗️ Build custom forms via drag-and-drop
+* ⚙️ Configure fields with labels, validation, and options
+* 🔍 Preview form schema in JSON format
+* 📝 Fill and submit generated forms
+* 📊 Manage submissions with filtering, sorting, and editing
 
-## Tech Stack
+All data is stored in **browser local storage**, so your progress is preserved during development.
 
-- React 19
-- Vite 7
-- Tailwind CSS 4
-- React Router
-- React Hook Form + Hook Form DevTools
-- DnD Kit (`@dnd-kit/core`, `@dnd-kit/sortable`)
+---
 
-## Project Routes
+## ✨ Features
 
-- `/` - Form builder page (schema creation)
-- `/form` - Rendered final form page
-- `/list` - Submission details table
+### 🧱 Form Builder
 
-## Getting Started
+* Drag-and-drop input creation using `@dnd-kit`
+* Intuitive schema editing panel
+* Live JSON schema preview
+
+### 🧾 Supported Input Types
+
+* **Basic Inputs**: text, number, email, password, color
+* **Textarea**
+* **Dropdown / Select**
+* **Radio Group**
+* **Checkbox Group**
+* **Date Picker** (date, datetime-local, date-range)
+* **File Upload**
+* **Slider (Range)**
+* **Toggle Switch**
+* **Multi-select**
+
+### ✅ Validation Support
+
+* Required fields
+* Min/Max length
+* Regex pattern matching
+* Selection limits
+* File constraints
+* Date restrictions
+
+### 📊 Submission Management
+
+* Sort by columns
+* Filter by fields
+* Pagination support
+* Edit & delete entries
+
+### 🔔 User Feedback
+
+* Toast notifications for actions and errors
+
+---
+
+## 🛠️ Tech Stack
+
+* **React 19**
+* **Vite 7**
+* **Tailwind CSS 4**
+* **React Router**
+* **React Hook Form + DevTools**
+* **DnD Kit** (`@dnd-kit/core`, `@dnd-kit/sortable`)
+
+---
+
+## 🧭 Application Routes
+
+| Route   | Description                    |
+| ------- | ------------------------------ |
+| `/`     | Form Builder (schema creation) |
+| `/form` | Rendered dynamic form          |
+| `/list` | Submission management table    |
+
+---
+
+## ⚡ Getting Started
 
 ### 1. Install dependencies
 
@@ -82,33 +116,65 @@ npm run preview
 npm run lint
 ```
 
-## How It Works
+---
 
-1. Open `/` and drag input types from the left panel into the form area.
-2. Edit field schema (label, name, options, rules) from the editor panel.
-3. Review generated schema in the JSON panel.
-4. Go to `/form` and submit data.
-5. Go to `/list` to manage saved submissions.
+## 🔄 How It Works
 
-## Local Storage Keys
+1. Go to `/` and drag input components into the canvas
+2. Configure fields (label, name, validation rules)
+3. Review the generated JSON schema
+4. Navigate to `/form` and submit data
+5. Visit `/list` to view and manage submissions
 
-- `formSchema`: stores generated form schema
-- `submittedFormData`: stores submitted rows
+---
 
-## Folder Highlights
+## 💾 Local Storage
 
-- `src/components/AvailableInputs`: draggable input source cards
-- `src/components/MainContent`: builder canvas and schema editing
-- `src/components/FinalForm`: dynamic form rendering and submission actions
-- `src/components/SubmissionDetails`: table, filters, and row actions
-- `src/contexts`: state management for active schema
-- `src/utils`: reusable helpers for rules, defaults, sorting, rendering
+| Key                 | Description               |
+| ------------------- | ------------------------- |
+| `formSchema`        | Stores the form structure |
+| `submittedFormData` | Stores submitted entries  |
 
-## Deployment
+---
 
-The repository includes:
+## 📁 Project Structure
 
-- `netlify.toml`
-- `public/_redirects`
+```
+src/
+├── components/
+│   ├── AvailableInputs     # Draggable input elements
+│   ├── MainContent         # Builder canvas & schema editor
+│   ├── FinalForm           # Dynamic form rendering
+│   ├── SubmissionDetails   # Table, filters, actions
+├── contexts/               # State management
+├── utils/                  # Helper functions
+```
 
-These files can be used for Netlify deployment and client-side route handling.
+---
+
+## 🌐 Deployment
+
+This project includes configuration for **Netlify deployment**:
+
+* `netlify.toml`
+* `public/_redirects`
+
+Supports client-side routing out of the box.
+
+---
+
+## 📌 Future Improvements (Optional Section)
+
+* Backend integration (save schemas & submissions)
+* Authentication system
+* Export/import schema
+* Form sharing via link
+* UI themes
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to fork the repo and submit a pull request.
+
+---

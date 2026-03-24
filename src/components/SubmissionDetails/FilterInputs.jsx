@@ -50,7 +50,7 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
                 <span className="text-sm font-medium uppercase tracking-wider">Filters</span>
             </div>
 
-            <div className="flex flex-1 items-center max-w-2xl gap-0 shadow-sm rounded-lg overflow-hidden border border-(--border) transition-all">
+            <div className="flex flex-1 items-center max-w-2xl gap-0 shadow-sm rounded-md overflow-hidden border border-(--border) transition-all">
 
                 <div className="w-1/2 border-r border-gray-200">
                     <Select
@@ -59,7 +59,7 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
                         name="name"
                         value={filters.name}
                         placeholder="Select Column"
-                        className="h-11 border-none bg-white focus:ring-0 rounded-none cursor-pointer"
+                        className="h-9 border-none bg-white focus:ring-0 rounded-none cursor-pointer"
                     />
                 </div>
 
@@ -75,7 +75,7 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
                         onChange={handleChange}
                         type="text"
                         placeholder={!filters.name ? "Pick a column first..." : `Search ${options.find(o => o.value === filters.name)?.label}...`}
-                        className="w-full pl-10 pr-10 h-11 border-none focus:ring-0 bg-transparent text-(--primary-text) disabled:cursor-not-allowed disabled:text-gray-400 placeholder:text-gray-400 focus:outline-none"
+                        className="w-full pl-10 pr-10 h-9 border-none focus:ring-0 bg-transparent text-(--primary-text) disabled:cursor-not-allowed disabled:text-gray-400 placeholder:text-gray-400 focus:outline-none"
                     />
 
                     {filters.value && (
@@ -93,12 +93,12 @@ const FilterInputs = ({ formSchema, tableData, setFilteredRows }) => {
                 type="button"
                 onClick={clearFilters}
                 disabled={!filters.name && !filters.value}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 
+                className={`flex items-center gap-1 px-4 py-2 h-full rounded-md text-sm font-medium transition-all duration-200 
                     ${!filters.name && !filters.value
                         ? "bg-gray-200 text-gray-400 cursor-not-allowed opacity-50"
                         : "bg-(--table-header-bg) text-white hover:shadow-md active:scale-95"}`}
             >
-                <MdRotateLeft className="text-lg" />
+                <MdRotateLeft className="text-[17px]" />
                 Reset
             </button>
         </div>
